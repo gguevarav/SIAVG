@@ -1,6 +1,6 @@
 <!--
     Sistema de Información de Averías Viales de Guatemala
-    Registro de Materiales
+    Registro de equipos
     Jueves, 06 de Septiembre del 2018
     16:14 PM
     f-Society
@@ -167,7 +167,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <h1 class="text-center">Registro de Materiales</h1>
+                                    <h1 class="text-center">Registro de Equipos</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
                                 <div class="col-xs-6 Icon">
@@ -177,12 +177,12 @@
                             </div>
                             <br>
                             <div class="form-group">
-                                <form name="RegistroMaterial" action="RegistroMaterial.php" method="post">
+                                <form name="RegistroEquipo" action="RegistroEquipo.php" method="post">
                                     <div class="row">
                                         <div class="col-xs-10 col-xs-offset-1">
                                             <div class="input-group input-group-lg">
                                                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-qrcode"></i></span>
-                                                <input type="text" class="form-control" name="CodigoMaterial" placeholder="Código" id="CodigoMaterial" aria-describedby="sizing-addon1" required>
+                                                <input type="text" class="form-control" name="CodigoEquipo" placeholder="Código" id="CodigoEquipo" aria-describedby="sizing-addon1" required>
                                             </div>
                                         </div>
                                     </div>
@@ -192,36 +192,7 @@
                                         <div class="col-xs-10 col-xs-offset-1">
                                             <div class="input-group input-group-lg">
                                                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-edit"></i></span>
-                                                <input type="text" class="form-control" name="NombreMaterial" placeholder="Nombre" id="NombreMaterial" aria-describedby="sizing-addon1" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <!-- MarcaProducto-->
-                                    <div class="row">
-                                        <div class="col-xs-9 col-xs-offset-1">
-                                            <div class="input-group input-group-lg">
-                                                <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
-                                                <select class="form-control" name="UnidadMedida" id="UnidadMedida">
-                                                <option value="" disabled selected>Unidad de medida</option>
-                                                    <!-- Acá mostraremos los puestos que existen en la base de datos -->
-                                                    <?php							
-                                                        $VerUM = "SELECT * FROM unidadmedida;";
-                                                        // Hacemos la consulta
-                                                        $resultado = $mysqli->query($VerUM);			
-                                                            while ($row = mysqli_fetch_array($resultado)){
-                                                                ?>
-                                                                <option value="<?php echo $row['idUnidadMedida'];?>"><?php echo $row['NombreUnidadMedida'] ?></option>
-                                                    <?php
-                                                            }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!-- Button trigger modal -->
-                                        <div class="col-xs-1">
-                                            <div class="input-group input-group-lg">
-                                                <button type="button" class="btn btn-success btn-lg AgregarUnidadMedida" value="" data-toggle="modal" data-target="#ModalAgregarUnidadMedida">+</button>
+                                                <input type="text" class="form-control" name="NombreEquipo" placeholder="Nombre" id="NombreEquipo" aria-describedby="sizing-addon1" required>
                                             </div>
                                         </div>
                                     </div>
@@ -231,7 +202,7 @@
                                         <div class="col-xs-10 col-xs-offset-1">
                                             <div class="input-group input-group-lg">
                                                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-ok"></i></span>
-                                                <input type="text" class="form-control" name="PrecioMaterial" placeholder="Precio" id="PrecioMaterial" aria-describedby="sizing-addon1">
+                                                <input type="text" class="form-control" name="CostoPorHora" placeholder="Costo por hora" id="CostoPorHora" aria-describedby="sizing-addon1">
                                             </div>
                                         </div>
                                     </div>
@@ -241,7 +212,7 @@
                                         <div class="col-xs-12 col-xs-offset-1">
                                             <div class="input-group input-group-lg">
                                                 <div clss="btn-group">
-                                                    <input type="submit" name="RegistrarMaterial" class="btn btn-primary" value="Registrar">
+                                                    <input type="submit" name="RegistrarEquipo" class="btn btn-primary" value="Registrar">
                                                 </div>
                                             </div>
                                         </div>
@@ -282,23 +253,17 @@
                 <!-- /Modal Agregar Unidad de medida -->
                 <?php
                 // Código que recibe la información para registrar un producto
-                if (isset($_POST['RegistrarMaterial'])) {
+                if (isset($_POST['RegistrarEquipo'])) {
                     // Guardamos la información en variables
-                    $CodigoMaterial = $_POST['CodigoMaterial'];
-                    $NombreMaterial = $_POST['NombreMaterial'];
-                    if(isset($_POST['UnidadMedida'])){
-                            $UnidadMedida = $_POST['UnidadMedida'];
-                    }
-                    else{
-                            $UnidadMedida = 1;
-                    }
-                    $Precio = $_POST['PrecioMaterial'];
+                    $CodigoEquipo = $_POST['CodigoEquipo'];
+                    $NombreEquipo = $_POST['NombreEquipo'];
+                    $CostoPorHora = $_POST['CostoPorHora'];
 
                     //Primero revisamos que no exista la marca ya en la base de datos
-                    $ConsultaExisteMaterial = "SELECT CodigoMaterial FROM Material WHERE CodigoMaterial='".$CodigoMaterial."';";
-                    $ResultadoExisteMaterial = $mysqli->query($ConsultaExisteMaterial);			
-                    $row = mysqli_fetch_array($ResultadoExisteMaterial);
-                    if($row['CodigoMaterial'] != null){
+                    $ConsultaExisteEquipo = "SELECT CodigoEquipo FROM Equipo WHERE CodigoEquipo='".$CodigoEquipo."';";
+                    $ResultadoExisteEquipo = $mysqli->query($ConsultaExisteEquipo);			
+                    $row = mysqli_fetch_array($ResultadoExisteEquipo);
+                    if($row['CodigoEquipo'] != null){
                         ?>
                         <div class="form-group">
                             <form name="Alerta">
@@ -319,8 +284,8 @@
                     }
                     else{
                         // Preparamos la consulta
-                        $query = "INSERT INTO Material(NombreMaterial, CodigoMaterial, idUnidadMedida, PrecioxUnidad, EstadoMaterial)
-                                                VALUES('".$NombreMaterial."', '".$CodigoMaterial."', ".$UnidadMedida.", ".$Precio.", 'Habilitado')";
+                        $query = "INSERT INTO Equipo(NombreEquipo, CodigoEquipo, CostoPorHora, EstadoEquipo)
+                                                VALUES('".$NombreEquipo."', '".$CodigoEquipo."', '".$CostoPorHora."', 'Habilitado')";
                         // Ejecutamos la consulta
                         if(!$resultado = $mysqli->query($query)){
                         echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -338,7 +303,7 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-10 col-xs-offset-1">
-                                                        <div class="alert alert-success">Producto registrado</div>
+                                                        <div class="alert alert-success">Equipo registrado</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -348,7 +313,7 @@
                             </div>
                             <?php
                             // Recargamos la página
-                            echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroMaterial.php\">"; 
+                            echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroEquipo.php\">"; 
                         }
                     }
                 }
@@ -536,7 +501,7 @@
                         </div>
                         <?php
                         // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroMaterial.php\">"; 
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroEquipo.php\">"; 
                     }
                 }
             }

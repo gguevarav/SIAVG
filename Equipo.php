@@ -2,7 +2,7 @@
     Sistema de Información de Averías Viales de Guatemala
     Listado de Equipos
     Miércoles, 06 de septiembre del 2018
-    18:29 PM
+    20:15 PM
     f-Society
     -
     UMG - Morales Izabal

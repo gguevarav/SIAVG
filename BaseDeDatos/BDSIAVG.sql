@@ -105,7 +105,7 @@ CREATE TABLE Equipo(
     NombreEquipo            VARCHAR(100)        NOT NULL,
     CodigoEquipo            VARCHAR(20)         NOT NULL,
     CostoPorHora            DECIMAL             NOT NULL,
-    EstadoEquipo            VARCHAR(20)         NOT NULL,
+    EstadoEquipo            VARCHAR(20)         NOT NULL
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
 CREATE TABLE UnidadMedida(

@@ -65,6 +65,32 @@ $(document).ready(function(){
     });
  });
  
+ // Deshabilitacion de Equipo
+ $(document).ready(function(){
+    $(document).on('click', '.DeshabilitarEquipo', function(){
+        var id=$(this).val();
+        var Nombre=$('#NombreEquipo'+id).text();
+        var Producto=$('#idEquipo'+id).text();
+
+        $('#ModalDeshabilitar').modal('show');
+        document.querySelector('#NombreEquipoDeshabilitar').innerText = Nombre;
+        $('#idEquipoDeshabilitar').val(id);
+    });
+ });
+ 
+ // Habilitacion de Material
+ $(document).ready(function(){
+    $(document).on('click', '.HabilitarEquipo', function(){
+        var id=$(this).val();
+        var Nombre=$('#NombreEquipo'+id).text();
+        var Producto=$('#idEquipo'+id).text();
+
+        $('#ModalHabilitar').modal('show');
+        document.querySelector('#NombreEquipoHabilitar').innerText = Nombre;
+        $('#idEquipoHabilitar').val(id);
+    });
+ });
+ 
  // Edición Material
 $(document).ready(function(){
     $(document).on('click', '.EditarMaterial', function(){
@@ -78,6 +104,22 @@ $(document).ready(function(){
         $('#NombreMaterial').val(NombreMaterial);
         //$('#Marca').val(idMarca);
         $('#PrecioMaterial').val(PrecioMaterial);
+    });
+});
+
+// Edición Equipo
+$(document).ready(function(){
+    $(document).on('click', '.EditarEquipo', function(){
+        var id=$(this).val();
+        var CodigoEquipo=$('#CodigoEquipo'+id).text();
+        var NombreEquipo=$('#NombreEquipo'+id).text();
+        var PrecioMaterial=$('#CostoPorHora'+id).text();
+
+        $('#ModalEditarEquipo').modal('show');
+        $('#idEditar').val(id);
+        $('#CodigoEquipo').val(CodigoEquipo);
+        $('#NombreEquipo').val(NombreEquipo);
+        $('#CostoPorHora').val(PrecioMaterial);
     });
 });
 

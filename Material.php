@@ -46,95 +46,50 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="defaultNavbar1">
                                 <ul class="nav navbar-nav">
-                                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Inventario<span class="caret"></span></a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                <?php
-                                                        if($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                                           $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                                           $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                                           $_SESSION["PrivilegioUsuario"] == 'Tesorero'){
-                                                        ?>
-                                                                <li><a href="EntradaInventario.php">Entrada de inventario</a></li>
-                                                                <li><a href="SalidaInventario.php">Salida de inventario</a></li>
-                                                <?php
-                                                        }
-                                                        ?>
-                                                        <li><a href="Inventario.php">Ver inventario</a></li>
-                                                </ul>
-                                        </li>
-                                        <?php
-                                        if($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Tesorero'){
-                                                ?>
-                                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Materiales<span class="caret"></span></a>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="RegistroMaterial.php">Registrar Material</a></li>
-                                                                <li><a href="#">Lista de Materiales</a></li>
-                                                        </ul>
-                                                </li>
-                                                <?php
-                                        }
-                                        ?>
-                                        <?php
-                                        if($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Tesorero'){
-                                                ?>
-                                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ajuste<span class="caret"></span></a>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="Ajuste.php">Ajuste de inventario</a></li>
-                                                        </ul>
-                                                </li>
-                                                <?php
-                                        }
-                                        ?>
-                                        <?php
-                                        if($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Tesorero'){
-                                                ?>
-                                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hojas de Reponsabilidad<span class="caret"></span></a>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="CrearHojaResponsabilidad.php">Crear hoja de responsabilidad</a></li>
-                                                                <li><a href="HojaResponsabilidad.php">Lista hojas de responsabilidad</a></li>
-                                                        </ul>
-                                                </li>
-                                                <?php
-                                        }
-                                        ?>
-                                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bitácoras<span class="caret"></span></a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="BitacoraEntradas.php">Bitácora de entradas de inventario</a></li>
-                                                        <li><a href="BitacoraSalidas.php">Bitácora de salidas de inventario</a></li>
-                                                        <li><a href="BitacoraAjustes.php">Bitácora de ajustes de inventario</a></li>
-                                                </ul>
-                                        </li>
-                                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reportes<span class="caret"></span></a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="ReporteProductos.php" target="_blank">Reporte de productos</a></li>
-                                                        <li><a href="ReporteInventario.php" target="_blank">Reporte de inventario</a></li>
-                                                        <li><a href="ReporteInventarioFisico.php" target="_blank">Reporte de inventario fisico</a></li>
-                                                        <li><a href="Kardex.php" target="_blank">Kardex</a></li>
-                                                </ul>
-                                        </li>
-                                        <?php
-                                        if($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                           $_SESSION["PrivilegioUsuario"] == 'Superadmin'){
-                                                ?>
-                                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="CrearUsuario.php">Crear usuario</li>
-                                                                <li><a href="Usuario.php">Ver usuarios</a></li>
-                                                        </ul>
-                                                </li>
-                                                <?php
-                                        }
-                                        ?>
-                          </ul>
+                                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
+                                      <ul class="dropdown-menu" role="menu">
+                                          <?php
+                                              if($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                                  $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
+                                                  $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
+                                                  $_SESSION["PrivilegioUsuario"] == 'Tesorero'){
+                                                  ?>
+                                                        <li><a href="Equipo.php">Listado de Equipos</a></li>
+                                                        <li><a href="RegistroEquipo.php">Registrar equipos</a></li>
+                                                  <?php
+                                              }
+                                                  ?>
+                                      </ul>
+                                  </li>
+                                          <?php
+                                          if($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                             $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
+                                             $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
+                                             $_SESSION["PrivilegioUsuario"] == 'Tesorero'){
+                                                  ?>
+                                                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Materiales<span class="caret"></span></a>
+                                                      <ul class="dropdown-menu" role="menu">
+                                                          <li><a href="RegistroMaterial.php">Registrar Material</a></li>
+                                                          <li><a href="#">Lista de Materiales</a></li>
+                                                      </ul>
+                                                  </li>
+                                                  <?php
+                                          }
+                                          ?>
+                                          <?php
+                                          if($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                             $_SESSION["PrivilegioUsuario"] == 'Superadmin'){
+                                                  ?>
+                                                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
+                                                      <ul class="dropdown-menu" role="menu">
+                                                          <li><a href="CrearUsuario.php">Crear usuario</li>
+                                                          <li><a href="Usuario.php">Ver usuarios</a></li>
+                                                      </ul>
+                                                  </li>
+                                                  <?php
+                                          }
+                                          ?>
+                            </ul>
                           <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <!-- Acá mostramos el nombre del usuario -->

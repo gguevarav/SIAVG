@@ -57,7 +57,7 @@
                                 $_SESSION['ContrasenaUsuario'] = $password;
                                 $_SESSION['idUsuario'] = $ResultadoConsulta['idUsuario'];
                                 $_SESSION['PrivilegioUsuario'] = $ResultadoConsulta['PrivilegioUsuario'];
-                                header("location:login.php");
+                                //header("location:login.php");
                             }
                         }
                         else{

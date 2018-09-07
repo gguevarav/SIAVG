@@ -24,15 +24,14 @@
     <body>
 	<?php
         // Incluimos el archivo que valida si hay una sesión activa
-        //include_once "Seguridad/seguro.php";
+        include_once "Seguridad/seguro.php";
         // Primero hacemos la consulta en la tabla de persona
-        include_once "Seguridad/clsConexion.php";
-        include_once "Clase/clsFunciones.php";
+        include_once "Seguridad/Conexion.php";
         // Si en la sesión activa tiene privilegios de administrador puede ver el formulario
-        //if($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin'){
+        if($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin'){
                 // Guardamos el nombre del usuario en una variable
-                //$NombreUsuario =$_SESSION["NombreUsuario"];
-                //$idUsuario2 =$_SESSION["idUsuario"];
+                $NombreUsuario =$_SESSION["NombreUsuario"];
+                $idUsuario2 =$_SESSION["idUsuario"];
         ?>
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid"> 
@@ -65,10 +64,10 @@
                         //   $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
                         //   $_SESSION["PrivilegioUsuario"] == 'Tesorero'){
                                 ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Productos<span class="caret"></span></a>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Materiales<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                            <li><a href="RegistroProducto.php">Registrar Producto</a></li>
-                                            <li><a href="Producto.php">Lista de Productos</a></li>
+                                            <li><a href="RegistroMaterial.php">Registrar Material</a></li>
+                                            <li><a href="Material.php">Lista de Materiales</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -260,7 +259,7 @@
                                 <div class="col-xs-12 col-xs-offset-1">
                                     <div class="input-group input-group-lg">
                                         <div clss="btn-group">
-                                            <button type="submit" class="btn btn-primary" id="RegistrarPuesto" name="RegistroEntrada">Registrar</button>
+                                            <button type="submit" class="btn btn-primary" id="RegistrarPuesto" name="RegistrarPuesto">Registrar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -305,12 +304,69 @@
         <?php
             if (isset($_POST['CambiarPassword'])) {
                 // Obtenemos los valores de todos los campos y los almacenamos en variables
-                $Funciones = new clsFunciones();
-                $idUsuario = $_POST['NombreUsuario'];
-                $Password = $_POST['ContraseniaUsuario'];
-                $Repassword = $_POST['ReContraseniaUsuario'];
-                $ResultadoCambio = $Funciones->CambioPassword($idUsuario, $Password, $Repassword);
-                echo $ResultadoCambio;
+                $idUsuario=$_POST['NombreUsuario'];
+                $PasswordUsuario=$_POST['ContraseniaUsuario'];
+                $RePasswordUsuario=$_POST['ReContraseniaUsuario'];
+
+                if($PasswordUsuario != $RePasswordUsuario){
+                    ?>
+                    <div class="form-group">
+                        <form name="Alerta">
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <div class="alert alert-success">Las contraseñas no coinciden</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <?php
+                }
+                else{
+                    $ContraseniaEncriptada = md5($PasswordUsuario);
+                    // Creamos la consulta para la insersión de los datos
+                    $CambiarContrasenia = "UPDATE usuario SET PasswordUsuario='".$ContraseniaEncriptada."' WHERE idUsuario=".$idUsuario.";";
+
+                    if(!$resultado1 = $mysqli->query($CambiarContrasenia)){
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $CambiarContrasenia . "\n";
+                        echo "Error: " . $mysqli->errno . "\n";
+                        exit;
+                    }
+                }
+            }
+            if (isset($_POST['RegistrarUnidadMedida'])) {
+                // Obtenemos los valores de todos los campos y los almacenamos en variables
+                $NombreUnidadMedida=$_POST['UnidadMedida'];
+
+                // Creamos la consulta para la insersión de los datos
+                $InsertarUM = "INSERT into UnidadMedida (NombreUnidadMedida)
+                                                      VALUES('".$NombreUnidadMedida."');";
+                if(!$resultado2 = $mysqli->query($InsertarUM)){
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $InsertarUM . "\n";
+                        echo "Error: " . $mysqli->errno . "\n";
+                        exit;
+                }
+            }
+            if (isset($_POST['RegistrarPuesto'])) {
+                // Obtenemos los valores de todos los campos y los almacenamos en variables
+                $NombreNuevoPuesto=$_POST['NombrePuesto'];
+
+                // Creamos la consulta para la insersión de los datos
+                $InsertarPuesto = "INSERT into TipoEmpleado (NombreTipoEmpleado)
+                                                      VALUES('".$NombreNuevoPuesto."');";
+                if(!$resultado2 = $mysqli->query($InsertarPuesto)){
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $InsertarPuesto . "\n";
+                        echo "Error: " . $mysqli->errno . "\n";
+                        exit;
+                }
             }
         ?>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
@@ -331,10 +387,10 @@
     </body>
     <?php
         // De lo contrario lo redirigimos al inicio de sesión
-        //} 
-        //else{
-        //        echo "usuario no valido";
-        //        header("location:login.php");
-        //}
+        } 
+        else{
+                echo "usuario no valido";
+                header("location:login.php");
+        }
     ?>
 </html>

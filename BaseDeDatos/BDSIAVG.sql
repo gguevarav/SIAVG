@@ -104,7 +104,8 @@ CREATE TABLE Equipo(
     idEquipo                INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
     NombreEquipo            VARCHAR(100)        NOT NULL,
     CodigoEquipo            VARCHAR(20)         NOT NULL,
-    CostoPorHora            DECIMAL             NOT NULL
+    CostoPorHora            DECIMAL             NOT NULL,
+    EstadoEquipo            VARCHAR(20)         NOT NULL,
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
 CREATE TABLE UnidadMedida(
@@ -118,6 +119,7 @@ CREATE TABLE Material(
     CodigoMaterial          VARCHAR(20)         NOT NULL,
     idUnidadMedida          TINYINT             NOT NULL,
     PrecioxUnidad           DECIMAL             NOT NULL,
+    EstadoMaterial          VARCHAR(20)         NOT NULL,
     INDEX (idUnidadMedida),
     FOREIGN KEY (idUnidadMedida)
             REFERENCES UnidadMedida(idUnidadMedida)

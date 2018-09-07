@@ -235,7 +235,7 @@
                                                                         <!-- Edición activada-->
                                                                         <div>
                                                                             <div class="input-group input-group-lg">
-                                                                                <button type="button" class="btn btn-success EditarMaterial" value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
+                                                                                <button type="button" class="btn btn-success EditarEquipo" value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
                                                                             </div>
                                                                         </div>
                                                                     <?php
@@ -245,7 +245,7 @@
                                                                         <!-- Edición desactivada-->
                                                                         <div>
                                                                             <div class="input-group input-group-lg">
-                                                                                <button type="button" class="btn btn-success EditarMaterialDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
+                                                                                <button type="button" class="btn btn-success EditarEquipoDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
                                                                             </div>
                                                                         </div>
                                                                     <?php
@@ -259,7 +259,7 @@
                                                                             <!-- Deshabilitación -->
                                                                             <div>
                                                                                 <div class="input-group input-group-lg">
-                                                                                    <button type="button" class="btn btn-warning DeshabilitarMaterial"  value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                                    <button type="button" class="btn btn-warning DeshabilitarEquipo"  value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -271,7 +271,7 @@
                                                                             <!-- Habilitación -->
                                                                             <div>
                                                                                 <div class="input-group input-group-lg">
-                                                                                    <button type="button" class="btn btn-success HabilitarMaterial"  value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-check"></span></button>
+                                                                                    <button type="button" class="btn btn-success HabilitarEquipo"  value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-check"></span></button>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -297,20 +297,20 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <center><h1 class="modal-title" id="myModalLabel">Deshabilitar Material</h1></center>
+                            <center><h1 class="modal-title" id="myModalLabel">Deshabilitar Equipo</h1></center>
                         </div>
-                        <form method="post" action="Material.php" id="myForm">
+                        <form method="post" action="Equipo.php" id="myForm">
                             <div class="modal-body text-center">
-                                <p class="lead">¿Está seguro que desea deshabilitar al siguiente Material?</p>
+                                <p class="lead">¿Está seguro que desea deshabilitar al siguiente equipo?</p>
                                 <div class="form-group input-group">
-                                    <input type="text" name="idMaterialDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idMaterialDeshabilitar">
+                                    <input type="text" name="idEquipoDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEquipoDeshabilitar">
                                     <br>
-                                    <label id="NombreMaterialDeshabilitar"></label>
+                                    <label id="NombreEquipoDeshabilitar"></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                                <input type="submit" name="DeshabilitarMat" class="btn btn-warning" value="Deshabilitar material">
+                                <input type="submit" name="DeshabilitarEquipo" class="btn btn-warning" value="Deshabilitar equipo">
                             </div>
                         </form>
                     </div>
@@ -323,20 +323,20 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <center><h1 class="modal-title" id="myModalLabel">Habilitar material</h1></center>
+                            <center><h1 class="modal-title" id="myModalLabel">Habilitar equipo</h1></center>
                         </div>
-                        <form method="post" action="Material.php" id="myForm">
+                        <form method="post" action="Equipo.php" id="myForm">
                             <div class="modal-body text-center">
-                                <p class="lead">¿Está seguro que desea habilitar al siguiente material?</p>
+                                <p class="lead">¿Está seguro que desea habilitar al siguiente equipo?</p>
                                 <div class="form-group input-group">
-                                    <input type="text" name="idMaterialHabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idMaterialHabilitar">
+                                    <input type="text" name="idEquipoHabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEquipoHabilitar">
                                     <br>
-                                    <label id="NombreMaterialHabilitar"></label>
+                                    <label id="NombreEquipoHabilitar"></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                                <input type="submit" name="HabilitarMat" class="btn btn-success" value="Habilitar material">
+                                <input type="submit" name="HabilitarEquipo" class="btn btn-success" value="Habilitar equipo">
                             </div>
                         </form>
                     </div>
@@ -344,14 +344,14 @@
             </div>
             <!-- /.modal -->
             <!-- Edit Modal-->
-            <div class="modal fade" id="ModalEditarMaterial" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="ModalEditarEquipo" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <center><h4 class="modal-title" id="myModalLabel">Editar Material</h4></center>
+                            <center><h4 class="modal-title" id="myModalLabel">Editar equipo</h4></center>
                         </div>
-                        <form method="post" action="Material.php" id="frmEdit">
+                        <form method="post" action="Equipo.php" id="frmEdit">
                             <div class="modal-body">
                                 <div class="container-fluid">
                                     <div class="form-group input-group">
@@ -359,35 +359,22 @@
                                         <input type="text" style="width:350px;" class="form-control" name="idEditar" id="idEditar">
                                     </div>
                                     <div class="form-group input-group">
-                                        <span class="input-group-addon" style="width:150px;">Nombre Material</span>
-                                        <input type="text" style="width:350px;" class="form-control" name="NombreMaterial" id="NombreMaterial">
+                                        <span class="input-group-addon" style="width:150px;">Nombre equipo</span>
+                                        <input type="text" style="width:350px;" class="form-control" name="CodigoEquipo" id="CodigoEquipo">
                                     </div>
                                     <div class="form-group input-group">
-                                        <span class="input-group-addon" style="width:150px;">Unidad de Medida</span>
-                                        <select class="form-control" name="UnidadMedida" id="UnidadMedida">
-                                        <option value="" disabled selected>Unidad de Medida</option>
-                                            <!-- Acá mostraremos los puestos que existen en la base de datos -->
-                                            <?php	
-                                                $VerUnidadMedida = "SELECT * FROM UnidadMedida;";
-                                                // Hacemos la consulta
-                                                $ResultadoConsultaUnidadMedida = $mysqli->query($VerUnidadMedida);
-                                                    while ($row = mysqli_fetch_array($ResultadoConsultaUnidadMedida)){
-                                                        ?>
-                                                        <option value="<?php echo $row['idUnidadMedida'];?>"><?php echo $row['NombreUnidadMedida'] ?></option>
-                                            <?php
-                                                    }
-                                            ?>
-                                        </select>
+                                        <span class="input-group-addon" style="width:150px;">Codigo equipo</span>
+                                        <input type="text" style="width:350px;" class="form-control" name="NombreEquipo" id="NombreEquipo">
                                     </div>
                                     <div class="form-group input-group">
-                                        <span class="input-group-addon" style="width:150px;">Precio</span>
-                                        <input type="text" style="width:350px;" class="form-control" name="PrecioMaterial" id="PrecioMaterial">
+                                        <span class="input-group-addon" style="width:150px;">Costo por Hora</span>
+                                        <input type="text" style="width:350px;" class="form-control" name="CostoPorHora" id="CostoPorHora">
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
-                                <input type="submit" name="EditarMaterial" class="btn btn-success" value="Editar material">
+                                <input type="submit" name="EditarEquipo" class="btn btn-success" value="Editar Equipo">
                             </div>
                         </form>
                         </div>
@@ -396,11 +383,11 @@
                 <!-- /.modal -->
                 <?php
                 // Código que recibe la información del formulario modal (Deshabilitar)
-                if (isset($_POST['DeshabilitarMat'])) {
+                if (isset($_POST['DeshabilitarEquipo'])) {
                     // Guardamos el id en una variable
-                    $idMaterial = $_POST['idMaterialDeshabilitar'];
+                    $idEquipo = $_POST['idEquipoDeshabilitar'];
                     // Preparamos la consulta
-                    $query = "UPDATE Material SET EstadoMaterial = 'Deshabilitado' WHERE idMaterial=".$idMaterial.";";
+                    $query = "UPDATE Equipo SET EstadoEquipo = 'Deshabilitado' WHERE idEquipo=".$idEquipo.";";
                     // Ejecutamos la consulta
                     if(!$resultado = $mysqli->query($query)){
                         echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -418,7 +405,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Material deshabilitado</div>
+                                                <div class="alert alert-success">Equipo deshabilitado</div>
                                             </div>
                                         </div>
                                     </div>
@@ -428,15 +415,15 @@
                     </div>
                     <?php
                     // Recargamos la página
-                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=Material.php\">"; 
+                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">"; 
                     }
                 }
                 // Código que recibe la información del formulario modal (Habilitar)
-                if (isset($_POST['HabilitarMat'])) {
+                if (isset($_POST['HabilitarEquipo'])) {
                     // Guardamos el id en una variable
-                    $idMaterial = $_POST['idMaterialHabilitar'];
+                    $idEquipo = $_POST['idEquipoHabilitar'];
                     // Preparamos la consulta
-                    $query = "UPDATE Material SET EstadoMaterial = 'Habilitado' WHERE idMaterial=".$idMaterial.";";
+                    $query = "UPDATE Equipo SET EstadoEquipo = 'Habilitado' WHERE idEquipo=".$idEquipo.";";
                     // Ejecutamos la consulta
                     if(!$resultado = $mysqli->query($query)){
                         echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -454,7 +441,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Material habilitado</div>
+                                                <div class="alert alert-success">Equipo habilitado</div>
                                             </div>
                                         </div>
                                     </div>
@@ -464,22 +451,22 @@
                     </div>
                     <?php
                     // Recargamos la página
-                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=Material.php\">"; 
+                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">"; 
                     }
                 }
                 // Código que recibe la información del formulario modal (Editar)
-                if (isset($_POST['EditarMaterial'])) {
+                if (isset($_POST['EditarEquipo'])) {
                     // Guardamos la info en variables
-                    $idMaterial = $_POST['idEditar'];
-                    $NombreMaterial = $_POST['NombreMaterial'];
-                    $UnidadMedida = $_POST['UnidadMedida'];
-                    $PrecioMaterial = $_POST['PrecioMaterial'];
+                    $idEquipo = $_POST['idEditar'];
+                    $NombreEquipo = $_POST['NombreEquipo'];
+                    $CodigoEquipo = $_POST['CodigoEquipo'];
+                    $CostoPorHora = $_POST['CostoPorHora'];
 
                     // Preparamos la consulta
-                    $query = "UPDATE material SET NombreMaterial = '".$NombreMaterial."',
-                                                    idUnidadMedida = ".$UnidadMedida.",
-                                                    PrecioxUnidad = ".$PrecioMaterial."
-                                                                    WHERE idMaterial=".$idMaterial.";";
+                    $query = "UPDATE Equipo SET NombreEquipo = '".$NombreEquipo."',
+                                                CodigoEquipo = '".$CodigoEquipo."',
+                                                CostoPorHora = '".$CostoPorHora."'
+                                            WHERE idEquipo=".$idEquipo.";";
                     // Ejecutamos la consulta
                     if(!$resultado = $mysqli->query($query)){
                         echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -497,7 +484,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Material editado correctamente</div>
+                                                <div class="alert alert-success">Equipo editado correctamente</div>
                                             </div>
                                         </div>
                                     </div>
@@ -507,7 +494,7 @@
                     </div>
                     <?php
                     // Recargamos la página
-                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=Material.php\">"; 
+                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">"; 
                     }
                 }
                 ?>

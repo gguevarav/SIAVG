@@ -173,10 +173,11 @@
                                                 <!-- Contenido -->
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Código</th>´
-                                                    <th>Nombre</th>´
-                                                    <th>Costo por Hora</th>
-                                                    <th>Estado del Equipo</th>
+                                                    <th>Nombres</th>
+                                                    <th>Apellidos</th>
+                                                    <th>Dirección</th>
+                                                    <th>Teléfono</th>
+                                                    <th>Puesto</th>
                                                     <th>Editar</th>
                                                     <th>Habilitar/Deshabilitar</th>
                                                 </tr>
@@ -186,35 +187,44 @@
                                                 <!-- Contenido de la tabla -->
                                                     <!-- Acá mostraremos los usuarios y seleccionaremos el que deseamos eliminar -->
                                                     <?php
-                                                        $VerEquipo = "SELECT * FROM Equipo";
+                                                        $VerEmpleado = "SELECT * FROM Persona";
                                                         // Hacemos la consulta
-                                                        $resultado = $mysqli->query($VerEquipo);
+                                                        $resultado = $mysqli->query($VerEmpleado);
                                                         while ($row = mysqli_fetch_array($resultado)){
                                                             ?>
                                                             <tr>
-                                                                <td><span id="idEquipo<?php echo $row['idEquipo'];?>"><?php echo $row['idEquipo'] ?></span></td>
-                                                                <td><span id="CodigoEquipo<?php echo $row['idEquipo'];?>"><?php echo $row['CodigoEquipo'] ?></span></td>
-                                                                <td><span id="NombreEquipo<?php echo $row['idEquipo'];?>"><?php echo $row['NombreEquipo'] ?></span></td>
-                                                                <td><span id="CostoPorHora<?php echo $row['idEquipo'];?>"><?php echo $row['CostoPorHora'] ?></span></td>
-                                                                <td><span id="EstadoEquipo<?php echo $row['idEquipo'];?>"><?php echo $row['EstadoEquipo'] ?></span></td>
+                                                                <td><span id="idPersona<?php echo $row['idPersona'];?>"><?php echo $row['idPersona'] ?></span></td>
+                                                                <td><span id="NombrePersona<?php echo $row['idPersona'];?>"><?php echo $row['NombrePersona']?></span></td>
+                                                                <td><span id="ApellidoPersona<?php echo $row['idPersona'];?>"><?php echo $row['ApellidoPersona'] ?></span></td>
+                                                                <td><span id="DireccionPersona<?php echo $row['idPersona'];?>"><?php echo $row['DireccionPersona'] ?></span></td>
+                                                                <td><span id="TelefonoPersona<?php echo $row['idPersona'];?>"><?php echo $row['TelefonoPersona'] ?></span></td>
+                                                                <td><span id="Puesto<?php echo $row['idPersona'];?>"><!-- Acá mostraremos el nombre del puesto a partir del id que se tiene en la tabla -->
+                                                                                                        <?php							
+                                                                                                                $VerTipoEmpleado = "SELECT NombreTipoEmpleado FROM TipoEmpleado WHERE idTipoEmpleado='".$row['idTipoEmpleado']."';";
+                                                                                                                // Hacemos la consulta
+                                                                                                                $ResultadoConsultaTipoEmpleado = $mysqli->query($VerTipoEmpleado);
+                                                                                                                $FilaResultadoTipoEmpleado = $ResultadoConsultaTipoEmpleado->fetch_assoc();
+                                                                                                                $NombrePuesto = $FilaResultadoTipoEmpleado['NombreTipoEmpleado'];
+                                                                                                                echo $NombrePuesto;
+                                                                                                        ?></span></td>
                                                                 <td>
                                                                 <?php
-                                                                    if($row['EstadoEquipo'] == 'Habilitado'){
+                                                                    if($row['EstadoPersona'] == 'Habilitado'){
                                                                     ?>
                                                                         <!-- Edición activada-->
                                                                         <div>
                                                                             <div class="input-group input-group-lg">
-                                                                                <button type="button" class="btn btn-success EditarEquipo" value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
+                                                                                <button type="button" class="btn btn-success EditarPersona" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
                                                                             </div>
                                                                         </div>
                                                                     <?php
                                                                     }
-                                                                    else if($row['EstadoEquipo'] == 'Deshabilitado'){
+                                                                    else if($row['EstadoPersona'] == 'Deshabilitado'){
                                                                     ?>
                                                                         <!-- Edición desactivada-->
                                                                         <div>
                                                                             <div class="input-group input-group-lg">
-                                                                                <button type="button" class="btn btn-success EditarEquipoDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
+                                                                                <button type="button" class="btn btn-success EditarPersonaDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
                                                                             </div>
                                                                         </div>
                                                                     <?php
@@ -222,25 +232,25 @@
                                                                     ?>
                                                                 </td>
                                                                 <?php
-                                                                    if($row['EstadoEquipo'] == 'Habilitado'){
+                                                                    if($row['EstadoPersona'] == 'Habilitado'){
                                                                     ?>
                                                                         <td>
                                                                             <!-- Deshabilitación -->
                                                                             <div>
                                                                                 <div class="input-group input-group-lg">
-                                                                                    <button type="button" class="btn btn-warning DeshabilitarEquipo"  value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                                    <button type="button" class="btn btn-warning DeshabilitarPersona"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
                                                                     <?php
                                                                     }
-                                                                    else if($row['EstadoEquipo'] == 'Deshabilitado'){
+                                                                    else if($row['EstadoPersona'] == 'Deshabilitado'){
                                                                     ?>
                                                                         <td>
                                                                             <!-- Habilitación -->
                                                                             <div>
                                                                                 <div class="input-group input-group-lg">
-                                                                                    <button type="button" class="btn btn-success HabilitarEquipo"  value="<?php echo $row['idEquipo']; ?>"><span class="glyphicon glyphicon-check"></span></button>
+                                                                                    <button type="button" class="btn btn-success HabilitarPersona"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-check"></span></button>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -266,20 +276,20 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <center><h1 class="modal-title" id="myModalLabel">Deshabilitar Equipo</h1></center>
+                            <center><h1 class="modal-title" id="myModalLabel">Deshabilitar empleado</h1></center>
                         </div>
-                        <form method="post" action="Equipo.php" id="myForm">
+                        <form method="post" action="Persona.php" id="myForm">
                             <div class="modal-body text-center">
-                                <p class="lead">¿Está seguro que desea deshabilitar al siguiente equipo?</p>
+                                <p class="lead">¿Está seguro que desea deshabilitar el siguiente empleado?</p>
                                 <div class="form-group input-group">
-                                    <input type="text" name="idEquipoDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEquipoDeshabilitar">
+                                    <input type="text" name="idEmpleadoDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEmpleadoDeshabilitar">
                                     <br>
-                                    <label id="NombreEquipoDeshabilitar"></label>
+                                    <label id="NombreEmpledoDeshabilitar"></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                                <input type="submit" name="DeshabilitarEquipo" class="btn btn-warning" value="Deshabilitar equipo">
+                                <input type="submit" name="DeshabilitarPersona" class="btn btn-warning" value="Deshabilitar persona">
                             </div>
                         </form>
                     </div>
@@ -292,20 +302,20 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <center><h1 class="modal-title" id="myModalLabel">Habilitar equipo</h1></center>
+                            <center><h1 class="modal-title" id="myModalLabel">Habilitar persona</h1></center>
                         </div>
-                        <form method="post" action="Equipo.php" id="myForm">
+                        <form method="post" action="Persona.php" id="myForm">
                             <div class="modal-body text-center">
-                                <p class="lead">¿Está seguro que desea habilitar al siguiente equipo?</p>
+                                <p class="lead">¿Está seguro que desea habilitar la siguiente persona?</p>
                                 <div class="form-group input-group">
-                                    <input type="text" name="idEquipoHabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEquipoHabilitar">
+                                    <input type="text" name="idEmpleadoHabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEmpleadoHabilitar">
                                     <br>
-                                    <label id="NombreEquipoHabilitar"></label>
+                                    <label id="NombreEmpleadoHabilitar"></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                                <input type="submit" name="HabilitarEquipo" class="btn btn-success" value="Habilitar equipo">
+                                <input type="submit" name="HabilitarEmpleado" class="btn btn-success" value="Habilitar empleado">
                             </div>
                         </form>
                     </div>
@@ -313,14 +323,14 @@
             </div>
             <!-- /.modal -->
             <!-- Edit Modal-->
-            <div class="modal fade" id="ModalEditarEquipo" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="ModalEditarEmpleado" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <center><h4 class="modal-title" id="myModalLabel">Editar equipo</h4></center>
+                            <center><h4 class="modal-title" id="myModalLabel">Editar empleado</h4></center>
                         </div>
-                        <form method="post" action="Equipo.php" id="frmEdit">
+                        <form method="post" action="Persona.php" id="frmEdit">
                             <div class="modal-body">
                                 <div class="container-fluid">
                                     <div class="form-group input-group">
@@ -328,22 +338,43 @@
                                         <input type="text" style="width:350px;" class="form-control" name="idEditar" id="idEditar">
                                     </div>
                                     <div class="form-group input-group">
-                                        <span class="input-group-addon" style="width:150px;">Nombre equipo</span>
-                                        <input type="text" style="width:350px;" class="form-control" name="CodigoEquipo" id="CodigoEquipo">
+                                        <span class="input-group-addon" style="width:150px;">Nombre</span>
+                                        <input type="text" style="width:350px;" class="form-control" name="NombrePersona" id="NombrePersona">
                                     </div>
                                     <div class="form-group input-group">
-                                        <span class="input-group-addon" style="width:150px;">Codigo equipo</span>
-                                        <input type="text" style="width:350px;" class="form-control" name="NombreEquipo" id="NombreEquipo">
+                                        <span class="input-group-addon" style="width:150px;">Apellido</span>
+                                        <input type="text" style="width:350px;" class="form-control" name="ApellidoPersona" id="ApellidoPersona">
                                     </div>
                                     <div class="form-group input-group">
-                                        <span class="input-group-addon" style="width:150px;">Costo por Hora</span>
-                                        <input type="text" style="width:350px;" class="form-control" name="CostoPorHora" id="CostoPorHora">
+                                        <span class="input-group-addon" style="width:150px;">Direccion</span>
+                                        <input type="text" style="width:350px;" class="form-control" name="DireccionPersona" id="DireccionPersona">
+                                    </div>
+									<div class="form-group input-group">
+                                        <span class="input-group-addon" style="width:150px;">Teléfono</span>
+                                        <input type="text" style="width:350px;" class="form-control" name="TelefonoPersona" id="TelefonoPersona">
+                                    </div>
+									<div class="form-group input-group">
+                                        <span class="input-group-addon" style="width:150px;">Puesto</span>
+										<select class="form-control" name="NombreTipoEmpleado" id="NombreTipoEmpleado">
+                                        <option value="" disabled selected>Tipo de Empleado</option>
+                                                    <!-- Acá mostraremos los puestos que existen en la base de datos -->
+                                                    <?php							
+                                                        $VerUM = "SELECT * FROM TipoEmpleado;";
+                                                        // Hacemos la consulta
+                                                        $resultado = $mysqli->query($VerUM);			
+                                                            while ($row = mysqli_fetch_array($resultado)){
+                                                                ?>
+                                                                <option value="<?php echo $row['idTipoEmpleado'];?>"><?php echo $row['NombreTipoEmpleado'] ?></option>
+                                                    <?php
+                                                            }
+                                                    ?>
+                                                </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
-                                <input type="submit" name="EditarEquipo" class="btn btn-success" value="Editar Equipo">
+                                <input type="submit" name="EditarEmpleado" class="btn btn-success" value="Editar empleado">
                             </div>
                         </form>
                         </div>
@@ -473,7 +504,7 @@
         <script src="js/bootstrap.js"></script>
         <!-- Pie de página, se utilizará el mismo para todos. -->
         <!-- Incluimos el script que nos dará el nombre de la persona para mostrarlo en el modal -->
-	<script src="js/Modal.js"></script>
+		<script src="js/Modal.js"></script>
         <footer>
             <hr>
             <div class="row">

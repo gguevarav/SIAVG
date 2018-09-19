@@ -193,9 +193,9 @@
                                                 <option value="" disabled selected>Tipo de Empleado</option>
                                                     <!-- Acá mostraremos los puestos que existen en la base de datos -->
                                                     <?php							
-                                                        $VerUM = "SELECT * FROM TipoEmpleado;";
+                                                        $TipoEmpleado = "SELECT * FROM TipoEmpleado;";
                                                         // Hacemos la consulta
-                                                        $resultado = $mysqli->query($VerUM);			
+                                                        $resultado = $mysqli->query($TipoEmpleado);			
                                                             while ($row = mysqli_fetch_array($resultado)){
                                                                 ?>
                                                                 <option value="<?php echo $row['idTipoEmpleado'];?>"><?php echo $row['NombreTipoEmpleado'] ?></option>

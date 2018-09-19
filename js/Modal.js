@@ -65,6 +65,53 @@ $(document).ready(function(){
     });
  });
  
+ // Edición usuario
+$(document).ready(function(){
+    $(document).on('click', '.EditarPersona', function(){
+        var id=$(this).val();
+        var Persona=$('#idPersona'+id).text();
+        var NombrePersona=$('#NombrePersona'+id).text();
+        var ApellidoPersona=$('#ApellidoPersona'+id).text();
+        var DireccionPersona=$('#DireccionPersona'+id).text();
+        var TelefonoPersona=$('#TelefonoPersona'+id).text();
+        var Puesto=$('#Puesto'+id).text();
+
+        $('#ModalEditarEmpleado').modal('show');
+        $('#idEditar').val(Persona);
+        $('#NombrePersona').val(NombrePersona);
+        $('#ApellidoPersona').val(ApellidoPersona);
+        $('#DireccionPersona').val(DireccionPersona);
+        $('#TelefonoPersona').val(TelefonoPersona);
+        //$('#idTipoEmpleado').val(Puesto);
+    });
+});
+
+// Deshabilitacion de Material
+ $(document).ready(function(){
+    $(document).on('click', '.DeshabilitarPersona', function(){
+        var id=$(this).val();
+        var Nombre=$('#NombrePersona'+id).text();
+        //var Producto=$('#idMaterial'+id).text();
+
+        $('#ModalDeshabilitar').modal('show');
+        document.querySelector('#NombreEmpleadoDeshabilitar').innerText = Nombre;
+        $('#idEmpleadoDeshabilitar').val(id);
+    });
+ });
+ 
+ // Habilitacion de Material
+ $(document).ready(function(){
+    $(document).on('click', '.HabilitarPersona', function(){
+        var id=$(this).val();
+        var Nombre=$('#NombrePersona'+id).text();
+        //var Producto=$('#idMaterial'+id).text();
+
+        $('#ModalHabilitar').modal('show');
+        document.querySelector('#NombreEmpleadoHabilitar').innerText = Nombre;
+        $('#idEmpleadoHabilitar').val(id);
+    });
+ });
+ 
  // Deshabilitacion de Equipo
  $(document).ready(function(){
     $(document).on('click', '.DeshabilitarEquipo', function(){

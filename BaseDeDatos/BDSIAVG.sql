@@ -24,6 +24,7 @@ CREATE TABLE Persona(
     ApellidoPersona         VARCHAR(45)         NOT NULL,
     DireccionPersona        VARCHAR(45)         NOT NULL,
     TelefonoPersona         VARCHAR(45)         NOT NULL,
+	EstadoPersona			VARCHAR(20)			NOT NULL,
     idTipoEmpleado          TINYINT             NOT NULL,
     INDEX (idTipoEmpleado),
     FOREIGN KEY (idTipoEmpleado)

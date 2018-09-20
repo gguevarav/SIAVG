@@ -178,19 +178,19 @@
                                     <br>
 									 <!-- Telefono Persona -->
                                     <div class="row">
-                                        <div class="col-xs-4 col-xs-offset-1">
+                                        <div class="col-xs-5 col-xs-offset-1">
                                             <div class="input-group input-group-lg">
                                                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-ok"></i></span>
                                                 <input type="text" class="form-control" name="TelefonoPersona" placeholder="Telefono" id="TelefonoPersona" aria-describedby="sizing-addon1">
                                             </div>
                                         </div>
                                       <!-- Id Empleado -->
-                                    <div class="row">
-                                        <div class="col-xs-5 col-xs-offset+1">
+                                    
+                                        <div class="col-xs-5 col-xs-offset">
                                             <div class="input-group input-group-lg">
                                                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
                                                 <select class="form-control" name="NombreTipoEmpleado" id="NombreTipoEmpleado">
-                                                <option value="" disabled selected>Tipo de Empleado</option>
+                                                <option value="" disabled selected>Puesto del Empleado</option>
                                                     <!-- Acá mostraremos los puestos que existen en la base de datos -->
                                                     <?php							
                                                         $VerUM = "SELECT * FROM TipoEmpleado;";

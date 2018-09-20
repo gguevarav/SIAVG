@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <link rel="shortcut icon" href="imagenes/icono.ico">
-        <title>Sistema de Información de Averías Viales de Guatemala</title>
+        <title>SIAVG</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
                 <!-- vinculo a bootstrap -->
                 <link rel="stylesheet" href="css/bootstrap.css">
@@ -271,25 +271,25 @@
                 </div>
             </div>
             <!-- Edit Modal-->
-            <div class="modal fade" id="ModalDeshabilitar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="ModalDeshabilitarEmpleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <center><h1 class="modal-title" id="myModalLabel">Deshabilitar empleado</h1></center>
                         </div>
-                        <form method="post" action="Persona.php" id="myForm">
+                        <form method="post" action="Persona.php" id="frmDeshabilitar">
                             <div class="modal-body text-center">
                                 <p class="lead">¿Está seguro que desea deshabilitar el siguiente empleado?</p>
                                 <div class="form-group input-group">
                                     <input type="text" name="idEmpleadoDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEmpleadoDeshabilitar">
                                     <br>
-                                    <label id="NombreEmpledoDeshabilitar"></label>
+                                    <label id="NombreEmpledoDeshabilitar" name="NombreEmpledoDeshabilitar"></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                                <input type="submit" name="DeshabilitarPersona" class="btn btn-warning" value="Deshabilitar persona">
+                                <input type="submit" name="DeshabilitarEmpleado" class="btn btn-warning" value="Deshabilitar empleado">
                             </div>
                         </form>
                     </div>
@@ -297,20 +297,20 @@
             </div>
             <!-- /.modal -->
             <!-- Edit Modal-->
-            <div class="modal fade" id="ModalHabilitar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="ModalHabilitarEmpleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <center><h1 class="modal-title" id="myModalLabel">Habilitar persona</h1></center>
+                            <center><h1 class="modal-title" id="myModalLabel">Habilitar empleado</h1></center>
                         </div>
                         <form method="post" action="Persona.php" id="myForm">
                             <div class="modal-body text-center">
-                                <p class="lead">¿Está seguro que desea habilitar la siguiente persona?</p>
+                                <p class="lead">¿Está seguro que desea habilitar la siguiente empleado?</p>
                                 <div class="form-group input-group">
-                                    <input type="text" name="idEmpleadoHabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEmpleadoHabilitar">
+                                    <input type="text" name="idEmpleadoHabilitar" id="idEmpleadoHabilitar" style="width:350px; visibility:hidden;" class="form-control">
                                     <br>
-                                    <label id="NombreEmpleadoHabilitar"></label>
+                                    <label id="NombreEmpleadoHabilitar" name="NombreEmpleadoHabilitar"></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -455,18 +455,26 @@
                     }
                 }
                 // Código que recibe la información del formulario modal (Editar)
-                if (isset($_POST['EditarEquipo'])) {
+                if (isset($_POST['EditarEmpleado'])) {
                     // Guardamos la info en variables
-                    $idEquipo = $_POST['idEditar'];
-                    $NombreEquipo = $_POST['NombreEquipo'];
-                    $CodigoEquipo = $_POST['CodigoEquipo'];
-                    $CostoPorHora = $_POST['CostoPorHora'];
+                    $idPersona = $_POST['idEditar'];
+                    $NombrePersona = $_POST['NombrePersona'];
+                    $ApellidoPersona = $_POST['ApellidoPersona'];
+                    $DireccionPersona = $_POST['DireccionPersona'];
+                    $TelefonoPersona = $_POST['TelefonoPersona'];
+                    $idTipoEmpleado = $_POST['NombreTipoEmpleado'];
+					
+					if($idTipoEmpleado == ""){
+						$idTipoEmpleado = 1;
+					}
 
                     // Preparamos la consulta
-                    $query = "UPDATE Equipo SET NombreEquipo = '".$NombreEquipo."',
-                                                CodigoEquipo = '".$CodigoEquipo."',
-                                                CostoPorHora = '".$CostoPorHora."'
-                                            WHERE idEquipo=".$idEquipo.";";
+                    $query = "UPDATE Persona SET NombrePersona = '".$NombrePersona."',
+                                                ApellidoPersona = '".$ApellidoPersona."',
+                                                DireccionPersona = '".$DireccionPersona."',
+                                                TelefonoPersona = '".$TelefonoPersona."',
+                                                idTipoEmpleado = ".$idTipoEmpleado."
+                                            WHERE idPersona=".$idPersona.";";
                     // Ejecutamos la consulta
                     if(!$resultado = $mysqli->query($query)){
                         echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -484,7 +492,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Equipo editado correctamente</div>
+                                                <div class="alert alert-success">Empleado editado correctamente</div>
                                             </div>
                                         </div>
                                     </div>
@@ -494,7 +502,7 @@
                     </div>
                     <?php
                     // Recargamos la página
-                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">"; 
+                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=Persona.php\">"; 
                     }
                 }
                 ?>

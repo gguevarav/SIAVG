@@ -91,9 +91,9 @@ $(document).ready(function(){
     $(document).on('click', '.DeshabilitarPersona', function(){
         var id=$(this).val();
         var Nombre=$('#NombrePersona'+id).text();
-        //var Producto=$('#idMaterial'+id).text();
+        var Producto=$('#idPersona'+id).text();
 
-        $('#ModalDeshabilitar').modal('show');
+        $('#ModalDeshabilitarEmpleado').modal('show');
         document.querySelector('#NombreEmpleadoDeshabilitar').innerText = Nombre;
         $('#idEmpleadoDeshabilitar').val(id);
     });
@@ -104,9 +104,9 @@ $(document).ready(function(){
     $(document).on('click', '.HabilitarPersona', function(){
         var id=$(this).val();
         var Nombre=$('#NombrePersona'+id).text();
-        //var Producto=$('#idMaterial'+id).text();
+        var Producto=$('#idPersona'+id).text();
 
-        $('#ModalHabilitar').modal('show');
+        $('#ModalHabilitarEmpleado').modal('show');
         document.querySelector('#NombreEmpleadoHabilitar').innerText = Nombre;
         $('#idEmpleadoHabilitar').val(id);
     });
@@ -119,7 +119,7 @@ $(document).ready(function(){
         var Nombre=$('#NombreEquipo'+id).text();
         var Producto=$('#idEquipo'+id).text();
 
-        $('#ModalDeshabilitar').modal('show');
+        $('#ModalDeshabilitarEmpleado').modal('show');
         document.querySelector('#NombreEquipoDeshabilitar').innerText = Nombre;
         $('#idEquipoDeshabilitar').val(id);
     });

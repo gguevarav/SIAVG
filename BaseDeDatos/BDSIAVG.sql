@@ -74,11 +74,13 @@ CREATE TABLE Tamanio(
 CREATE TABLE Averia(
     idAveria                INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
     UbicacionAveria         VARCHAR(100)        NOT NULL,
+    FechaReporteAveria      TIMESTAMP		NOT NULL,
     ImagenAveria            VARCHAR(100)        NOT NULL,
     idPrioridad             TINYINT             NOT NULL,
     idTrazabilidad          TINYINT             NOT NULL,
     idUrgencia              TINYINT             NOT NULL,
     idTamanio               TINYINT             NOT NULL,
+	idUsuario				INTEGER				NOT NULL,
     INDEX (idPrioridad),
     FOREIGN KEY (idPrioridad)
             REFERENCES Prioridad(idPrioridad)
@@ -97,6 +99,11 @@ CREATE TABLE Averia(
     INDEX (idTamanio),
     FOREIGN KEY (idTamanio)
             REFERENCES Tamanio(idTamanio)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
+    INDEX (idUsuario),
+    FOREIGN KEY (idUsuario)
+            REFERENCES Usuario(idUsuario)
             ON DELETE CASCADE
             ON UPDATE NO ACTION
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;

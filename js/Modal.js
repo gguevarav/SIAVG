@@ -125,7 +125,7 @@ $(document).ready(function(){
     });
  });
  
- // Habilitacion de Material
+ // Habilitacion de Equipo
  $(document).ready(function(){
     $(document).on('click', '.HabilitarEquipo', function(){
         var id=$(this).val();
@@ -135,6 +135,20 @@ $(document).ready(function(){
         $('#ModalHabilitar').modal('show');
         document.querySelector('#NombreEquipoHabilitar').innerText = Nombre;
         $('#idEquipoHabilitar').val(id);
+    });
+ });
+ 
+ // Cancelación de Avería
+ $(document).ready(function(){
+    $(document).on('click', '.CancelarAveria', function(){
+        var id=$(this).val();
+        var Nombres=$('#NombreUsuario'+id).text();
+        var Apellidos=$('#ApellidoUsuario'+id).text();
+        var Usuario=$('#idPersonaEliminar'+id).text();
+
+        $('#ModalCancelarAveria').modal('show');
+        //document.querySelector('#NombresApellidos').innerText = Nombres + " " + Apellidos;
+        $('#idAEliminar').val(id);
     });
  });
  

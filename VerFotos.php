@@ -1,8 +1,8 @@
 <!--
     Sistema de Información de Averías Viales de Guatemala
-    Registro de Materiales
-    Jueves, 06 de Septiembre del 2018
-    16:14 PM
+    Visor de Fotografías
+    Viernes, 21 de Septiembre del 2018
+    03:23 AM
     f-Society
     -
     UMG - Morales Izabal
@@ -135,7 +135,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-6">
-                                <h1 class="text-center">Registro de Persona</h1>
+                                <h1 class="text-center">Fotografías</h1>
                             </div>
                             <!-- Contenedor del ícono del Usuario -->
                             <div class="col-xs-6 Icon">
@@ -147,146 +147,52 @@
                         <!-- Nombre Persona -->
                         <div class="form-group">
                             <form name="RegistroPersona" action="RegistroPersona.php" method="post">
-                                <div class="row">
-                                    <div class="col-xs-10 col-xs-offset-1">
-                                        <div class="input-group input-group-lg">
-                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-edit"></i></span>
-                                            <input type="text" class="form-control" name="NombrePersona" placeholder="Nombre" id="NombrePersona" aria-describedby="sizing-addon1" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <!-- Apellido Persona-->
-                                <div class="row">
-                                    <div class="col-xs-10 col-xs-offset-1">
-                                        <div class="input-group input-group-lg">
-                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-edit"></i></span>
-                                            <input type="text" class="form-control" name="ApellidoPersona" placeholder="Apellido" id="ApellidoPersona" aria-describedby="sizing-addon1" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <!-- Direccion Persona -->
-                                <div class="row">
-                                    <div class="col-xs-10 col-xs-offset-1">
-                                        <div class="input-group input-group-lg">
-                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-ok"></i></span>
-                                            <input type="text" class="form-control" name="DireccionPersona" placeholder="Direccion" id="DireccionPersona" aria-describedby="sizing-addon1">
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <!-- Telefono Persona -->
-                                <div class="row">
-                                    <div class="col-xs-4 col-xs-offset-1">
-                                        <div class="input-group input-group-lg">
-                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-ok"></i></span>
-                                            <input type="text" class="form-control" name="TelefonoPersona" placeholder="Telefono" id="TelefonoPersona" aria-describedby="sizing-addon1">
-                                        </div>
-                                    </div>
-                                    <!-- Id Empleado -->
-                                    <div class="row">
-                                        <div class="col-xs-5 col-xs-offset">
-                                            <div class="input-group input-group-lg">
-                                                <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
-                                                <select class="form-control" name="NombreTipoEmpleado" id="NombreTipoEmpleado">
-                                                    <option value="" disabled selected>Tipo de Empleado</option>
-                                                    <!-- Acá mostraremos los puestos que existen en la base de datos -->
-                                                    <?php
-                                                    $TipoEmpleado = "SELECT * FROM TipoEmpleado;";
-                                                    // Hacemos la consulta
-                                                    $resultado = $mysqli->query($TipoEmpleado);
-                                                    while ($row = mysqli_fetch_array($resultado)) {
-                                                        ?>
-                                                        <option value="<?php echo $row['idTipoEmpleado']; ?>"><?php echo $row['NombreTipoEmpleado'] ?></option>
+                                <?php
+                                if (isset($_POST['VerFotos'])) {
+                                    $directory = $_POST['Path'];
+                                    $dirint = dir($directory);
+                                    while (($archivo = $dirint->read()) !== false) {
+                                        if (preg_match('/gif/', $archivo) || preg_match('/jpg/', $archivo) || preg_match('/png/', $archivo)) {
+                                            ?>
+                                            <div class="row">
+                                                <div class="col-xs-10 col-xs-offset-1">
+                                                    <div class="input-group input-group-lg">
                                                         <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </br>
-                                    <!-- Resgistrar -->
-                                    <div class="row">
-                                        <div class="col-xs-6 col-xs-offset-1">
-                                            <div class="input-group input-group-lg">
-                                                <div class="btn-group">
-                                                    <input type="submit" name="RegistrarPersona" class="btn btn-primary" value="Registrar">
+                                                        echo '<img src="' . $directory . "/" . $archivo . '"class="img-thumbnail">';
+                                                        ?>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    </form>
-                                </div>
+                                            <br>
+                                            <?php
+                                        }
+                                    }
+                                    $dirint->close();
+                                }
+                                ?>
+                                <br>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <?php
-                // Código que recibe la información para registrar un producto
-                if (isset($_POST['RegistrarPersona'])) {
-                    // Guardamos la información en variables
-                    $NombrePersona = $_POST['NombrePersona'];
-                    $ApellidoPersona = $_POST['ApellidoPersona'];
-                    $DireccionPersona = $_POST['DireccionPersona'];
-                    $TelefonoPersona = $_POST['TelefonoPersona'];
-                    $NombreTipoEmpleado = $_POST['NombreTipoEmpleado'];
-                    ?>
-
-                    <?php
-                    // Preparamos la consulta
-                    $query = "INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona, TelefonoPersona, idTipoEmpleado)
-                                                VALUES('" . $NombrePersona . "', '" . $ApellidoPersona . "', '" . $DireccionPersona . "', '" . $TelefonoPersona . "', " . $NombreTipoEmpleado . ")";
-                    // Ejecutamos la consulta
-                    if (!$resultado = $mysqli->query($query)) {
-                        echo "Error: La ejecución de la consulta falló debido a: \n";
-                        echo "Query: " . $query . "\n";
-                        echo "Errno: " . $mysqli->errno . "\n";
-                        echo "Error: " . $mysqli->error . "\n";
-                        exit;
-                    } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Persona registrada</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroPersona.php\">";
-                    }
-                }
-                // Termina código para agregar una nueva marca
-                // Código que recibe la información para agregar una nueva linea
-                ?>
-                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-                <script src="js/jquery-1.11.3.min.js"></script>
-                <!-- Include all compiled plugins (below), or include individual files as needed --> 
-                <script src="js/bootstrap.js"></script>
-                <!-- Pie de página, se utilizará el mismo para todos. -->
-                <!-- Incluimos el script que nos dará el nombre de la persona para mostrarlo en el modal -->
-                <script src="js/Modal.js"></script>
-                <footer>
-                    <hr>
-                    <div class="row">
-                        <div class="text-center col-md-6 col-md-offset-3">
-                            <h4>Sistema de Información de Averías Viales de Guatemala</h4>
-                            <p>Copyright &copy; 2018 &middot; All Rights Reserved &middot; <a href="https://www.umg.edu.gt/" >f-Society</a></p>
-                        </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+            <script src="js/jquery-1.11.3.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed --> 
+            <script src="js/bootstrap.js"></script>
+            <!-- Pie de página, se utilizará el mismo para todos. -->
+            <!-- Incluimos el script que nos dará el nombre de la persona para mostrarlo en el modal -->
+            <script src="js/Modal.js"></script>
+            <footer>
+                <hr>
+                <div class="row">
+                    <div class="text-center col-md-6 col-md-offset-3">
+                        <h4>Sistema de Información de Averías Viales de Guatemala</h4>
+                        <p>Copyright &copy; 2018 &middot; All Rights Reserved &middot; <a href="https://www.umg.edu.gt/" >f-Society</a></p>
                     </div>
-                    <hr>
-                </footer> 
+                </div>
+                <hr>
+            </footer> 
         </body>
         <?php
         // De lo contrario lo redirigimos al inicio de sesión

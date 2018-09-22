@@ -82,7 +82,7 @@
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Personas<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroPersona.php">Crear Persona</li>
+                                        <li><a href="RegistroPersona.php">Crear Persona</a></li>
                                         <li><a href="Persona.php">Ver Personas</a></li>
                                     </ul>
                                 </li>
@@ -95,8 +95,21 @@
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearUsuario.php">Crear usuario</li>
+                                        <li><a href="CrearUsuario.php">Crear usuario</a></li>
                                         <li><a href="Usuario.php">Ver usuarios</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
+                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -179,7 +192,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
-                                            <div clss="btn-group">
+                                            <div class="btn-group">
                                                 <input type="submit" name="RegistrarEquipo" class="btn btn-primary" value="Registrar">
                                             </div>
                                         </div>
@@ -202,18 +215,19 @@
                             <h1 class="modal-title" id="myModalLabel">Registrar nueva unidad de medida</h1>
 
                         </div>
-                        <div class="modal-body">
-                            <p class="lead">Ingrese los datos</p>
-                            <form method="post" id="myForm">
+                        <form method="post" id="myForm">
+                            <div class="modal-body">
+                                <p class="lead">Ingrese los datos</p>
+
                                 <div class="form-group">
                                     <label for="email">Nombre de la unidad de medida</label>
                                     <input type="text" name="NombreUnidad" id="NombreUnidad" class="form-control" placeholder="Nombre" value="" required/>
                                 </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="AgregarUnidad" class="btn btn-success" value="Registrar unidad de medida">
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <input type="submit" name="AgregarUnidad" class="btn btn-success" value="Registrar unidad de medida">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -277,22 +291,22 @@
                                 </div>
                             </form>
                         </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroEquipo.php\">";
+                        <?php
+                        // Recargamos la página
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroEquipo.php\">";
+                    }
+                }
             }
-        }
-    }
-    // Código que recibe la información para agregar nueva marca
-    if (isset($_POST['AgregarMarca'])) {
-        // Guardamos la información en variables
-        $NombreMarca = $_POST['NombreMarca'];
-        //Primero revisamos que no exista la marca ya en la base de datos
-        $ConsultaExisteMarca = "SELECT NombreMarca FROM marca WHERE NombreMarca='" . $NombreMarca . "';";
-        $ResultadoExisteMarca = $mysqli->query($ConsultaExisteMarca);
-        $row = mysqli_fetch_array($ResultadoExisteMarca);
-        if ($row['NombreMarca'] != null) {
-            ?>
+            // Código que recibe la información para agregar nueva marca
+            if (isset($_POST['AgregarMarca'])) {
+                // Guardamos la información en variables
+                $NombreMarca = $_POST['NombreMarca'];
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteMarca = "SELECT NombreMarca FROM marca WHERE NombreMarca='" . $NombreMarca . "';";
+                $ResultadoExisteMarca = $mysqli->query($ConsultaExisteMarca);
+                $row = mysqli_fetch_array($ResultadoExisteMarca);
+                if ($row['NombreMarca'] != null) {
+                    ?>
                     <div class="form-group">
                         <form name="Alerta">
                             <div class="container">
@@ -308,20 +322,20 @@
                             </div>
                         </form>
                     </div>
-            <?php
-        } else {
-            // Preparamos la consulta
-            $query = "INSERT INTO marca(NombreMarca)
+                    <?php
+                } else {
+                    // Preparamos la consulta
+                    $query = "INSERT INTO marca(NombreMarca)
                                                               VALUES('" . $NombreMarca . "');";
-            // Ejecutamos la consulta
-            if (!$resultado = $mysqli->query($query)) {
-                echo "Error: La ejecución de la consulta falló debido a: \n";
-                echo "Query: " . $query . "\n";
-                echo "Errno: " . $mysqli->errno . "\n";
-                echo "Error: " . $mysqli->error . "\n";
-                exit;
-            } else {
-                ?>
+                    // Ejecutamos la consulta
+                    if (!$resultado = $mysqli->query($query)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $query . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        exit;
+                    } else {
+                        ?>
                         <div class="form-group">
                             <form name="Alerta">
                                 <div class="container">
@@ -337,23 +351,23 @@
                                 </div>
                             </form>
                         </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroProducto.php\">";
+                        <?php
+                        // Recargamos la página
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroProducto.php\">";
+                    }
+                }
             }
-        }
-    }
-    // Termina código para agregar una nueva marca
-    // Código que recibe la información para agregar una nueva linea
-    if (isset($_POST['AgregarLinea'])) {
-        // Guardamos la información en variables
-        $NombreLinea = $_POST['NombreLinea'];
-        //Primero revisamos que no exista la marca ya en la base de datos
-        $ConsultaExisteLinea = "SELECT NombreLineaProducto FROM lineaproducto WHERE NombreLineaProducto='" . $NombreLinea . "';";
-        $ResultadoExisteLinea = $mysqli->query($ConsultaExisteLinea);
-        $row = mysqli_fetch_array($ResultadoExisteLinea);
-        if ($row['NombreLineaProducto'] != null) {
-            ?>
+            // Termina código para agregar una nueva marca
+            // Código que recibe la información para agregar una nueva linea
+            if (isset($_POST['AgregarLinea'])) {
+                // Guardamos la información en variables
+                $NombreLinea = $_POST['NombreLinea'];
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteLinea = "SELECT NombreLineaProducto FROM lineaproducto WHERE NombreLineaProducto='" . $NombreLinea . "';";
+                $ResultadoExisteLinea = $mysqli->query($ConsultaExisteLinea);
+                $row = mysqli_fetch_array($ResultadoExisteLinea);
+                if ($row['NombreLineaProducto'] != null) {
+                    ?>
                     <div class="form-group">
                         <form name="Alerta">
                             <div class="container">
@@ -369,20 +383,20 @@
                             </div>
                         </form>
                     </div>
-            <?php
-        } else {
-            // Preparamos la consulta
-            $query = "INSERT INTO lineaproducto(NombreLineaProducto)
+                    <?php
+                } else {
+                    // Preparamos la consulta
+                    $query = "INSERT INTO lineaproducto(NombreLineaProducto)
                                                               VALUES('" . $NombreLinea . "');";
-            // Ejecutamos la consulta
-            if (!$resultado = $mysqli->query($query)) {
-                echo "Error: La ejecución de la consulta falló debido a: \n";
-                echo "Query: " . $query . "\n";
-                echo "Errno: " . $mysqli->errno . "\n";
-                echo "Error: " . $mysqli->error . "\n";
-                exit;
-            } else {
-                ?>
+                    // Ejecutamos la consulta
+                    if (!$resultado = $mysqli->query($query)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $query . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        exit;
+                    } else {
+                        ?>
                         <div class="form-group">
                             <form name="Alerta">
                                 <div class="container">
@@ -398,23 +412,23 @@
                                 </div>
                             </form>
                         </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroProducto.php\">";
+                        <?php
+                        // Recargamos la página
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroProducto.php\">";
+                    }
+                }
             }
-        }
-    }
-    // Termina código para agregar la línea
-    // Código que recibe la información para agregar una nueva unidad
-    if (isset($_POST['AgregarUnidad'])) {
-        // Guardamos la información en variables
-        $NombreUnidad = $_POST['NombreUnidad'];
-        //Primero revisamos que no exista la marca ya en la base de datos
-        $ConsultaExisteUnidad = "SELECT NombreUnidadMedida FROM unidadmedida WHERE NombreUnidadMedida='" . $NombreUnidad . "';";
-        $ResultadoExisteUnidad = $mysqli->query($ConsultaExisteUnidad);
-        $row = mysqli_fetch_array($ResultadoExisteUnidad);
-        if ($row['NombreUnidadMedida'] != null) {
-            ?>
+            // Termina código para agregar la línea
+            // Código que recibe la información para agregar una nueva unidad
+            if (isset($_POST['AgregarUnidad'])) {
+                // Guardamos la información en variables
+                $NombreUnidad = $_POST['NombreUnidad'];
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteUnidad = "SELECT NombreUnidadMedida FROM unidadmedida WHERE NombreUnidadMedida='" . $NombreUnidad . "';";
+                $ResultadoExisteUnidad = $mysqli->query($ConsultaExisteUnidad);
+                $row = mysqli_fetch_array($ResultadoExisteUnidad);
+                if ($row['NombreUnidadMedida'] != null) {
+                    ?>
                     <div class="form-group">
                         <form name="Alerta">
                             <div class="container">
@@ -430,20 +444,20 @@
                             </div>
                         </form>
                     </div>
-            <?php
-        } else {
-            // Preparamos la consulta
-            $query = "INSERT INTO unidadmedida(NombreUnidadMedida)
+                    <?php
+                } else {
+                    // Preparamos la consulta
+                    $query = "INSERT INTO unidadmedida(NombreUnidadMedida)
                                                               VALUES('" . $NombreUnidad . "');";
-            // Ejecutamos la consulta
-            if (!$resultado = $mysqli->query($query)) {
-                echo "Error: La ejecución de la consulta falló debido a: \n";
-                echo "Query: " . $query . "\n";
-                echo "Errno: " . $mysqli->errno . "\n";
-                echo "Error: " . $mysqli->error . "\n";
-                exit;
-            } else {
-                ?>
+                    // Ejecutamos la consulta
+                    if (!$resultado = $mysqli->query($query)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $query . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        exit;
+                    } else {
+                        ?>
                         <div class="form-group">
                             <form name="Alerta">
                                 <div class="container">
@@ -459,14 +473,14 @@
                                 </div>
                             </form>
                         </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroEquipo.php\">";
+                        <?php
+                        // Recargamos la página
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroEquipo.php\">";
+                    }
+                }
             }
-        }
-    }
-    // Termina código para agregar una nueva unidad
-    ?>
+            // Termina código para agregar una nueva unidad
+            ?>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
             <script src="js/jquery-1.11.3.min.js"></script>
             <!-- Include all compiled plugins (below), or include individual files as needed --> 
@@ -485,12 +499,12 @@
                 <hr>
             </footer> 
         </body>
-    <?php
-    // De lo contrario lo redirigimos al inicio de sesión
-} else {
-    echo "usuario no valido";
-    header("location:login.php");
-}
-?>
+        <?php
+        // De lo contrario lo redirigimos al inicio de sesión
+    } else {
+        echo "usuario no valido";
+        header("location:login.php");
+    }
+    ?>
 </html>
 

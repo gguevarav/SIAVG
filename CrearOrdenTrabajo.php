@@ -149,7 +149,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-5">
-                                    <h1 class="text-center">Mis reportes</h1>
+                                    <h1 class="text-center">Reportes en cola</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
                                 <div class="col-xs-5 Icon">
@@ -180,7 +180,7 @@
                                                 <th>Urgencia</th>
                                                 <th>Tamaño</th>
                                                 <th>Estado</th>
-                                                <th>Cancelar</th>
+                                                <th>Generar OT</th>
                                             </tr>
                                         </thead>
                                         <!-- Cuerpo de la tabla -->
@@ -246,21 +246,27 @@
                                                         if ($row['idTrazabilidad'] == 1) {
                                                             ?>
                                                             <td>
-                                                                <!-- Deshabilitación -->
+                                                                <!-- GenerarOT -->
                                                                 <div>
                                                                     <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-warning CancelarAveria"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                        <form method="post" action="GenerarOT.php">
+                                                                            <input type="hidden" name="idAveria" value="<?php echo $row['idAveria']; ?>" />
+                                                                            <input type="submit" name="GenerarOT" class="btn btn-success GenerarOT" value="+">
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <?php
-                                                        } else if ($row['idTrazabilidad'] == 1) {
+                                                        } else {
                                                             ?>
                                                             <td>
-                                                                <!-- Habilitación -->
+                                                                <!-- GenerarOT -->
                                                                 <div>
                                                                     <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success HabilitarAveria"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-check"></span></button>
+                                                                        <form method="post" action="GenerarOT.php">
+                                                                            <input type="hidden" name="idAveria" value="<?php echo $row['idAveria']; ?>" />
+                                                                            <input type="submit" name="GenerarOT" class="btn btn-success" disabled="true" value="+">
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </td>

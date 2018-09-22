@@ -102,6 +102,19 @@
                                 <?php
                             }
                             ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
+                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">

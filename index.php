@@ -34,91 +34,6 @@ UMG - Morales Izabal
         // Guardamos el nombre del usuario en una variable
         $NombreUsuario = $_SESSION["NombreUsuario"];
         $idUsuario2 = $_SESSION["idUsuario"];
-
-        $sql1 = 'SELECT idProducto, SUM(CantidadSalida) AS Suma FROM registrosalida GROUP BY idProducto ORDER BY Suma DESC;';
-        $sql2 = 'SELECT idProducto, SUM(CantidadEntrada) AS Suma FROM registroentrada GROUP BY idProducto ORDER BY Suma DESC;';
-        $sql3 = 'SELECT idProducto, SUM(CantidadInventario) AS Suma FROM inventario GROUP BY idProducto ORDER BY Suma DESC';
-        // Guardado
-        /*
-          $sql4 = 'SELECT producto.NombreProducto, SUM(inventario.CantidadInventario)
-          FROM producto LEFT JOIN inventario ON producto.idProducto = inventario.idProducto
-          GROUP BY producto.idProducto;'; */
-
-        // Primer gráfica
-        $NombreTop10_Salidas;
-        $Top10_Salidas;
-        // Hacemos la consulta para mostrar las cantidades de Entradas
-        $resultado1 = $mysqli->query($sql1);
-        $Contador = 0;
-        // Llenamos la matriz para que pueda mostrar aunque no tenga información completa
-        for ($Contador1 = 0; $Contador1 < 5; $Contador1++) {
-            $NombreTop10_Salidas[$Contador1] = " ";
-            $Top10_Salidas[$Contador1] = 0;
-        }
-        // Si el objeto no está vacio entonces guardamos la información en la matriz
-        while ($row1 = mysqli_fetch_array($resultado1)) {
-            $VerNombreProducto = "SELECT NombreProducto FROM producto WHERE idProducto=" . $row1['idProducto'] . ";";
-            // Hacemos la consulta
-            $ResultadoVerProducto = $mysqli->query($VerNombreProducto);
-            $FilaResultado = $ResultadoVerProducto->fetch_assoc();
-            $NombreTop10_Salidas[$Contador] = $FilaResultado['NombreProducto'];
-            $Top10_Salidas[$Contador] = $row1['Suma'];
-            // Aumentamos al contador
-            $Contador++;
-            if ($Contador == 6) {
-                break;
-            }
-        }
-        // Segunda Gráfica
-        $NombreTop10_Entradas;
-        $Top10_Entradas;
-        // Hacemos la consulta para mostrar las cantidades de Entradas
-        $resultado2 = $mysqli->query($sql2);
-        $Contador = 0;
-        // Llenamos la matriz para que pueda mostrar aunque no tenga información completa
-        for ($Contador2 = 0; $Contador2 < 5; $Contador2++) {
-            $NombreTop10_Entradas[$Contador2] = " ";
-            $Top10_Entradas[$Contador2] = 0;
-        }
-        // Si el objeto no está vacio entonces guardamos la información en la matriz
-        while ($row2 = mysqli_fetch_array($resultado2)) {
-            $VerNombreProducto = "SELECT NombreProducto FROM producto WHERE idProducto=" . $row2['idProducto'] . ";";
-            // Hacemos la consulta
-            $ResultadoVerProducto = $mysqli->query($VerNombreProducto);
-            $FilaResultado = $ResultadoVerProducto->fetch_assoc();
-            $NombreTop10_Entradas[$Contador] = $FilaResultado['NombreProducto'];
-            $Top10_Entradas[$Contador] = $row2['Suma'];
-            // Aumentamos al contador
-            $Contador++;
-            if ($Contador == 6) {
-                break;
-            }
-        }
-        // Guardamos las cantidades en variables (5)
-        $NombreTop5_1;
-        $Top5_1;
-        // Hacemos la consulta para mostrar las cantidades de Entradas
-        $resultado3 = $mysqli->query($sql3);
-        $Contador = 0;
-        // Llenamos la matriz para que pueda mostrar aunque no tenga información completa
-        for ($Contador3 = 0; $Contador3 < 5; $Contador3++) {
-            $NombreTop5_1[$Contador3] = " ";
-            $Top5_1[$Contador3] = 0;
-        }
-        // Si el objeto no está vacio entonces guardamos la información en la matriz
-        while ($row3 = mysqli_fetch_array($resultado3)) {
-            $VerNombreProducto = "SELECT NombreProducto FROM producto WHERE idProducto=" . $row3['idProducto'] . ";";
-            // Hacemos la consulta
-            $ResultadoVerProducto = $mysqli->query($VerNombreProducto);
-            $FilaResultado = $ResultadoVerProducto->fetch_assoc();
-            $NombreTop5_1[$Contador] = $FilaResultado['NombreProducto'];
-            $Top5_1[$Contador] = $row3['Suma'];
-            // Aumentamos al contador
-            $Contador++;
-            if ($Contador == 6) {
-                break;
-            }
-        }
         ?>
         <body>
             <nav class="navbar navbar-default navbar-fixed-top">
@@ -166,8 +81,21 @@ UMG - Morales Izabal
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearUsuario.php">Crear usuario</li>
+                                        <li><a href="CrearUsuario.php">Crear usuario</a></li>
                                         <li><a href="Usuario.php">Ver usuarios</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
+                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -204,31 +132,6 @@ UMG - Morales Izabal
             <div class="container-fluid">
                 <div class="dashboard">
                     <div class="row">
-                        <div class="text-center">
-                            <div class="col-xs-12 col-md-5">
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12"><canvas id="ContenedorChart1"></canvas></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12"><canvas id="ContenedorChart2"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <div class="col-md-2"><img src="imagenes/LogoPrincipal.png" class="img-responsive center-block"></div>
-                        </div>
-                        <div class="text-center">
-                            <div class="col-xs-12 col-md-5">
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12"><canvas id="ContenedorChart3" height="40vh" width="40vw"></canvas></div>
-                                </div>
-                                <!--
-                                <div class="row">
-                                        <div class="col-xs-12 col-md-12"><canvas id="" height="40vh" width="80vw"></canvas></div>
-                                </div>
-                                -->
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!-- Pie de página, se utilizará el mismo para todos. -->
@@ -248,159 +151,6 @@ UMG - Morales Izabal
             <!-- Include all compiled plugins (below), or include individual files as needed --> 
             <script src="js/bootstrap.js"></script>
             <script src="jquery/jquery.js"></script>
-            <!-- Importo el archivo Javascript de Highcharts directamente desde su servidor -->
-            <script src="Chart.js/Chart.min.js"></script>
-            <script>
-                // Primer gráfica
-                var ctx1 = document.getElementById("ContenedorChart1").getContext('2d');
-                var myChart1 = new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: [<?php echo "'" . $NombreTop10_Entradas[0] . "'"; ?>, <?php echo "'" . $NombreTop10_Entradas[1] . "'"; ?>,
-    <?php echo "'" . $NombreTop10_Entradas[2] . "'"; ?>, <?php echo "'" . $NombreTop10_Entradas[3] . "'"; ?>,
-    <?php echo "'" . $NombreTop10_Entradas[4] . "'"; ?>],
-                        datasets: [{
-                                label: 'Entradas',
-                                data: [<?php echo $Top10_Entradas[0]; ?>, <?php echo $Top10_Entradas[1]; ?>,
-    <?php echo $Top10_Entradas[2]; ?>, <?php echo $Top10_Entradas[3]; ?>,
-    <?php echo $Top10_Entradas[4]; ?>],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                    ticks: {
-                                    }
-                                }]
-                        },
-                        title: {
-                            display: true,
-                            text: 'Top 5 entradas'
-                        }
-                    }
-                });
-                // Segunda gráfica
-                var ctx2 = document.getElementById("ContenedorChart2").getContext('2d');
-                var myChart2 = new Chart(ctx2, {
-                    type: 'line',
-                    data: {
-                        labels: [<?php echo "'" . $NombreTop10_Salidas[0] . "'"; ?>, <?php echo "'" . $NombreTop10_Salidas[1] . "'"; ?>,
-    <?php echo "'" . $NombreTop10_Salidas[2] . "'"; ?>, <?php echo "'" . $NombreTop10_Salidas[3] . "'"; ?>,
-    <?php echo "'" . $NombreTop10_Salidas[4] . "'"; ?>],
-                        datasets: [{
-                                label: 'Salidas',
-                                data: [<?php echo $Top10_Salidas[0]; ?>, <?php echo $Top10_Salidas[1]; ?>,
-    <?php echo $Top10_Salidas[2]; ?>, <?php echo $Top10_Salidas[3]; ?>,
-    <?php echo $Top10_Salidas[4]; ?>],
-                                backgroundColor: ['rgba(54, 162, 235, 0.2)'],
-                                borderColor: ['rgba(54, 162, 235, 1)'],
-                                borderWidth: 1
-                            }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                    ticks: {
-                                    }
-                                }]
-                        },
-                        title: {
-                            display: true,
-                            text: 'Top 5 Salidas'
-                        }
-                    }
-                });
-                // Tercera gráfica
-                var ctx3 = document.getElementById("ContenedorChart3").getContext('2d');
-                var myChart3 = new Chart(ctx3, {
-                    type: 'doughnut',
-                    data: {
-                        labels: [<?php echo "'" . $NombreTop5_1[0] . "'"; ?>, <?php echo "'" . $NombreTop5_1[1] . "'"; ?>,
-    <?php echo "'" . $NombreTop5_1[2] . "'"; ?>, <?php echo "'" . $NombreTop5_1[3] . "'"; ?>,
-    <?php echo "'" . $NombreTop5_1[4] . "'"; ?>],
-                        datasets: [{
-                                data: [<?php echo $Top5_1[0]; ?>, <?php echo $Top5_1[1]; ?>,
-    <?php echo $Top5_1[2]; ?>, <?php echo $Top5_1[3]; ?>,
-    <?php echo $Top5_1[4]; ?>],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(255, 159, 64, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            text: 'Top 5 de existencia de productos'
-                        }
-                    }
-                });
-                // Cuarta gráfica
-                var ctx4 = document.getElementById("ContenedorChart4").getContext('2d');
-                var myChart4 = new Chart(ctx4, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                        datasets: [{
-                                data: [12, 19, 3, 5, 2, 3],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
-                        },
-                        title: {
-                            display: true,
-                            text: 'Otros'
-                        }
-                    }
-                });
-            </script>
         </body>
         <?php
         // De lo contrario lo redirigimos al inicio de sesión

@@ -125,6 +125,19 @@
                                 <?php
                             }
                             ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Reportar una Avería</a></li>
+                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
@@ -305,18 +318,18 @@
                             <h1 class="modal-title" id="myModalLabel">Registrar nueva prioridad</h1>
 
                         </div>
-                        <div class="modal-body">
-                            <p class="lead">Ingrese los datos</p>
-                            <form method="post" id="myForm">
+                        <form method="post" id="myForm">
+                            <div class="modal-body">
+                                <p class="lead">Ingrese los datos</p>
                                 <div class="form-group">
                                     <label for="email">Nombre de la prioridad</label>
                                     <input type="text" name="NombrePrioridad" id="NombrePrioridad" class="form-control" placeholder="Nombre" value="" required/>
                                 </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="AgregarPrioridad" class="btn btn-success" value="Registrar">
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <input type="submit" name="AgregarPrioridad" class="btn btn-success" value="Registrar">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -333,18 +346,18 @@
                             <h1 class="modal-title" id="myModalLabel">Registrar nueva trazabilidad</h1>
 
                         </div>
-                        <div class="modal-body">
-                            <p class="lead">Ingrese los datos</p>
-                            <form method="post" id="myForm">
+                        <form method="post" id="myForm">
+                            <div class="modal-body">
+                                <p class="lead">Ingrese los datos</p>
                                 <div class="form-group">
                                     <label for="email">Nombre de la Trazabilidad</label>
                                     <input type="text" name="NombreTrazabilidad" id="NombreTrazabilidad" class="form-control" placeholder="Nombre" value="" required/>
                                 </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="AgregarTrazabilidad" class="btn btn-success" value="Registrar">
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <input type="submit" name="AgregarTrazabilidad" class="btn btn-success" value="Registrar">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -361,18 +374,18 @@
                             <h1 class="modal-title" id="myModalLabel">Registrar nueva urgencia</h1>
 
                         </div>
-                        <div class="modal-body">
-                            <p class="lead">Ingrese los datos</p>
-                            <form method="post" id="myForm">
+                        <form method="post" id="myForm">
+                            <div class="modal-body">
+                                <p class="lead">Ingrese los datos</p>
                                 <div class="form-group">
                                     <label for="email">Nombre de la urgencia</label>
                                     <input type="text" name="NombreUrgencia" id="NombreUrgencia" class="form-control" placeholder="Nombre" value="" required/>
                                 </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="AgregarUrgencia" class="btn btn-success" value="Registrar">
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <input type="submit" name="AgregarUrgencia" class="btn btn-success" value="Registrar">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -389,18 +402,18 @@
                             <h1 class="modal-title" id="myModalLabel">Registrar nueva tamanio</h1>
 
                         </div>
-                        <div class="modal-body">
-                            <p class="lead">Ingrese los datos</p>
-                            <form method="post" id="myForm">
+                        <form method="post" id="myForm">
+                            <div class="modal-body">
+                                <p class="lead">Ingrese los datos</p>
                                 <div class="form-group">
                                     <label for="email">Nombre de la tamanio</label>
                                     <input type="text" name="NombreTamanio" id="NombreTamanio" class="form-control" placeholder="Nombre" value="" required/>
                                 </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="AgregarTamanio" class="btn btn-success" value="Registrar">
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <input type="submit" name="AgregarTamanio" class="btn btn-success" value="Registrar">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -451,8 +464,8 @@
                 $Tamanio = $_POST['Tamanio'];
 
                 // Preparamos la consulta
-                $query = "INSERT INTO Averia(UbicacionAveria, ImagenAveria, idPrioridad, idTrazabilidad, idUrgencia, idTamanio)
-											VALUES('" . $Ubicacion . "', '" . $ImagenAveria . "', " . $Prioridad . ", 1, " . $Urgencia . ", " . $Tamanio . ")";
+                $query = "INSERT INTO Averia(UbicacionAveria, ImagenAveria, idPrioridad, idTrazabilidad, idUrgencia, idTamanio, idUsuario)
+											VALUES('" . $Ubicacion . "', '" . $ImagenAveria . "', " . $Prioridad . ", 1, " . $Urgencia . ", " . $Tamanio . ", ".$idUsuario2.")";
                 // Ejecutamos la consulta
                 if (!$resultado = $mysqli->query($query)) {
                     echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -536,23 +549,23 @@
                                 </div>
                             </form>
                         </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                        <?php
+                        // Recargamos la página
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                    }
+                }
             }
-        }
-    }
-    // Termina código para agregar una nueva Prioridad
-    // Código que recibe la información para agregar nueva Trazabilidad
-    if (isset($_POST['AgregarTrazabilidad'])) {
-        // Guardamos la información en variables
-        $NombreTrazabilidad = $_POST['NombreTrazabilidad'];
-        //Primero revisamos que no exista la marca ya en la base de datos
-        $ConsultaExisteTrazabilidad = "SELECT NombreTrazabilidad FROM Trazabilidad WHERE NombreTrazabilidad='" . $NombreTrazabilidad . "';";
-        $ResultadoExisteTrazabilidad = $mysqli->query($ConsultaExisteTrazabilidad);
-        $row = mysqli_fetch_array($ResultadoExisteTrazabilidad);
-        if ($row['NombreTrazabilidad'] != null) {
-            ?>
+            // Termina código para agregar una nueva Prioridad
+            // Código que recibe la información para agregar nueva Trazabilidad
+            if (isset($_POST['AgregarTrazabilidad'])) {
+                // Guardamos la información en variables
+                $NombreTrazabilidad = $_POST['NombreTrazabilidad'];
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteTrazabilidad = "SELECT NombreTrazabilidad FROM Trazabilidad WHERE NombreTrazabilidad='" . $NombreTrazabilidad . "';";
+                $ResultadoExisteTrazabilidad = $mysqli->query($ConsultaExisteTrazabilidad);
+                $row = mysqli_fetch_array($ResultadoExisteTrazabilidad);
+                if ($row['NombreTrazabilidad'] != null) {
+                    ?>
                     <div class="form-group">
                         <form name="Alerta">
                             <div class="container">
@@ -568,20 +581,20 @@
                             </div>
                         </form>
                     </div>
-            <?php
-        } else {
-            // Preparamos la consulta
-            $query = "INSERT INTO Trazabilidad(NombreTrazabilidad)
+                    <?php
+                } else {
+                    // Preparamos la consulta
+                    $query = "INSERT INTO Trazabilidad(NombreTrazabilidad)
                                                               VALUES('" . $NombreTrazabilidad . "');";
-            // Ejecutamos la consulta
-            if (!$resultado = $mysqli->query($query)) {
-                echo "Error: La ejecución de la consulta falló debido a: \n";
-                echo "Query: " . $query . "\n";
-                echo "Errno: " . $mysqli->errno . "\n";
-                echo "Error: " . $mysqli->error . "\n";
-                exit;
-            } else {
-                ?>
+                    // Ejecutamos la consulta
+                    if (!$resultado = $mysqli->query($query)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $query . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        exit;
+                    } else {
+                        ?>
                         <div class="form-group">
                             <form name="Alerta">
                                 <div class="container">
@@ -597,23 +610,23 @@
                                 </div>
                             </form>
                         </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                        <?php
+                        // Recargamos la página
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                    }
+                }
             }
-        }
-    }
-    // Termina código para agregar una nueva Prioridad 
-    // Código que recibe la información para agregar una nueva linea
-    if (isset($_POST['AgregarUrgencia'])) {
-        // Guardamos la información en variables
-        $NombreUrgencia = $_POST['NombreUrgencia'];
-        //Primero revisamos que no exista la marca ya en la base de datos
-        $ConsultaExisteUrgencia = "SELECT NombreUrgencia FROM Urgencia WHERE NombreUrgencia='" . $NombreUrgencia . "';";
-        $ResultadoExisteUrgencia = $mysqli->query($ConsultaExisteUrgencia);
-        $row = mysqli_fetch_array($ResultadoExisteUrgencia);
-        if ($row['NombreLineaProducto'] != null) {
-            ?>
+            // Termina código para agregar una nueva Prioridad 
+            // Código que recibe la información para agregar una nueva linea
+            if (isset($_POST['AgregarUrgencia'])) {
+                // Guardamos la información en variables
+                $NombreUrgencia = $_POST['NombreUrgencia'];
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteUrgencia = "SELECT NombreUrgencia FROM Urgencia WHERE NombreUrgencia='" . $NombreUrgencia . "';";
+                $ResultadoExisteUrgencia = $mysqli->query($ConsultaExisteUrgencia);
+                $row = mysqli_fetch_array($ResultadoExisteUrgencia);
+                if ($row['NombreLineaProducto'] != null) {
+                    ?>
                     <div class="form-group">
                         <form name="Alerta">
                             <div class="container">
@@ -629,20 +642,20 @@
                             </div>
                         </form>
                     </div>
-            <?php
-        } else {
-            // Preparamos la consulta
-            $query = "INSERT INTO Urgencia(NombreUrgencia)
+                    <?php
+                } else {
+                    // Preparamos la consulta
+                    $query = "INSERT INTO Urgencia(NombreUrgencia)
                                                               VALUES('" . $NombreUrgencia . "');";
-            // Ejecutamos la consulta
-            if (!$resultado = $mysqli->query($query)) {
-                echo "Error: La ejecución de la consulta falló debido a: \n";
-                echo "Query: " . $query . "\n";
-                echo "Errno: " . $mysqli->errno . "\n";
-                echo "Error: " . $mysqli->error . "\n";
-                exit;
-            } else {
-                ?>
+                    // Ejecutamos la consulta
+                    if (!$resultado = $mysqli->query($query)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $query . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        exit;
+                    } else {
+                        ?>
                         <div class="form-group">
                             <form name="Alerta">
                                 <div class="container">
@@ -658,23 +671,23 @@
                                 </div>
                             </form>
                         </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                        <?php
+                        // Recargamos la página
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                    }
+                }
             }
-        }
-    }
-    // Termina código para agregar la línea
-    // Código que recibe la información para agregar una nueva unidad
-    if (isset($_POST['AgregarTamanio'])) {
-        // Guardamos la información en variables
-        $NombreTamanio = $_POST['NombreTamanio'];
-        //Primero revisamos que no exista la marca ya en la base de datos
-        $ConsultaExisteTamanio = "SELECT NombreTamanio FROM Tamanio WHERE NombreTamanio='" . $NombreTamanio . "';";
-        $ResultadoExisteTamanio = $mysqli->query($ConsultaExisteTamanio);
-        $row = mysqli_fetch_array($ResultadoExisteTamanio);
-        if ($row['NombreUnidadMedida'] != null) {
-            ?>
+            // Termina código para agregar la línea
+            // Código que recibe la información para agregar una nueva unidad
+            if (isset($_POST['AgregarTamanio'])) {
+                // Guardamos la información en variables
+                $NombreTamanio = $_POST['NombreTamanio'];
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteTamanio = "SELECT NombreTamanio FROM Tamanio WHERE NombreTamanio='" . $NombreTamanio . "';";
+                $ResultadoExisteTamanio = $mysqli->query($ConsultaExisteTamanio);
+                $row = mysqli_fetch_array($ResultadoExisteTamanio);
+                if ($row['NombreUnidadMedida'] != null) {
+                    ?>
                     <div class="form-group">
                         <form name="Alerta">
                             <div class="container">
@@ -690,20 +703,20 @@
                             </div>
                         </form>
                     </div>
-            <?php
-        } else {
-            // Preparamos la consulta
-            $query = "INSERT INTO Tamanio(NombreTamanio)
+                    <?php
+                } else {
+                    // Preparamos la consulta
+                    $query = "INSERT INTO Tamanio(NombreTamanio)
                                                               VALUES('" . $NombreTamanio . "');";
-            // Ejecutamos la consulta
-            if (!$resultado = $mysqli->query($query)) {
-                echo "Error: La ejecución de la consulta falló debido a: \n";
-                echo "Query: " . $query . "\n";
-                echo "Errno: " . $mysqli->errno . "\n";
-                echo "Error: " . $mysqli->error . "\n";
-                exit;
-            } else {
-                ?>
+                    // Ejecutamos la consulta
+                    if (!$resultado = $mysqli->query($query)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $query . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        exit;
+                    } else {
+                        ?>
                         <div class="form-group">
                             <form name="Alerta">
                                 <div class="container">
@@ -719,14 +732,14 @@
                                 </div>
                             </form>
                         </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                        <?php
+                        // Recargamos la página
+                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                    }
+                }
             }
-        }
-    }
-    // Termina código para agregar una nueva unidad
-    ?>
+            // Termina código para agregar una nueva unidad
+            ?>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
             <script src="js/jquery-1.11.3.min.js"></script>
             <!-- Include all compiled plugins (below), or include individual files as needed --> 
@@ -804,12 +817,12 @@
                 <hr>
             </footer> 
         </body>
-    <?php
-    // De lo contrario lo redirigimos al inicio de sesión
-} else {
-    echo "usuario no valido";
-    header("location:login.php");
-}
-?>
+        <?php
+        // De lo contrario lo redirigimos al inicio de sesión
+    } else {
+        echo "usuario no valido";
+        header("location:login.php");
+    }
+    ?>
 </html>
 

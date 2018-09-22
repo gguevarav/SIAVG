@@ -82,7 +82,7 @@
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Personas<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroPersona.php">Crear Persona</li>
+                                        <li><a href="RegistroPersona.php">Crear Persona</a></li>
                                         <li><a href="Persona.php">Ver Personas</a></li>
                                     </ul>
                                 </li>
@@ -95,8 +95,21 @@
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearUsuario.php">Crear usuario</li>
+                                        <li><a href="CrearUsuario.php">Crear usuario</a></li>
                                         <li><a href="Usuario.php">Ver usuarios</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
+                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
                                     </ul>
                                 </li>
                                 <?php

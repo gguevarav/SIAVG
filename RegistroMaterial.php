@@ -82,7 +82,7 @@
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Personas<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroPersona.php">Crear Persona</li>
+                                        <li><a href="RegistroPersona.php">Crear Persona</a></li>
                                         <li><a href="Persona.php">Ver Personas</a></li>
                                     </ul>
                                 </li>
@@ -95,8 +95,21 @@
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearUsuario.php">Crear usuario</li>
+                                        <li><a href="CrearUsuario.php">Crear usuario</a></li>
                                         <li><a href="Usuario.php">Ver usuarios</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
+                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -208,7 +221,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
-                                            <div clss="btn-group">
+                                            <div class="btn-group">
                                                 <input type="submit" name="RegistrarMaterial" class="btn btn-primary" value="Registrar">
                                             </div>
                                         </div>
@@ -231,18 +244,18 @@
                             <h1 class="modal-title" id="myModalLabel">Registrar nueva unidad de medida</h1>
 
                         </div>
-                        <div class="modal-body">
-                            <p class="lead">Ingrese los datos</p>
-                            <form method="post" id="myForm">
+                        <form method="post" id="myForm">
+                            <div class="modal-body">
+                                <p class="lead">Ingrese los datos</p>
                                 <div class="form-group">
                                     <label for="email">Nombre de la unidad de medida</label>
                                     <input type="text" name="NombreUnidad" id="NombreUnidad" class="form-control" placeholder="Nombre" value="" required/>
                                 </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="AgregarUnidad" class="btn btn-success" value="Registrar unidad de medida">
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <input type="submit" name="AgregarUnidad" class="btn btn-success" value="Registrar unidad de medida">
+                            </div>
                         </form>
                     </div>
                 </div>

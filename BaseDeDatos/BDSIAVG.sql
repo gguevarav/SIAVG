@@ -37,7 +37,7 @@ CREATE TABLE Usuario(
     idUsuario               INTEGER             NOT NULL                PRIMARY KEY             AUTO_INCREMENT,
     NombreUsuario           VARCHAR(50)         NOT NULL,
     PasswordUsuario         VARCHAR(80)         NOT NULL,
-    IdPesona                INTEGER             NOT NULL,
+    IdPersona                INTEGER             NOT NULL,
     idRol                   TINYINT             NOT NULL,
     INDEX (IdPesona),
     FOREIGN KEY (IdPesona)

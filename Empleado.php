@@ -1,8 +1,8 @@
 <!--
     Sistema de Información de Averías Viales de Guatemala
-    Listado de Equipos
-    Miércoles, 06 de septiembre del 2018
-    20:15 PM
+    Listado de Empleados
+    Sábado, 22 de septiembre del 2018
+    2:20 AM
     f-Society
     -
     UMG - Morales Izabal
@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="imagenes/icono.ico">
-        <title>SIAVG</title>
+        <title>Sistema de Información de Averías Viales de Guatemala</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
@@ -80,10 +80,22 @@
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Personas<span class="caret"></span></a>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroPersona.php">Crear Persona</a></li>
-                                        <li><a href="#">Ver Personas</a></li>
+                                        <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="RegistroEmpleado.php">Crear empleado</a></li>
+                                        <li><a href="#">Listado de empleados</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -126,7 +138,6 @@
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
                                         <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
-                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
                                         <?php
                                     }
                                     ?>
@@ -149,26 +160,12 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-5">
-                                    <h1 class="text-center">Personas registradas</h1>
+                                    <h1 class="text-center">Empleados registrados</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
                                 <div class="col-xs-5 Icon">
                                     <!-- Icono de usuario -->
                                     <span class="glyphicon glyphicon-asterisk"></span>
-                                </div>
-                                <div class="form-group">
-                                    <!--<form name="Exportar" action="Material.php" method="post">
-                                        <div class="col-xs-1">
-                                            <div class="input-group input-group-lg">
-                                                    <a class="btn btn-success btn-lg" href="ReporteProductos.php" target="_blank"><span class="glyphicon glyphicon-print"></span></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-1">
-                                            <div class="input-group input-group-lg">
-                                                    <input type="submit" name="Exportar" class="btn btn-success" value="Exportar a excel">
-                                            </div>
-                                        </div>
-                                    </form>-->
                                 </div>
                             </div>
                             <br>
@@ -265,13 +262,13 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-            <?php
-        }
-        ?>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </tr>
-                                                    <?php
-                                                }
-                                                ?>
+                                                <?php
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -289,7 +286,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <center><h1 class="modal-title" id="myModalLabel">Deshabilitar empleado</h1></center>
                     </div>
-                    <form method="post" action="Persona.php" id="frmDeshabilitar">
+                    <form method="post" action="Empleado.php" id="frmDeshabilitar">
                         <div class="modal-body text-center">
                             <p class="lead">¿Está seguro que desea deshabilitar el siguiente empleado?</p>
                             <div class="form-group input-group">
@@ -315,7 +312,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <center><h1 class="modal-title" id="myModalLabel">Habilitar empleado</h1></center>
                     </div>
-                    <form method="post" action="Persona.php" id="myForm">
+                    <form method="post" action="Empleado.php" id="myForm">
                         <div class="modal-body text-center">
                             <p class="lead">¿Está seguro que desea habilitar la siguiente empleado?</p>
                             <div class="form-group input-group">
@@ -341,7 +338,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <center><h4 class="modal-title" id="myModalLabel">Editar empleado</h4></center>
                     </div>
-                    <form method="post" action="Persona.php" id="frmEdit">
+                    <form method="post" action="Empleado.php" id="frmEdit">
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="form-group input-group">
@@ -369,12 +366,12 @@
                                     <select class="form-control" name="NombreTipoEmpleado" id="NombreTipoEmpleado">
                                         <option value="" disabled selected>Tipo de Empleado</option>
                                         <!-- Acá mostraremos los puestos que existen en la base de datos -->
-    <?php
-    $VerUM = "SELECT * FROM TipoEmpleado;";
-    // Hacemos la consulta
-    $resultado = $mysqli->query($VerUM);
-    while ($row = mysqli_fetch_array($resultado)) {
-        ?>
+                                        <?php
+                                        $VerUM = "SELECT * FROM TipoEmpleado;";
+                                        // Hacemos la consulta
+                                        $resultado = $mysqli->query($VerUM);
+                                        while ($row = mysqli_fetch_array($resultado)) {
+                                            ?>
                                             <option value="<?php echo $row['idTipoEmpleado']; ?>"><?php echo $row['NombreTipoEmpleado'] ?></option>
                                             <?php
                                         }
@@ -392,22 +389,22 @@
             </div>
         </div>
         <!-- /.modal -->
-    <?php
-    // Código que recibe la información del formulario modal (Deshabilitar)
-    if (isset($_POST['DeshabilitarEquipo'])) {
-        // Guardamos el id en una variable
-        $idEquipo = $_POST['idEquipoDeshabilitar'];
-        // Preparamos la consulta
-        $query = "UPDATE Equipo SET EstadoEquipo = 'Deshabilitado' WHERE idEquipo=" . $idEquipo . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
+        <?php
+        // Código que recibe la información del formulario modal (Deshabilitar)
+        if (isset($_POST['DeshabilitarEquipo'])) {
+            // Guardamos el id en una variable
+            $idEquipo = $_POST['idEquipoDeshabilitar'];
+            // Preparamos la consulta
+            $query = "UPDATE Equipo SET EstadoEquipo = 'Deshabilitado' WHERE idEquipo=" . $idEquipo . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                ?>
                 <div class="form-group">
                     <form name="Alerta">
                         <div class="container">
@@ -423,26 +420,26 @@
                         </div>
                     </form>
                 </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
+                <?php
+                // Recargamos la página
+                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
+            }
         }
-    }
-    // Código que recibe la información del formulario modal (Habilitar)
-    if (isset($_POST['HabilitarEquipo'])) {
-        // Guardamos el id en una variable
-        $idEquipo = $_POST['idEquipoHabilitar'];
-        // Preparamos la consulta
-        $query = "UPDATE Equipo SET EstadoEquipo = 'Habilitado' WHERE idEquipo=" . $idEquipo . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
+        // Código que recibe la información del formulario modal (Habilitar)
+        if (isset($_POST['HabilitarEquipo'])) {
+            // Guardamos el id en una variable
+            $idEquipo = $_POST['idEquipoHabilitar'];
+            // Preparamos la consulta
+            $query = "UPDATE Equipo SET EstadoEquipo = 'Habilitado' WHERE idEquipo=" . $idEquipo . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                ?>
                 <div class="form-group">
                     <form name="Alerta">
                         <div class="container">
@@ -458,41 +455,41 @@
                         </div>
                     </form>
                 </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
+                <?php
+                // Recargamos la página
+                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Empleado.php\">";
+            }
         }
-    }
-    // Código que recibe la información del formulario modal (Editar)
-    if (isset($_POST['EditarEmpleado'])) {
-        // Guardamos la info en variables
-        $idPersona = $_POST['idEditar'];
-        $NombrePersona = $_POST['NombrePersona'];
-        $ApellidoPersona = $_POST['ApellidoPersona'];
-        $DireccionPersona = $_POST['DireccionPersona'];
-        $TelefonoPersona = $_POST['TelefonoPersona'];
-        $idTipoEmpleado = $_POST['NombreTipoEmpleado'];
+        // Código que recibe la información del formulario modal (Editar)
+        if (isset($_POST['EditarEmpleado'])) {
+            // Guardamos la info en variables
+            $idPersona = $_POST['idEditar'];
+            $NombrePersona = $_POST['NombrePersona'];
+            $ApellidoPersona = $_POST['ApellidoPersona'];
+            $DireccionPersona = $_POST['DireccionPersona'];
+            $TelefonoPersona = $_POST['TelefonoPersona'];
+            $idTipoEmpleado = $_POST['NombreTipoEmpleado'];
 
-        if ($idTipoEmpleado == "") {
-            $idTipoEmpleado = 1;
-        }
+            if ($idTipoEmpleado == "") {
+                $idTipoEmpleado = 1;
+            }
 
-        // Preparamos la consulta
-        $query = "UPDATE Persona SET NombrePersona = '" . $NombrePersona . "',
+            // Preparamos la consulta
+            $query = "UPDATE Persona SET NombrePersona = '" . $NombrePersona . "',
                                                 ApellidoPersona = '" . $ApellidoPersona . "',
                                                 DireccionPersona = '" . $DireccionPersona . "',
                                                 TelefonoPersona = '" . $TelefonoPersona . "',
                                                 idTipoEmpleado = " . $idTipoEmpleado . "
                                             WHERE idPersona=" . $idPersona . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                ?>
                 <div class="form-group">
                     <form name="Alerta">
                         <div class="container">
@@ -508,12 +505,12 @@
                         </div>
                     </form>
                 </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Persona.php\">";
+                <?php
+                // Recargamos la página
+                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Empleado.php\">";
+            }
         }
-    }
-    ?>
+        ?>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
         <script src="js/jquery-1.11.3.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed --> 

@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="imagenes/icono.ico">
-        <title>SIAVG</title>
+        <title>Sistema de Información de Averías Viales de Guatemala</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
@@ -80,10 +80,22 @@
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Personas<span class="caret"></span></a>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroPersona.php">Crear Persona</a></li>
-                                        <li><a href="#">Ver Personas</a></li>
+                                        <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+							<?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="RegistroEmpleado.php">Crear empleado</a></li>
+                                        <li><a href="Empleado.php">Listado de empleados</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -199,7 +211,7 @@
                                                         <td><span id="Correlativo<?php echo $Contador; ?>"><?php echo $Contador ?></span></td>
                                                         <td><span id="Codigo<?php echo $row['idAveria']; ?>"><?php echo $row['idAveria'] ?></span></td>
                                                         <td><span id="FechaReporteAveria<?php echo $row['idAveria']; ?>"><?php echo $row['FechaReporteAveria'] ?></span></td>
-                                                        <td><span id="UbicacionAveria<?php echo $row['idAveria']; ?>"><a href="https://maps.google.com/?ll=<?php echo $row['UbicacionAveria'] ?>&z=18&t=k" >Ir</a></span></td>
+                                                        <td><span id="UbicacionAveria<?php echo $row['idAveria']; ?>"><a href="https://maps.google.com/?q=<?php echo $row['UbicacionAveria'] ?>&z=18&t=k" target="_blank">Ver ubicación</a></span></td>
                                                         <td><span id="ImagenAveria<?php echo $row['idAveria']; ?>">
                                                                 <form method="post" action="VerFotos.php">
                                                                     <input type="hidden" name="Path" value="<?php echo $row['ImagenAveria'] ?>" />

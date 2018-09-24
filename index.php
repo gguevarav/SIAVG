@@ -79,6 +79,31 @@ UMG - Morales Izabal
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+							<?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="RegistroEmpleado.php">Crear empleado</a></li>
+                                        <li><a href="Empleado.php">Listado de empleados</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+							<?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearUsuario.php">Crear usuario</a></li>
@@ -94,7 +119,7 @@ UMG - Morales Izabal
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
+                                        <li><a href="ReporteAveria.php">Reportar una avería</a></li>
                                         <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
                                     </ul>
                                 </li>
@@ -139,8 +164,8 @@ UMG - Morales Izabal
                     <hr>
                     <div class="row">
                         <div class="text-center col-md-6 col-md-offset-3">
-                            <h4>Sistema de gestión de inventario</h4>
-                            <p>Copyright &copy; 2018 &middot; All Rights Reserved &middot; <a href="http://www.umg.edu.gt/" >Gemis Daniel Guevara Villeda - Gustavo Rodolfo Arriaza</a></p>
+                            <h4>Sistema de Información de Averías Viales de Guatemala</h4>
+                            <p>Copyright &copy; 2018 &middot; All Rights Reserved &middot; <a href="http://www.umg.edu.gt/" >f-Society</a></p>
                         </div>
                     </div>
                     <hr>

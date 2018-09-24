@@ -83,7 +83,7 @@
 
                 // Consulta SQL, seleccionamos todos los datos de la tabla y obtenemos solo
                 // la fila que tiene el usario especificado
-                $query = "SELECT * FROM usuario WHERE NombreUsuario='" . $Usuario . "'";
+                $query = "SELECT * FROM usuario WHERE NombreUsuario='" . $Usuario . "';";
                 if (!$resultado = $mysqli->query($query)) {
                     echo "Error: La ejecución de la consulta falló debido a: \n";
                     echo "Query: " . $query . "\n";

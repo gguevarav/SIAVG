@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="imagenes/icono.ico">
-        <title>SIAVG</title>
+        <title>Sistema de Información de Averías Viales de Guatemala</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
@@ -63,22 +63,7 @@
                                             $_SESSION["PrivilegioUsuario"] == 'Tesorero') {
                                         ?>
                                         <li><a href="Equipo.php">Listado de Equipos</a></li>
-                                        <li><a href="#">Registrar equipos</a></li>
-                                        <?php
-                                    }
-                                    ?>
-                                </ul>
-                            </li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <?php
-                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Tesorero') {
-                                        ?>
-                                        <li><a href="Equipo.php">Listado de Equipos</a></li>
-                                        <li><a href="#">Registrar equipos</a></li>
+                                        <li><a href="RegistroEquipo.php">Registrar equipos</a></li>
                                         <?php
                                     }
                                     ?>
@@ -103,10 +88,22 @@
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Personas<span class="caret"></span></a>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroPersona.php">Crear Persona</a></li>
-                                        <li><a href="Persona.php">Ver Personas</a></li>
+                                        <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="RegistroEmpleado.php">Crear empleado</a></li>
+                                        <li><a href="Empleado.php">Listado de empleados</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -465,7 +462,7 @@
 
                 // Preparamos la consulta
                 $query = "INSERT INTO Averia(UbicacionAveria, ImagenAveria, idPrioridad, idTrazabilidad, idUrgencia, idTamanio, idUsuario)
-											VALUES('" . $Ubicacion . "', '" . $ImagenAveria . "', " . $Prioridad . ", 1, " . $Urgencia . ", " . $Tamanio . ", ".$idUsuario2.")";
+											VALUES('" . $Ubicacion . "', '" . $ImagenAveria . "', " . $Prioridad . ", 1, " . $Urgencia . ", " . $Tamanio . ", " . $idUsuario2 . ")";
                 // Ejecutamos la consulta
                 if (!$resultado = $mysqli->query($query)) {
                     echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -742,6 +739,7 @@
             ?>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
             <script src="js/jquery-1.11.3.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
             <!-- Include all compiled plugins (below), or include individual files as needed --> 
             <script src="js/bootstrap.js"></script>
             <!-- Pie de página, se utilizará el mismo para todos. -->
@@ -804,7 +802,7 @@
                         marker.setAnimation(google.maps.Animation.BOUNCE);
                     }
                 }
-                // Carga de la libreria de google maps 
+                // Carga de la libreria de google maps              
             </script>
             <footer>
                 <hr>

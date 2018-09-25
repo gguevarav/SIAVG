@@ -76,7 +76,7 @@
                                 <?php
                             }
                             ?>
-                           <?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -88,7 +88,7 @@
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -270,30 +270,14 @@
                     echo "Error: " . $mysqli->error . "\n";
                     exit;
                 } else {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Persona registrada</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroPersona.php\">";
-        }
-    }
-    // Termina código para agregar una nueva marca
-    // Código que recibe la información para agregar una nueva linea
-    ?>
+                    echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Empleado registrado\");\n";
+                        echo "</script>";
+                }
+            }
+            // Termina código para agregar una nueva marca
+            // Código que recibe la información para agregar una nueva linea
+            ?>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
             <script src="js/jquery-1.11.3.min.js"></script>
             <!-- Include all compiled plugins (below), or include individual files as needed --> 
@@ -312,12 +296,12 @@
                 <hr>
             </footer> 
         </body>
-    <?php
-    // De lo contrario lo redirigimos al inicio de sesión
-} else {
-    echo "usuario no valido";
-    header("location:login.php");
-}
-?>
+        <?php
+        // De lo contrario lo redirigimos al inicio de sesión
+    } else {
+        echo "usuario no valido";
+        header("location:login.php");
+    }
+    ?>
 </html>
 

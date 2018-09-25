@@ -18,6 +18,9 @@
         <link rel="stylesheet" href="css/bootstrap.css">
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
     </head>
@@ -72,7 +75,7 @@
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -84,7 +87,7 @@
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -154,6 +157,8 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="container-fluid">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="row">
                             <div class="col-xs-6 ">
                                 <h1 class="text-center">Módulo Administrador</h1>
@@ -302,23 +307,9 @@
                 $RePasswordUsuario = $_POST['ReContraseniaUsuario'];
 
                 if ($PasswordUsuario != $RePasswordUsuario) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Las contraseñas no coinciden</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Las contraseñas no coinciden\");\n";
+                    echo "</script>";
                 } else {
                     $ContraseniaEncriptada = md5($PasswordUsuario);
                     // Creamos la consulta para la insersión de los datos
@@ -329,35 +320,11 @@
                         echo "Query: " . $CambiarContrasenia . "\n";
                         echo "Error: " . $mysqli->errno . "\n";
                         exit;
+                        // Mostrar el mensaje
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Contraseña cambiada\");\n";
+                        echo "</script>";
                     }
-                }
-            }
-            if (isset($_POST['RegistrarUnidadMedida'])) {
-                // Obtenemos los valores de todos los campos y los almacenamos en variables
-                $NombreUnidadMedida = $_POST['UnidadMedida'];
-
-                // Creamos la consulta para la insersión de los datos
-                $InsertarUM = "INSERT into UnidadMedida (NombreUnidadMedida)
-                                                      VALUES('" . $NombreUnidadMedida . "');";
-                if (!$resultado2 = $mysqli->query($InsertarUM)) {
-                    echo "Error: La ejecución de la consulta falló debido a: \n";
-                    echo "Query: " . $InsertarUM . "\n";
-                    echo "Error: " . $mysqli->errno . "\n";
-                    exit;
-                }
-            }
-            if (isset($_POST['RegistrarPuesto'])) {
-                // Obtenemos los valores de todos los campos y los almacenamos en variables
-                $NombreNuevoPuesto = $_POST['NombrePuesto'];
-
-                // Creamos la consulta para la insersión de los datos
-                $InsertarPuesto = "INSERT into TipoEmpleado (NombreTipoEmpleado)
-                                                      VALUES('" . $NombreNuevoPuesto . "');";
-                if (!$resultado2 = $mysqli->query($InsertarPuesto)) {
-                    echo "Error: La ejecución de la consulta falló debido a: \n";
-                    echo "Query: " . $InsertarPuesto . "\n";
-                    echo "Error: " . $mysqli->errno . "\n";
-                    exit;
                 }
             }
             ?>

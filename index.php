@@ -18,6 +18,8 @@ UMG - Morales Izabal
         <link href="css/bootstrap.css" rel="stylesheet">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->  
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
 
     </head>
     <?php
@@ -87,7 +89,7 @@ UMG - Morales Izabal
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -100,7 +102,7 @@ UMG - Morales Izabal
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>

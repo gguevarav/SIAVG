@@ -17,6 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -158,6 +161,8 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="container-fluid">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="row">
                             <div class="col-xs-6">
                                 <h1 class="text-center">Registro de Materiales</h1>
@@ -291,23 +296,9 @@
                 $ResultadoExisteMaterial = $mysqli->query($ConsultaExisteMaterial);
                 $row = mysqli_fetch_array($ResultadoExisteMaterial);
                 if ($row['CodigoMaterial'] != null) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Este código ya existe</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
+                    echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Este código ya existe\");\n";
+                        echo "</script>";
                 } else {
                     // Preparamos la consulta
                     $query = "INSERT INTO Material(NombreMaterial, CodigoMaterial, idUnidadMedida, PrecioxUnidad, EstadoMaterial)
@@ -320,146 +311,9 @@
                         echo "Error: " . $mysqli->error . "\n";
                         exit;
                     } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Producto registrado</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroMaterial.php\">";
-                    }
-                }
-            }
-            // Código que recibe la información para agregar nueva marca
-            if (isset($_POST['AgregarMarca'])) {
-                // Guardamos la información en variables
-                $NombreMarca = $_POST['NombreMarca'];
-                //Primero revisamos que no exista la marca ya en la base de datos
-                $ConsultaExisteMarca = "SELECT NombreMarca FROM marca WHERE NombreMarca='" . $NombreMarca . "';";
-                $ResultadoExisteMarca = $mysqli->query($ConsultaExisteMarca);
-                $row = mysqli_fetch_array($ResultadoExisteMarca);
-                if ($row['NombreMarca'] != null) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">La marca ya existe</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
-                } else {
-                    // Preparamos la consulta
-                    $query = "INSERT INTO marca(NombreMarca)
-                                                              VALUES('" . $NombreMarca . "');";
-                    // Ejecutamos la consulta
-                    if (!$resultado = $mysqli->query($query)) {
-                        echo "Error: La ejecución de la consulta falló debido a: \n";
-                        echo "Query: " . $query . "\n";
-                        echo "Errno: " . $mysqli->errno . "\n";
-                        echo "Error: " . $mysqli->error . "\n";
-                        exit;
-                    } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Marca registrada</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroProducto.php\">";
-                    }
-                }
-            }
-            // Termina código para agregar una nueva marca
-            // Código que recibe la información para agregar una nueva linea
-            if (isset($_POST['AgregarLinea'])) {
-                // Guardamos la información en variables
-                $NombreLinea = $_POST['NombreLinea'];
-                //Primero revisamos que no exista la marca ya en la base de datos
-                $ConsultaExisteLinea = "SELECT NombreLineaProducto FROM lineaproducto WHERE NombreLineaProducto='" . $NombreLinea . "';";
-                $ResultadoExisteLinea = $mysqli->query($ConsultaExisteLinea);
-                $row = mysqli_fetch_array($ResultadoExisteLinea);
-                if ($row['NombreLineaProducto'] != null) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">La línea ya existe</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
-                } else {
-                    // Preparamos la consulta
-                    $query = "INSERT INTO lineaproducto(NombreLineaProducto)
-                                                              VALUES('" . $NombreLinea . "');";
-                    // Ejecutamos la consulta
-                    if (!$resultado = $mysqli->query($query)) {
-                        echo "Error: La ejecución de la consulta falló debido a: \n";
-                        echo "Query: " . $query . "\n";
-                        echo "Errno: " . $mysqli->errno . "\n";
-                        echo "Error: " . $mysqli->error . "\n";
-                        exit;
-                    } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Línea registrada</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroProducto.php\">";
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Producto registrado\");\n";
+                        echo "</script>";
                     }
                 }
             }
@@ -473,23 +327,9 @@
                 $ResultadoExisteUnidad = $mysqli->query($ConsultaExisteUnidad);
                 $row = mysqli_fetch_array($ResultadoExisteUnidad);
                 if ($row['NombreUnidadMedida'] != null) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">La unidad de medida ya existe</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
+                    echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"El nombre de la unidad de medida ya existe\");\n";
+                        echo "</script>";
                 } else {
                     // Preparamos la consulta
                     $query = "INSERT INTO unidadmedida(NombreUnidadMedida)
@@ -502,25 +342,9 @@
                         echo "Error: " . $mysqli->error . "\n";
                         exit;
                     } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Unidad de medida registrada</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=RegistroMaterial.php\">";
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Nombre de unidad de medida registrada\");\n";
+                        echo "</script>";
                     }
                 }
             }

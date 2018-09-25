@@ -21,6 +21,9 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Importamos la API de Google para hacer uso de coordenadas-->
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpKmSyylxEF4rZfw-FAo1NWBwU_Id9B4k&callback=initMap"></script>
         <style>
@@ -166,6 +169,8 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="container-fluid">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="row">
                             <div class="col-xs-6">
                                 <h1 class="text-center">Reporte de Avería</h1>
@@ -431,7 +436,7 @@
                             // Pasamos la dirección a la variable que vamos a almacenar en la base de datos
                             $ImagenAveria = "FotosReportes/" . $FechaHoraActual;
                             // Creamos el directorio
-                            if (!is_dir($path)) {
+                            if (!is_dir($ImagenAveria)) {
                                 mkdir($ImagenAveria);
                             }
                             //Subimos el fichero al servidor
@@ -441,22 +446,10 @@
                             $validar = false;
                     }
                 }
-                /* if (isset($_FILES['imagen']) && $validar==true){
-                  $cantidad= count($_FILES["imagen"]["tmp_name"]);
-                  for ($i=0; $i<$cantidad; $i++){?>
-                  <h1>
-                  <?php
-                  echo $_FILES["imagen"]["name"][$i]
-                  ?>
-                  </h1>
-                  <img src="<?php echo $_FILES["imagen"]["name"][$i] ?>" width="100">
-                  <?php
-                  }
-                  } */
                 // Guardamos la información en variables
                 $Ubicacion = $_POST['coords'];
                 $Prioridad = $_POST['Prioridad'];
-                $Trazabilidad = $_POST['Trazabilidad'];
+                //$Trazabilidad = $_POST['Trazabilidad'];
                 $Urgencia = $_POST['Urgencia'];
                 $Tamanio = $_POST['Tamanio'];
 
@@ -471,25 +464,9 @@
                     echo "Error: " . $mysqli->error . "\n";
                     exit;
                 } else {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Incidente reportado</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
-                    // Recargamos la página
-                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Incidente Reportado\");\n";
+                    echo "</script>";
                 }
             }
             // Código que recibe la información para agregar nueva prioridad
@@ -501,23 +478,9 @@
                 $ResultadoExistePrioridad = $mysqli->query($ConsultaExistePrioridad);
                 $row = mysqli_fetch_array($ResultadoExistePrioridad);
                 if ($row['NombrePrioridad'] != null) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">La prioridad ya existe</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Este nombre de prioridad ya existe\");\n";
+                    echo "</script>";
                 } else {
                     // Preparamos la consulta
                     $query = "INSERT INTO Prioridad(NombrePrioridad)
@@ -530,25 +493,9 @@
                         echo "Error: " . $mysqli->error . "\n";
                         exit;
                     } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Prioridad registrada</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Prioridad registrada\");\n";
+                        echo "</script>";
                     }
                 }
             }
@@ -562,23 +509,9 @@
                 $ResultadoExisteTrazabilidad = $mysqli->query($ConsultaExisteTrazabilidad);
                 $row = mysqli_fetch_array($ResultadoExisteTrazabilidad);
                 if ($row['NombreTrazabilidad'] != null) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">La trazabilidad ya existe</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Este nombre de trazabilidad ya existe\");\n";
+                    echo "</script>";
                 } else {
                     // Preparamos la consulta
                     $query = "INSERT INTO Trazabilidad(NombreTrazabilidad)
@@ -591,25 +524,9 @@
                         echo "Error: " . $mysqli->error . "\n";
                         exit;
                     } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Trazabilidad registrada</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Trazabilidad registrada\");\n";
+                        echo "</script>";
                     }
                 }
             }
@@ -623,23 +540,9 @@
                 $ResultadoExisteUrgencia = $mysqli->query($ConsultaExisteUrgencia);
                 $row = mysqli_fetch_array($ResultadoExisteUrgencia);
                 if ($row['NombreLineaProducto'] != null) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">La urgencia ya existe</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Este nombre de urgencia ya existe\");\n";
+                    echo "</script>";
                 } else {
                     // Preparamos la consulta
                     $query = "INSERT INTO Urgencia(NombreUrgencia)
@@ -652,25 +555,9 @@
                         echo "Error: " . $mysqli->error . "\n";
                         exit;
                     } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Urgencia registrada</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Urgencia registrada\");\n";
+                        echo "</script>";
                     }
                 }
             }
@@ -684,23 +571,9 @@
                 $ResultadoExisteTamanio = $mysqli->query($ConsultaExisteTamanio);
                 $row = mysqli_fetch_array($ResultadoExisteTamanio);
                 if ($row['NombreUnidadMedida'] != null) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">El tamaño ya existe</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Este nombre de tamaño ya existe\");\n";
+                    echo "</script>";
                 } else {
                     // Preparamos la consulta
                     $query = "INSERT INTO Tamanio(NombreTamanio)
@@ -713,25 +586,9 @@
                         echo "Error: " . $mysqli->error . "\n";
                         exit;
                     } else {
-                        ?>
-                        <div class="form-group">
-                            <form name="Alerta">
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-xs-10 col-xs-offset-1">
-                                                    <div class="alert alert-success">Tamaño registrado</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <?php
-                        // Recargamos la página
-                        echo "<meta http-equiv=\"refresh\" content=\"0;URL=ReporteAveria.php\">";
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Tamaño registrado\");\n";
+                        echo "</script>";
                     }
                 }
             }
@@ -823,4 +680,3 @@
     }
     ?>
 </html>
-

@@ -17,6 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -88,7 +91,7 @@
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -159,6 +162,8 @@
                 <form name="CrearOT" action="CrearOrdenTrabajo.php.php" method="post">
                     <input type="hidden" name="idAveria" value="<?php echo $_POST['idAveria']; ?>" />
                     <div class="container">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="row text-center">
                             <div class="container-fluid">
                                 <div class="row">

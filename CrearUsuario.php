@@ -17,6 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -158,6 +161,8 @@
             <div class="form-group">
                 <form name="CrearUsuario" action="CrearUsuario.php" method="post">
                     <div class="container">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="row text-center">
                             <div class="container-fluid">
                                 <div class="row">
@@ -311,23 +316,9 @@
                 $PasswordUsuario = $_POST['PasswordUsuario'];
                 $RePasswordUsuario = $_POST['RePasswordUsuario'];
                 if ($PasswordUsuario != $RePasswordUsuario) {
-                    ?>
-                    <div class="form-group">
-                        <form name="Alerta">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <div class="alert alert-success">Las contraseñas no coinciden</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <?php
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Las contraseñas no coinciden\");\n";
+                    echo "</script>";
                 } else {
                     $ContraseniaEncriptada = md5($PasswordUsuario);
                     $InsertarPersona = "INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona, TelefonoPersona, EstadoPersona, idTipoEmpleado)
@@ -349,6 +340,9 @@
                         echo "Error: " . $mysqli->errno . "\n";
                         exit;
                     }
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Usuario registrado\");\n";
+                    echo "</script>";
                 }
             }
             ?>			

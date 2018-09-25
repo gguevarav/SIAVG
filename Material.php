@@ -17,6 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -88,7 +91,7 @@
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -158,6 +161,8 @@
             <div class="form-group">
                 <div class="container">
                     <div class="row text-center">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-5">
@@ -167,20 +172,6 @@
                                 <div class="col-xs-5 Icon">
                                     <!-- Icono de usuario -->
                                     <span class="glyphicon glyphicon-asterisk"></span>
-                                </div>
-                                <div class="form-group">
-                                    <!--<form name="Exportar" action="Material.php" method="post">
-                                        <div class="col-xs-1">
-                                            <div class="input-group input-group-lg">
-                                                    <a class="btn btn-success btn-lg" href="ReporteProductos.php" target="_blank"><span class="glyphicon glyphicon-print"></span></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-1">
-                                            <div class="input-group input-group-lg">
-                                                    <input type="submit" name="Exportar" class="btn btn-success" value="Exportar a excel">
-                                            </div>
-                                        </div>
-                                    </form>-->
                                 </div>
                             </div>
                             <br>
@@ -277,13 +268,13 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-            <?php
-        }
-        ?>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </tr>
-                                                    <?php
-                                                }
-                                                ?>
+                                                <?php
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -369,12 +360,12 @@
                                     <select class="form-control" name="UnidadMedida" id="UnidadMedida">
                                         <option value="" disabled selected>Unidad de Medida</option>
                                         <!-- Acá mostraremos los puestos que existen en la base de datos -->
-    <?php
-    $VerUnidadMedida = "SELECT * FROM UnidadMedida;";
-    // Hacemos la consulta
-    $ResultadoConsultaUnidadMedida = $mysqli->query($VerUnidadMedida);
-    while ($row = mysqli_fetch_array($ResultadoConsultaUnidadMedida)) {
-        ?>
+                                        <?php
+                                        $VerUnidadMedida = "SELECT * FROM UnidadMedida;";
+                                        // Hacemos la consulta
+                                        $ResultadoConsultaUnidadMedida = $mysqli->query($VerUnidadMedida);
+                                        while ($row = mysqli_fetch_array($ResultadoConsultaUnidadMedida)) {
+                                            ?>
                                             <option value="<?php echo $row['idUnidadMedida']; ?>"><?php echo $row['NombreUnidadMedida'] ?></option>
                                             <?php
                                         }
@@ -396,120 +387,72 @@
             </div>
         </div>
         <!-- /.modal -->
-    <?php
-    // Código que recibe la información del formulario modal (Deshabilitar)
-    if (isset($_POST['DeshabilitarMat'])) {
-        // Guardamos el id en una variable
-        $idMaterial = $_POST['idMaterialDeshabilitar'];
-        // Preparamos la consulta
-        $query = "UPDATE Material SET EstadoMaterial = 'Deshabilitado' WHERE idMaterial=" . $idMaterial . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Material deshabilitado</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Material.php\">";
+        <?php
+        // Código que recibe la información del formulario modal (Deshabilitar)
+        if (isset($_POST['DeshabilitarMat'])) {
+            // Guardamos el id en una variable
+            $idMaterial = $_POST['idMaterialDeshabilitar'];
+            // Preparamos la consulta
+            $query = "UPDATE Material SET EstadoMaterial = 'Deshabilitado' WHERE idMaterial=" . $idMaterial . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Material deshabilitado\");\n";
+                echo "</script>";
+            }
         }
-    }
-    // Código que recibe la información del formulario modal (Habilitar)
-    if (isset($_POST['HabilitarMat'])) {
-        // Guardamos el id en una variable
-        $idMaterial = $_POST['idMaterialHabilitar'];
-        // Preparamos la consulta
-        $query = "UPDATE Material SET EstadoMaterial = 'Habilitado' WHERE idMaterial=" . $idMaterial . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Material habilitado</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Material.php\">";
+        // Código que recibe la información del formulario modal (Habilitar)
+        if (isset($_POST['HabilitarMat'])) {
+            // Guardamos el id en una variable
+            $idMaterial = $_POST['idMaterialHabilitar'];
+            // Preparamos la consulta
+            $query = "UPDATE Material SET EstadoMaterial = 'Habilitado' WHERE idMaterial=" . $idMaterial . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Material habilitado\");\n";
+                echo "</script>";
+            }
         }
-    }
-    // Código que recibe la información del formulario modal (Editar)
-    if (isset($_POST['EditarMaterial'])) {
-        // Guardamos la info en variables
-        $idMaterial = $_POST['idEditar'];
-        $NombreMaterial = $_POST['NombreMaterial'];
-        $UnidadMedida = $_POST['UnidadMedida'];
-        $PrecioMaterial = $_POST['PrecioMaterial'];
+        // Código que recibe la información del formulario modal (Editar)
+        if (isset($_POST['EditarMaterial'])) {
+            // Guardamos la info en variables
+            $idMaterial = $_POST['idEditar'];
+            $NombreMaterial = $_POST['NombreMaterial'];
+            $UnidadMedida = $_POST['UnidadMedida'];
+            $PrecioMaterial = $_POST['PrecioMaterial'];
 
-        // Preparamos la consulta
-        $query = "UPDATE material SET NombreMaterial = '" . $NombreMaterial . "',
+            // Preparamos la consulta
+            $query = "UPDATE material SET NombreMaterial = '" . $NombreMaterial . "',
                                                     idUnidadMedida = " . $UnidadMedida . ",
                                                     PrecioxUnidad = " . $PrecioMaterial . "
                                                                     WHERE idMaterial=" . $idMaterial . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Material editado correctamente</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Material.php\">";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Material editado correctamente\");\n";
+                echo "</script>";
+            }
         }
-    }
-    ?>
+        ?>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
         <script src="js/jquery-1.11.3.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed --> 

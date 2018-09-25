@@ -17,6 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -88,7 +91,7 @@
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -158,6 +161,8 @@
             <div class="form-group">
                 <div class="container">
                     <div class="row text-center">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-5">
@@ -267,13 +272,13 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-            <?php
-        }
-        ?>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </tr>
-                                                    <?php
-                                                }
-                                                ?>
+                                                <?php
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -373,120 +378,72 @@
             </div>
         </div>
         <!-- /.modal -->
-    <?php
-    // Código que recibe la información del formulario modal (Deshabilitar)
-    if (isset($_POST['DeshabilitarEquipo'])) {
-        // Guardamos el id en una variable
-        $idEquipo = $_POST['idEquipoDeshabilitar'];
-        // Preparamos la consulta
-        $query = "UPDATE Equipo SET EstadoEquipo = 'Deshabilitado' WHERE idEquipo=" . $idEquipo . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Equipo deshabilitado</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
+        <?php
+        // Código que recibe la información del formulario modal (Deshabilitar)
+        if (isset($_POST['DeshabilitarEquipo'])) {
+            // Guardamos el id en una variable
+            $idEquipo = $_POST['idEquipoDeshabilitar'];
+            // Preparamos la consulta
+            $query = "UPDATE Equipo SET EstadoEquipo = 'Deshabilitado' WHERE idEquipo=" . $idEquipo . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Equipo deshabilitado\");\n";
+                echo "</script>";
+            }
         }
-    }
-    // Código que recibe la información del formulario modal (Habilitar)
-    if (isset($_POST['HabilitarEquipo'])) {
-        // Guardamos el id en una variable
-        $idEquipo = $_POST['idEquipoHabilitar'];
-        // Preparamos la consulta
-        $query = "UPDATE Equipo SET EstadoEquipo = 'Habilitado' WHERE idEquipo=" . $idEquipo . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Equipo habilitado</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
+        // Código que recibe la información del formulario modal (Habilitar)
+        if (isset($_POST['HabilitarEquipo'])) {
+            // Guardamos el id en una variable
+            $idEquipo = $_POST['idEquipoHabilitar'];
+            // Preparamos la consulta
+            $query = "UPDATE Equipo SET EstadoEquipo = 'Habilitado' WHERE idEquipo=" . $idEquipo . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Equipo habilitado\");\n";
+                echo "</script>";
+            }
         }
-    }
-    // Código que recibe la información del formulario modal (Editar)
-    if (isset($_POST['EditarEquipo'])) {
-        // Guardamos la info en variables
-        $idEquipo = $_POST['idEditar'];
-        $NombreEquipo = $_POST['NombreEquipo'];
-        $CodigoEquipo = $_POST['CodigoEquipo'];
-        $CostoPorHora = $_POST['CostoPorHora'];
+        // Código que recibe la información del formulario modal (Editar)
+        if (isset($_POST['EditarEquipo'])) {
+            // Guardamos la info en variables
+            $idEquipo = $_POST['idEditar'];
+            $NombreEquipo = $_POST['NombreEquipo'];
+            $CodigoEquipo = $_POST['CodigoEquipo'];
+            $CostoPorHora = $_POST['CostoPorHora'];
 
-        // Preparamos la consulta
-        $query = "UPDATE Equipo SET NombreEquipo = '" . $NombreEquipo . "',
+            // Preparamos la consulta
+            $query = "UPDATE Equipo SET NombreEquipo = '" . $NombreEquipo . "',
                                                 CodigoEquipo = '" . $CodigoEquipo . "',
                                                 CostoPorHora = '" . $CostoPorHora . "'
                                             WHERE idEquipo=" . $idEquipo . ";";
-        // Ejecutamos la consulta
-        if (!$resultado = $mysqli->query($query)) {
-            echo "Error: La ejecución de la consulta falló debido a: \n";
-            echo "Query: " . $query . "\n";
-            echo "Errno: " . $mysqli->errno . "\n";
-            echo "Error: " . $mysqli->error . "\n";
-            exit;
-        } else {
-            ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Equipo editado correctamente</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            <?php
-            // Recargamos la página
-            echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Equipo editado correctamente\");\n";
+                echo "</script>";
+            }
         }
-    }
-    ?>
+        ?>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
         <script src="js/jquery-1.11.3.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed --> 

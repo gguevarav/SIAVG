@@ -17,6 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -157,6 +160,8 @@
             <div class="form-group">
                 <div class="container">
                     <div class="row text-center">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-5">
@@ -404,25 +409,9 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Equipo deshabilitado</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Equipo deshabilitado\");\n";
+                echo "</script>";
             }
         }
         // Código que recibe la información del formulario modal (Habilitar)
@@ -439,25 +428,9 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Equipo habilitado</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Empleado.php\">";
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Equipo habilitado\");\n";
+                echo "</script>";
             }
         }
         // Código que recibe la información del formulario modal (Editar)
@@ -489,25 +462,9 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Empleado editado correctamente</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Empleado.php\">";
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Empleado editado correctamente\");\n";
+                echo "</script>";
             }
         }
         ?>

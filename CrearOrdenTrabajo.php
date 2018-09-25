@@ -17,6 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -88,7 +91,7 @@
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -158,6 +161,8 @@
             <div class="form-group">
                 <div class="container">
                     <div class="row text-center">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-5">
@@ -340,25 +345,9 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                ?>
-                <div class="form-group">
-                    <form name="Alerta">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <div class="alert alert-success">Reporte cancelado</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <?php
-                // Recargamos la página
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Averias.php\">";
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Reporte cancelado\");\n";
+                echo "</script>";
             }
         }
         ?>

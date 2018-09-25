@@ -94,7 +94,7 @@ $(document).ready(function(){
         var Producto=$('#idPersona'+id).text();
 
         $('#ModalDeshabilitarEmpleado').modal('show');
-        document.querySelector('#NombreEmpleadoDeshabilitar').innerText = Nombre;
+        document.querySelector('#NombreEmpledoDeshabilitar').innerText = Nombre;
         $('#idEmpleadoDeshabilitar').val(id);
     });
  });

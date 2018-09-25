@@ -340,7 +340,7 @@
                 exit;
             } else {
                 echo "<script language=\"JavaScript\">\n";
-                        echo "myFunction(\"Reporte cancelados\");\n";
+                        echo "myFunction(\"Reporte cancelado\");\n";
                         echo "</script>";
             }
         }

@@ -396,11 +396,11 @@
         <!-- /.modal -->
         <?php
         // Código que recibe la información del formulario modal (Deshabilitar)
-        if (isset($_POST['DeshabilitarEquipo'])) {
+        if (isset($_POST['DeshabilitarEmpleado'])) {
             // Guardamos el id en una variable
-            $idEquipo = $_POST['idEquipoDeshabilitar'];
+            $idPersona = $_POST['idEmpleadoDeshabilitar'];
             // Preparamos la consulta
-            $query = "UPDATE Equipo SET EstadoEquipo = 'Deshabilitado' WHERE idEquipo=" . $idEquipo . ";";
+            $query = "UPDATE Persona SET EstadoPersona = 'Deshabilitado' WHERE idPersona=" . $idPersona . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -410,16 +410,16 @@
                 exit;
             } else {
                 echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Equipo deshabilitado\");\n";
+                echo "myFunction(\"Empleado deshabilitado\");\n";
                 echo "</script>";
             }
         }
         // Código que recibe la información del formulario modal (Habilitar)
-        if (isset($_POST['HabilitarEquipo'])) {
+        if (isset($_POST['HabilitarEmpleado'])) {
             // Guardamos el id en una variable
-            $idEquipo = $_POST['idEquipoHabilitar'];
+            $idPersona = $_POST['idEmpleadoHabilitar'];
             // Preparamos la consulta
-            $query = "UPDATE Equipo SET EstadoEquipo = 'Habilitado' WHERE idEquipo=" . $idEquipo . ";";
+            $query = "UPDATE Persona SET EstadoPersona = 'Habilitado' WHERE idPersona=" . $idPersona . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -429,7 +429,7 @@
                 exit;
             } else {
                 echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Equipo habilitado\");\n";
+                echo "myFunction(\"Empleado habilitado\");\n";
                 echo "</script>";
             }
         }

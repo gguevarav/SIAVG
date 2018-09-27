@@ -39,7 +39,7 @@ CREATE TABLE Usuario(
     PasswordUsuario         VARCHAR(80)         NOT NULL,
     IdPersona                INTEGER             NOT NULL,
     idRol                   TINYINT             NOT NULL,
-    INDEX (IdPesona),
+    INDEX (IdPersona),
     FOREIGN KEY (IdPesona)
             REFERENCES Persona(idPersona)
             ON DELETE CASCADE
@@ -178,6 +178,7 @@ CREATE TABLE OrdenTrabajo(
     idListadoPersonal       INTEGER             NOT NULL,
     EncargadoMunicipal      INTEGER             NOT NULL,
     EncargadoCovial         INTEGER             NOT NULL,
+	Estado					INTEGER				NOT NULL,
     INDEX (idAveria),
     FOREIGN KEY (idAveria)
             REFERENCES Averia(idAveria)

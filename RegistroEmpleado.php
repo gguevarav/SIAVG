@@ -83,7 +83,6 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -139,6 +138,7 @@
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
                                         <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
+                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
                                         <?php
                                     }
                                     ?>
@@ -171,7 +171,7 @@
                         <br>
                         <!-- Nombre Persona -->
                         <div class="form-group">
-                            <form name="RegistroEmpleado" action="RegistroEmpleado.php" method="post">
+                            <form name="RegistroPersona" action="RegistroPersona.php" method="post">
                                 <div class="row">
                                     <div class="col-xs-10 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
@@ -193,24 +193,24 @@
                                 <br>
                                 <!-- Direccion Persona -->
                                 <div class="row">
-                                    <div class="col-xs-5 col-xs-offset-1">
+                                    <div class="col-xs-10 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-ok"></i></span>
                                             <input type="text" class="form-control" name="DireccionPersona" placeholder="Direccion" id="DireccionPersona" aria-describedby="sizing-addon1">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-5 col-xs-offset">
-                                        <div class="input-group input-group-lg">
-                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-ok"></i></span>
-                                            <input type="tel" class="form-control" name="TelefonoPersona" placeholder="Telefono" id="TelefonoPersona" aria-describedby="sizing-addon1">
                                         </div>
                                     </div>
                                 </div>
                                 <br>
                                 <!-- Telefono Persona -->
                                 <div class="row">
-                                    <!-- Id Empleado -->
                                     <div class="col-xs-5 col-xs-offset-1">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-ok"></i></span>
+                                            <input type="text" class="form-control" name="TelefonoPersona" placeholder="Telefono" id="TelefonoPersona" aria-describedby="sizing-addon1">
+                                        </div>
+                                    </div>
+                                    <!-- Id Empleado -->
+                                    <div class="col-xs-5 col-xs-offset">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
                                             <select class="form-control" name="NombreTipoEmpleado" id="NombreTipoEmpleado">
@@ -227,12 +227,6 @@
                                                 }
                                                 ?>
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-5 col-xs-offset">
-                                        <div class="input-group input-group-lg">
-                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-question-sign"></i></span>
-                                            <input type="number" class="form-control" name="CostoPorHora" min="0" step="0.50" placeholder="Costo por Hora" id="CostoPorHora" aria-describedby="sizing-addon1" required>
                                         </div>
                                     </div>
                                 </div>
@@ -261,14 +255,13 @@
                 $ApellidoPersona = $_POST['ApellidoPersona'];
                 $DireccionPersona = $_POST['DireccionPersona'];
                 $TelefonoPersona = $_POST['TelefonoPersona'];
-                $CostoPorHora = $_POST['CostoPorHora'];
                 $NombreTipoEmpleado = $_POST['NombreTipoEmpleado'];
                 ?>
 
                 <?php
                 // Preparamos la consulta
-                $query = "INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona, TelefonoPersona,CostoXHoraPersona, idTipoEmpleado, EstadoPersona)
-                                       VALUES('" . $NombrePersona . "', '" . $ApellidoPersona . "', '" . $DireccionPersona . "', '" . $TelefonoPersona . "', " . $CostoPorHora . ", " . $NombreTipoEmpleado . ", 'Activo')";
+                $query = "INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona, TelefonoPersona, idTipoEmpleado)
+                                                VALUES('" . $NombrePersona . "', '" . $ApellidoPersona . "', '" . $DireccionPersona . "', '" . $TelefonoPersona . "', " . $NombreTipoEmpleado . ")";
                 // Ejecutamos la consulta
                 if (!$resultado = $mysqli->query($query)) {
                     echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -278,8 +271,8 @@
                     exit;
                 } else {
                     echo "<script language=\"JavaScript\">\n";
-                    echo "myFunction(\"Empleado registrado\");\n";
-                    echo "</script>";
+                        echo "myFunction(\"Empleado registrado\");\n";
+                        echo "</script>";
                 }
             }
             // Termina código para agregar una nueva marca
@@ -289,11 +282,9 @@
             <script src="js/jquery-1.11.3.min.js"></script>
             <!-- Include all compiled plugins (below), or include individual files as needed --> 
             <script src="js/bootstrap.js"></script>
+            <!-- Pie de página, se utilizará el mismo para todos. -->
             <!-- Incluimos el script que nos dará el nombre de la persona para mostrarlo en el modal -->
             <script src="js/Modal.js"></script>
-            <!-- Incluimos el script que nos dará la notificación de que ya se realizó alguna acción -->
-            <script src="js/Toast.js"></script>
-            <!-- Pie de página, se utilizará el mismo para todos. -->
             <footer>
                 <hr>
                 <div class="row">

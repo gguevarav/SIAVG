@@ -83,7 +83,6 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -139,6 +138,7 @@
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
                                         <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
+                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
                                         <?php
                                     }
                                     ?>
@@ -158,16 +158,6 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="container-fluid">
-                        <!-- Regresar -->
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="input-group input-group-lg">
-                                            <div class="btn-group">
-                                                <span id="Regresar"><a href="CrearOrdenTrabajo.php" > <<-Regresar</a></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                         <div class="row">
                             <div class="col-xs-6">
                                 <h1 class="text-center">Fotografías</h1>
@@ -181,7 +171,7 @@
                         <br>
                         <!-- Nombre Persona -->
                         <div class="form-group">
-                            <form name="VerFotos" action="VerFotos.php" method="post">
+                            <form name="RegistroPersona" action="RegistroPersona.php" method="post">
                                 <?php
                                 if (isset($_POST['VerFotos'])) {
                                     $directory = $_POST['Path'];

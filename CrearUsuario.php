@@ -86,7 +86,6 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -142,6 +141,7 @@
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
                                         <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
+                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
                                         <?php
                                     }
                                     ?>
@@ -166,11 +166,11 @@
                         <div class="row text-center">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-xs-5 col-xs-offset-1">
+                                    <div class="col-xs-6">
                                         <h1 class="text-center">Registro de Usuario</h1>
                                     </div>
                                     <!-- Contenedor del ícono del Usuario -->
-                                    <div class="col-xs-5 Icon">
+                                    <div class="col-xs-6 Icon">
                                         <!-- Icono de usuario -->
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </div>
@@ -205,7 +205,7 @@
                                         </div>
                                     </div>
                                     <!-- Teléfono del usuario -->
-                                    <div class="col-xs-4">
+                                    <div class="col-xs-4 col-xs-offset+1">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-earphone"></i></span>
                                             <input type="tel" class="form-control" name="TelefonoUsuario" placeholder="Teléfono" id="TelefonoUsuario" aria-describedby="sizing-addon1" required>
@@ -219,7 +219,7 @@
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
                                             <select class="form-control" name="NombreTipoEmpleado" id="NombreTipoEmpleado">
-                                                <option value="" disabled selected>Puesto del Usuario</option>
+                                                <option value="" disabled selected>Puesto del Empleado</option>
                                                 <!-- Acá mostraremos los puestos que existen en la base de datos -->
                                                 <?php
                                                 $VerUM = "SELECT * FROM TipoEmpleado;";
@@ -235,11 +235,11 @@
                                         </div>
                                     </div>
                                     <!-- Id Rol -->
-                                    <div class="col-xs-5">
+                                    <div class="col-xs-5 col-xs-offset+1">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
                                             <select class="form-control" name="NombreRol" id="NombreRol">
-                                                <option value="" disabled selected>Rol del usuario</option>
+                                                <option value="" disabled selected>Nombre del Rol</option>
                                                 <!-- Acá mostraremos los puestos que existen en la base de datos -->
                                                 <?php
                                                 $VerUM = "SELECT * FROM Rol;";

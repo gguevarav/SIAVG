@@ -24,7 +24,6 @@ CREATE TABLE Persona(
     ApellidoPersona         VARCHAR(45)         NOT NULL,
     DireccionPersona        VARCHAR(45)         NOT NULL,
     TelefonoPersona         VARCHAR(45)         NOT NULL,
-	CostoXHoraPersona		DECIMAL(10,2)		NOT NULL,
 	EstadoPersona			VARCHAR(20)			NOT NULL,
     idTipoEmpleado          TINYINT             NOT NULL,
     INDEX (idTipoEmpleado),
@@ -75,7 +74,7 @@ CREATE TABLE Tamanio(
 CREATE TABLE Averia(
     idAveria                INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
     UbicacionAveria         VARCHAR(100)        NOT NULL,
-    FechaReporteAveria      TIMESTAMP			NOT NULL,
+    FechaReporteAveria      TIMESTAMP		NOT NULL,
     ImagenAveria            VARCHAR(100)        NOT NULL,
     idPrioridad             TINYINT             NOT NULL,
     idTrazabilidad          TINYINT             NOT NULL,
@@ -113,7 +112,7 @@ CREATE TABLE Equipo(
     idEquipo                INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
     NombreEquipo            VARCHAR(100)        NOT NULL,
     CodigoEquipo            VARCHAR(20)         NOT NULL,
-    CostoPorHora            DECIMAL(10,2)       NOT NULL,
+    CostoPorHora            DECIMAL             NOT NULL,
     EstadoEquipo            VARCHAR(20)         NOT NULL
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
@@ -127,7 +126,7 @@ CREATE TABLE Material(
     NombreMaterial          VARCHAR(100)        NOT NULL,
     CodigoMaterial          VARCHAR(20)         NOT NULL,
     idUnidadMedida          TINYINT             NOT NULL,
-    PrecioxUnidad           DECIMAL(10,2)       NOT NULL,
+    PrecioxUnidad           DECIMAL             NOT NULL,
     EstadoMaterial          VARCHAR(20)         NOT NULL,
     INDEX (idUnidadMedida),
     FOREIGN KEY (idUnidadMedida)
@@ -138,69 +137,66 @@ CREATE TABLE Material(
 
 CREATE TABLE ListadoEquipo(
     idListadoEquipo         INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
-	idAveria				INTEGER				NOT NULL,
     idEquipo                INTEGER             NOT NULL,
-    CantidadEquipo          DECIMAL(10,2)       NOT NULL,
+    CantidadEquipo          DECIMAL             NOT NULL,
     INDEX (idEquipo),
     FOREIGN KEY (idEquipo)
             REFERENCES Equipo(idEquipo)
-            ON DELETE CASCADE
-            ON UPDATE NO ACTION,
-	INDEX (idAveria),
-    FOREIGN KEY (idAveria)
-            REFERENCES Averia(idAveria)
             ON DELETE CASCADE
             ON UPDATE NO ACTION
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
 CREATE TABLE ListadoMaterial(
     idListadoMaterial       INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
-	idAveria				INTEGER				NOT NULL,
     idMaterial              INTEGER             NOT NULL,
-    CantidadMaterial        DECIMAl(10,2)       NOT NULL,
+    CantidadMaterial        DECIMAl             NOT NULL,
     INDEX (idMaterial),
     FOREIGN KEY (idMaterial)
             REFERENCES Material(idMaterial)
-            ON DELETE CASCADE
-            ON UPDATE NO ACTION,
-	INDEX (idAveria),
-    FOREIGN KEY (idAveria)
-            REFERENCES Averia(idAveria)
             ON DELETE CASCADE
             ON UPDATE NO ACTION
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
 CREATE TABLE ListadoPersonal(
     idListadoPersonal       INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
-	idAveria				INTEGER				NOT NULL,
     idPersona               INTEGER             NOT NULL,
     CantidadPersona         INTEGER             NOT NULL,
     INDEX (idPersona),
     FOREIGN KEY (idPersona)
             REFERENCES Persona(idPersona)
             ON DELETE CASCADE
-            ON UPDATE NO ACTION,
-	INDEX (idAveria),
-    FOREIGN KEY (idAveria)
-            REFERENCES Averia(idAveria)
-            ON DELETE CASCADE
             ON UPDATE NO ACTION
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
 CREATE TABLE OrdenTrabajo(
     idOrdenTrabajo          INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
-    FechaOrdenTrabajo       TIMESTAMP           NOT NULL,
-	CostoPersonalOrdenTrabajo	DECIMAL(10,2)		NOT NULL,
-	CostoEquipoOrdenTrabajo		DECIMAL(10,2)		NOT NULL,
-	CostoMaterialOrdenTrabajo	DECIMAL(10,2)		NOT NULL,
-    CostoTotalOrdenTrabajo  DECIMAL(10,2)       NOT NULL,
+    FechaOrdenTrabajo       DATE                NOT NULL,
+    CostoTotalOrdenTrabajo  DECIMAL             NOT NULL,
     idAveria                INTEGER             NOT NULL,
+    idListadoEquipo         INTEGER             NOT NULL,
+    idListadoMaterial       INTEGER             NOT NULL,
+    idListadoPersonal       INTEGER             NOT NULL,
     EncargadoMunicipal      INTEGER             NOT NULL,
     EncargadoCovial         INTEGER             NOT NULL,
-	idTrazabilidad			INTEGER				NOT NULL,
+	Estado					INTEGER				NOT NULL,
     INDEX (idAveria),
     FOREIGN KEY (idAveria)
             REFERENCES Averia(idAveria)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
+    INDEX (idListadoEquipo),
+    FOREIGN KEY (idListadoEquipo)
+            REFERENCES ListadoEquipo(idListadoEquipo)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
+    INDEX (idListadoMaterial),
+    FOREIGN KEY (idListadoMaterial)
+            REFERENCES ListadoMaterial(idListadoMaterial)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
+    INDEX (idListadoPersonal),
+    FOREIGN KEY (idListadoPersonal)
+            REFERENCES ListadoPersonal(idListadoPersonal)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
     INDEX (EncargadoMunicipal),
@@ -211,11 +207,6 @@ CREATE TABLE OrdenTrabajo(
     INDEX (EncargadoCovial),
     FOREIGN KEY (EncargadoCovial)
             REFERENCES Persona(idPersona)
-            ON DELETE CASCADE
-            ON UPDATE NO ACTION,
-	INDEX (idTrazabilidad),
-    FOREIGN KEY (idTrazabilidad)
-            REFERENCES Trazabilidad(idTrazabilidad)
             ON DELETE CASCADE
             ON UPDATE NO ACTION
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;

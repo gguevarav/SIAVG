@@ -86,7 +86,6 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -165,7 +164,7 @@
                         <div id="snackbar"></div> 
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-xs-5 col-xs-offset-1">
+                                <div class="col-xs-5">
                                     <h1 class="text-center">Empleados registrados</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
@@ -188,16 +187,14 @@
                                         <thead>
                                             <!-- Contenido -->
                                             <tr>
-                                                <th class="text-center">#</th>
-                                                <th class="text-center">Nombres</th>
-                                                <th class="text-center">Apellidos</th>
-                                                <th class="text-center">Dirección</th>
-                                                <th class="text-center">Teléfono</th>
-                                                <th class="text-center">Precio por hora <br>
-                                                    (Cifras en Quetzales)</th>
-                                                <th class="text-center">Puesto</th>
-                                                <th class="text-center">Editar</th>
-                                                <th class="text-center">Habilitar/Deshabilitar</th>
+                                                <th>#</th>
+                                                <th>Nombres</th>
+                                                <th>Apellidos</th>
+                                                <th>Dirección</th>
+                                                <th>Teléfono</th>
+                                                <th>Puesto</th>
+                                                <th>Editar</th>
+                                                <th>Habilitar/Deshabilitar</th>
                                             </tr>
                                         </thead>
                                         <!-- Cuerpo de la tabla -->
@@ -216,7 +213,6 @@
                                                     <td><span id="ApellidoPersona<?php echo $row['idPersona']; ?>"><?php echo $row['ApellidoPersona'] ?></span></td>
                                                     <td><span id="DireccionPersona<?php echo $row['idPersona']; ?>"><?php echo $row['DireccionPersona'] ?></span></td>
                                                     <td><span id="TelefonoPersona<?php echo $row['idPersona']; ?>"><?php echo $row['TelefonoPersona'] ?></span></td>
-                                                    <td><span id="PrecioPorHora<?php echo $row['idPersona']; ?>"><?php echo $row['CostoXHoraPersona'] ?></span></td>
                                                     <td><span id="Puesto<?php echo $row['idPersona']; ?>"><!-- Acá mostraremos el nombre del puesto a partir del id que se tiene en la tabla -->
                                                             <?php
                                                             $VerTipoEmpleado = "SELECT NombreTipoEmpleado FROM TipoEmpleado WHERE idTipoEmpleado='" . $row['idTipoEmpleado'] . "';";
@@ -228,7 +224,7 @@
                                                             ?></span></td>
                                                     <td>
                                                         <?php
-                                                        if ($row['EstadoPersona'] == 'Activo') {
+                                                        if ($row['EstadoPersona'] == 'Habilitado') {
                                                             ?>
                                                             <!-- Edición activada-->
                                                             <div>
@@ -237,7 +233,7 @@
                                                                 </div>
                                                             </div>
                                                             <?php
-                                                        } else if ($row['EstadoPersona'] == 'Inactivo') {
+                                                        } else if ($row['EstadoPersona'] == 'Deshabilitado') {
                                                             ?>
                                                             <!-- Edición desactivada-->
                                                             <div>
@@ -250,7 +246,7 @@
                                                         ?>
                                                     </td>
                                                     <?php
-                                                    if ($row['EstadoPersona'] == 'Activo') {
+                                                    if ($row['EstadoPersona'] == 'Habilitado') {
                                                         ?>
                                                         <td>
                                                             <!-- Deshabilitación -->
@@ -261,7 +257,7 @@
                                                             </div>
                                                         </td>
                                                         <?php
-                                                    } else if ($row['EstadoPersona'] == 'Inactivo') {
+                                                    } else if ($row['EstadoPersona'] == 'Deshabilitado') {
                                                         ?>
                                                         <td>
                                                             <!-- Habilitación -->
@@ -371,12 +367,8 @@
                                     <input type="text" style="width:350px;" class="form-control" name="TelefonoPersona" id="TelefonoPersona">
                                 </div>
                                 <div class="form-group input-group">
-                                    <span class="input-group-addon" style="width:150px;">Precio por hora</span>
-                                    <input type="number" style="width:350px;" min="0" step="0.50" class="form-control" name="PrecioPorHora" id="PrecioPorHora">
-                                </div>
-                                <div class="form-group input-group">
                                     <span class="input-group-addon" style="width:150px;">Puesto</span>
-                                    <select class="form-control" style="width:350px;" name="NombreTipoEmpleado" id="NombreTipoEmpleado">
+                                    <select class="form-control" name="NombreTipoEmpleado" id="NombreTipoEmpleado">
                                         <option value="" disabled selected>Tipo de Empleado</option>
                                         <!-- Acá mostraremos los puestos que existen en la base de datos -->
                                         <?php
@@ -408,7 +400,7 @@
             // Guardamos el id en una variable
             $idPersona = $_POST['idEmpleadoDeshabilitar'];
             // Preparamos la consulta
-            $query = "UPDATE Persona SET EstadoPersona = 'Inactivo' WHERE idPersona=" . $idPersona . ";";
+            $query = "UPDATE Persona SET EstadoPersona = 'Deshabilitado' WHERE idPersona=" . $idPersona . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -427,7 +419,7 @@
             // Guardamos el id en una variable
             $idPersona = $_POST['idEmpleadoHabilitar'];
             // Preparamos la consulta
-            $query = "UPDATE Persona SET EstadoPersona = 'Activo' WHERE idPersona=" . $idPersona . ";";
+            $query = "UPDATE Persona SET EstadoPersona = 'Habilitado' WHERE idPersona=" . $idPersona . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -449,7 +441,6 @@
             $ApellidoPersona = $_POST['ApellidoPersona'];
             $DireccionPersona = $_POST['DireccionPersona'];
             $TelefonoPersona = $_POST['TelefonoPersona'];
-            $PrecioPorHora = $_POST['PrecioPorHora'];
             $idTipoEmpleado = $_POST['NombreTipoEmpleado'];
 
             if ($idTipoEmpleado == "") {
@@ -461,7 +452,6 @@
                                                 ApellidoPersona = '" . $ApellidoPersona . "',
                                                 DireccionPersona = '" . $DireccionPersona . "',
                                                 TelefonoPersona = '" . $TelefonoPersona . "',
-                                                CostoXHoraPersona = " . $PrecioPorHora . ",
                                                 idTipoEmpleado = " . $idTipoEmpleado . "
                                             WHERE idPersona=" . $idPersona . ";";
             // Ejecutamos la consulta

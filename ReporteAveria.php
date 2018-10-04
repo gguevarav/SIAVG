@@ -94,7 +94,6 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -150,6 +149,7 @@
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
                                         <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
+                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
                                         <?php
                                     }
                                     ?>
@@ -172,11 +172,11 @@
                         <!-- Snackbar -->
                         <div id="snackbar"></div> 
                         <div class="row">
-                            <div class="col-xs-5 col-xs-offset-1">
+                            <div class="col-xs-6">
                                 <h1 class="text-center">Reporte de Avería</h1>
                             </div>
                             <!-- Contenedor del ícono del Usuario -->
-                            <div class="col-xs-5 Icon">
+                            <div class="col-xs-6 Icon">
                                 <!-- Icono de usuario -->
                                 <span class="glyphicon glyphicon-edit"></span>
                             </div>
@@ -309,7 +309,7 @@
                     </div>
                 </div>
             </div>
-            <script>
+			<script>
                 var marker;          //variable del marcador
                 var coords = {};    //coordenadas obtenidas con la geolocalización
 

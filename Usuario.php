@@ -17,9 +17,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
-        <!-- Toast-->
-        <link rel="stylesheet" type="text/css" href="css/Toast.css">
-        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -86,7 +83,6 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -161,11 +157,9 @@
             <div class="form-group">
                 <div class="container">
                     <div class="row text-center">
-                        <!-- Snackbar -->
-                        <div id="snackbar"></div> 
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-xs-5 col-xs-offset-1">
+                                <div class="col-xs-5">
                                     <h1 class="text-center">Usuarios registrados</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
@@ -188,16 +182,13 @@
                                         <thead>
                                             <!-- Contenido -->
                                             <tr>
-                                                <th class="text-center">#</th>
-                                                <th class="text-center">Nombre</th>
-                                                <th class="text-center">Apellido</th>
-                                                <th class="text-center">Nombre usuario</th>
-                                                <th class="text-center">Dirección</th>
-                                                <th class="text-center">No. de teléfono</th>
-                                                <th class="text-center">Tipo de Empleado</th>
-                                                <th class="text-center">Rol</th>
-                                                <th class="text-center">Cambiar rol</th>
-                                                <th class="text-center">Habilitar/<br>Deshabilitar</th>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th>Apellido</th>
+                                                <th>Nombre usuario</th>
+                                                <th>Dirección</th>
+                                                <th>No. de teléfono</th>
+                                                <th>Tipo de Empleado</th>
                                             </tr>
                                         </thead>
                                         <tbody class="buscar">
@@ -220,85 +211,40 @@
                                                 // Nombre de usuario
                                                 $NombreDeUsuario = $ResultadoConsulta['NombreUsuario'];
                                                 // Primero haremos la consulta
-                                                $VerTipoEmpleado = "SELECT NombreTipoEmpleado FROM TipoEmpleado WHERE idTipoEmpleado='" . $row['idTipoEmpleado'] . "'";
+                                                $VerTipoEmpleado = "SELECT * FROM TipoEmpleado WHERE idTipoEmpleado='" . $row['idTipoEmpleado'] . "'";
                                                 // Ejecutamos la consulta
                                                 $ResultadoConsultaTipoEmpleado = $mysqli->query($VerTipoEmpleado);
                                                 // Guardamos la consulta en un array
                                                 $ResultadoConsultaTipo = $ResultadoConsultaTipoEmpleado->fetch_assoc();
                                                 // Privilegio de usuario
                                                 $TipoDeEmpleado = $ResultadoConsultaTipo['NombreTipoEmpleado'];
-                                                if ($NombreDeUsuario != "") {
-                                                    // NombreRol
-                                                    $idRol = $ResultadoConsulta['idRol'];
-                                                    // Primero haremos la consulta
-                                                    $VerNombreRol = "SELECT NombreRol FROM rol WHERE idRol=" . $idRol . ";";
-                                                    // Ejecutamos la consulta
-                                                    $ResultadoConsultaNombreRol = $mysqli->query($VerNombreRol);
-                                                    // Guardamos la consulta en un array
-                                                    $ResultadoConsultaRol = $ResultadoConsultaNombreRol->fetch_assoc();
-                                                    // Privilegio de usuario
-                                                    $NombreRol = $ResultadoConsultaRol['NombreRol'];
-                                                    ?>
-                                                    <tr>
-                                                        <td><span id="idPersonaEliminar<?php echo $row['idPersona']; ?>"><?php echo $row['idPersona'] ?></span></td>
-                                                        <td><span id="NombrePersona<?php echo $row['idPersona']; ?>"><?php echo $row['NombrePersona'] ?></span></td>
-                                                        <td><span id="ApellidoUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['ApellidoPersona'] ?></span></td>
-                                                        <td><span id="NombreUsuario<?php echo $row['idPersona']; ?>"><?php echo $NombreDeUsuario ?></span></td>
-                                                        <td><span id="DireccionUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['DireccionPersona'] ?></span></td>
-                                                        <td><span id="TelefonoUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['TelefonoPersona'] ?></span></td>
-                                                        <td><span id="TipoEmpleadoUsuario<?php echo $row['idPersona']; ?>"><?php echo $TipoDeEmpleado ?></span></td>
-                                                        <td><span id="NombreRol<?php echo $row['idPersona']; ?>"><?php echo $NombreRol ?></span></td>
-                                                        <td>
-                                                            <?php
-                                                            if ($row['EstadoPersona'] == 'Activo') {
-                                                                ?>
-                                                                <!-- Edición activada-->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success CambiarRol" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                                <?php
-                                                            } else if ($row['EstadoPersona'] == 'Inactivo') {
-                                                                ?>
-                                                                <!-- Edición desactivada-->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success CambiarRolDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <?php
-                                                        if ($row['EstadoPersona'] == 'Activo') {
-                                                            ?>
-                                                            <td>
-                                                                <!-- Deshabilitación -->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-warning DeshabilitarPersona"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <?php
-                                                        } else if ($row['EstadoPersona'] == 'Inactivo') {
-                                                            ?>
-                                                            <td>
-                                                                <!-- Habilitación -->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success HabilitarPersona"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-check"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </tr>
-                                                    <?php
-                                                }
+                                                ?>
+                                                <tr>
+                                                    <td><span id="idPersonaEliminar<?php echo $row['idPersona']; ?>"><?php echo $row['idPersona'] ?></span></td>
+                                                    <td><span id="NombreUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['NombrePersona'] ?></span></td>
+                                                    <td><span id="ApellidoUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['ApellidoPersona'] ?></span></td>
+                                                    <td><span id="NombreUsuario<?php echo $row['idPersona']; ?>"><?php echo $NombreDeUsuario ?></span></td>
+                                                    <td><span id="DireccionUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['DireccionPersona'] ?></span></td>
+                                                    <td><span id="TelefonoUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['TelefonoPersona'] ?></span></td>
+                                                    <td><span id="TipoEmpleadoUsuario<?php echo $row['idPersona']; ?>"><?php echo $TipoDeEmpleado ?></span></td>
+                                                    <td>
+                                                        <!-- Edición -->
+                                                        <div>
+                                                            <div class="input-group input-group-lg">
+                                                                <button type="button" class="btn btn-success EditarUsuario" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <!-- Eliminación -->
+                                                        <div>
+                                                            <div class="input-group input-group-lg">
+                                                                <button type="button" class="btn btn-danger EliminarUsuario" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <?php
                                             }
                                             ?>
                                         </tbody>
@@ -311,99 +257,89 @@
             </div>
         </div>
         <!-- Edit Modal-->
-        <div class="modal fade" id="ModalCambioRol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="ModalDeshabilitar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <center><h1 class="modal-title" id="myModalLabel">Cambio de rol</h1></center>
+                        <center><h1 class="modal-title" id="myModalLabel">Deshabilitar Equipo</h1></center>
                     </div>
-                    <form method="post" action="Usuario.php" id="frmDeshabilitar">
+                    <form method="post" action="Equipo.php" id="myForm">
                         <div class="modal-body text-center">
+                            <p class="lead">¿Está seguro que desea deshabilitar al siguiente equipo?</p>
+                            <div class="form-group input-group">
+                                <input type="text" name="idEquipoDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEquipoDeshabilitar">
+                                <br>
+                                <label id="NombreEquipoDeshabilitar"></label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="DeshabilitarEquipo" class="btn btn-warning" value="Deshabilitar equipo">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+        <!-- Edit Modal-->
+        <div class="modal fade" id="ModalHabilitar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <center><h1 class="modal-title" id="myModalLabel">Habilitar equipo</h1></center>
+                    </div>
+                    <form method="post" action="Equipo.php" id="myForm">
+                        <div class="modal-body text-center">
+                            <p class="lead">¿Está seguro que desea habilitar al siguiente equipo?</p>
+                            <div class="form-group input-group">
+                                <input type="text" name="idEquipoHabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEquipoHabilitar">
+                                <br>
+                                <label id="NombreEquipoHabilitar"></label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="HabilitarEquipo" class="btn btn-success" value="Habilitar equipo">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+        <!-- Edit Modal-->
+        <div class="modal fade" id="ModalEditarEquipo" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <center><h4 class="modal-title" id="myModalLabel">Editar equipo</h4></center>
+                    </div>
+                    <form method="post" action="Equipo.php" id="frmEdit">
+                        <div class="modal-body">
                             <div class="container-fluid">
-                                <p class="lead">Seleccione el nuevo rol del usuario</p>
                                 <div class="form-group input-group">
-                                    <input type="text" name="idUsuarioCambioRol" style="width:350px; visibility:hidden;" class="form-control" id="idUsuarioCambioRol">
-                                    <br>
+                                    <span class="input-group-addon" style="width:150px;">ID</span>
+                                    <input type="text" style="width:350px;" class="form-control" name="idEditar" id="idEditar">
                                 </div>
                                 <div class="form-group input-group">
-                                    <span class="input-group-addon" style="width:150px;">Nombre del usuario</span>
-                                    <label class="form-control" style="width:350px;" id="NombresApellidos" name="NombresApellidos"></label>
+                                    <span class="input-group-addon" style="width:150px;">Nombre equipo</span>
+                                    <input type="text" style="width:350px;" class="form-control" name="CodigoEquipo" id="CodigoEquipo">
                                 </div>
                                 <div class="form-group input-group">
-                                    <span class="input-group-addon" style="width:150px;">Puesto</span>
-                                    <select class="form-control" style="width:350px;" name="idRol" id="idRol">
-                                        <option value="" disabled selected>Seleccione el Rol</option>
-                                        <!-- Acá mostraremos los puestos que existen en la base de datos -->
-                                        <?php
-                                        $VerUM = "SELECT * FROM Rol;";
-                                        // Hacemos la consulta
-                                        $resultado = $mysqli->query($VerUM);
-                                        while ($row = mysqli_fetch_array($resultado)) {
-                                            ?>
-                                            <option value="<?php echo $row['idRol']; ?>"><?php echo $row['NombreRol'] ?></option>
-                                            <?php
-                                        }
-                                        ?>
-                                    </select>
+                                    <span class="input-group-addon" style="width:150px;">Codigo equipo</span>
+                                    <input type="text" style="width:350px;" class="form-control" name="NombreEquipo" id="NombreEquipo">
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon" style="width:150px;">Costo por Hora</span>
+                                    <input type="text" style="width:350px;" class="form-control" name="CostoPorHora" id="CostoPorHora">
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="CambiarRol" class="btn btn-warning" value="Cambiar Rol">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal -->
-        <!-- Edit Modal-->
-        <div class="modal fade" id="ModalDeshabilitarEmpleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <center><h1 class="modal-title" id="myModalLabel">Deshabilitar empleado</h1></center>
-                    </div>
-                    <form method="post" action="Usuario.php" id="frmDeshabilitar">
-                        <div class="modal-body text-center">
-                            <p class="lead">¿Está seguro que desea deshabilitar el siguiente empleado?</p>
-                            <div class="form-group input-group">
-                                <input type="text" name="idEmpleadoDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEmpleadoDeshabilitar">
-                                <br>
-                                <label id="NombreEmpledoDeshabilitar" name="NombreEmpledoDeshabilitar"></label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="DeshabilitarEmpleado" class="btn btn-warning" value="Deshabilitar empleado">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal -->
-        <!-- Edit Modal-->
-        <div class="modal fade" id="ModalHabilitarEmpleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <center><h1 class="modal-title" id="myModalLabel">Habilitar empleado</h1></center>
-                    </div>
-                    <form method="post" action="Usuario.php" id="myForm">
-                        <div class="modal-body text-center">
-                            <p class="lead">¿Está seguro que desea habilitar la siguiente empleado?</p>
-                            <div class="form-group input-group">
-                                <input type="text" name="idEmpleadoHabilitar" id="idEmpleadoHabilitar" style="width:350px; visibility:hidden;" class="form-control">
-                                <br>
-                                <label id="NombreEmpleadoHabilitar" name="NombreEmpleadoHabilitar"></label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="HabilitarEmpleado" class="btn btn-success" value="Habilitar empleado">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+                            <input type="submit" name="EditarEquipo" class="btn btn-success" value="Editar Equipo">
                         </div>
                     </form>
                 </div>
@@ -412,11 +348,11 @@
         <!-- /.modal -->
         <?php
         // Código que recibe la información del formulario modal (Deshabilitar)
-        if (isset($_POST['DeshabilitarEmpleado'])) {
+        if (isset($_POST['DeshabilitarEquipo'])) {
             // Guardamos el id en una variable
-            $idPersona = $_POST['idEmpleadoDeshabilitar'];
+            $idEquipo = $_POST['idEquipoDeshabilitar'];
             // Preparamos la consulta
-            $query = "UPDATE Persona SET EstadoPersona = 'Inactivo' WHERE idPersona=" . $idPersona . ";";
+            $query = "UPDATE Equipo SET EstadoEquipo = 'Deshabilitado' WHERE idEquipo=" . $idEquipo . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -425,38 +361,33 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Empleado deshabilitado\");\n";
-                echo "</script>";
-            }
-        }
-        // Código que recibe la información del formulario modal para cambiar el rol del usuario
-        if (isset($_POST['CambiarRol'])) {
-            // Guardamos el id en una variable
-            $idUsuario = $_POST['idUsuarioCambioRol'];
-            // Guardamos el id del rol en una variable
-            $idRol = $_POST['idRol'];
-            // Preparamos la consulta
-            $query = "UPDATE Usuario SET idRol =" . $idRol . " WHERE idUsuario=" . $idUsuario . ";";
-            // Ejecutamos la consulta
-            if (!$resultado = $mysqli->query($query)) {
-                echo "Error: La ejecución de la consulta falló debido a: \n";
-                echo "Query: " . $query . "\n";
-                echo "Errno: " . $mysqli->errno . "\n";
-                echo "Error: " . $mysqli->error . "\n";
-                exit;
-            } else {
-                echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Cambio de rol satisfactiorio\");\n";
-                echo "</script>";
+                ?>
+                <div class="form-group">
+                    <form name="Alerta">
+                        <div class="container">
+                            <div class="row text-center">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            <div class="alert alert-success">Equipo deshabilitado</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <?php
+                // Recargamos la página
+                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
             }
         }
         // Código que recibe la información del formulario modal (Habilitar)
-        if (isset($_POST['HabilitarEmpleado'])) {
+        if (isset($_POST['HabilitarEquipo'])) {
             // Guardamos el id en una variable
-            $idPersona = $_POST['idEmpleadoHabilitar'];
+            $idEquipo = $_POST['idEquipoHabilitar'];
             // Preparamos la consulta
-            $query = "UPDATE Persona SET EstadoPersona = 'Activo' WHERE idPersona=" . $idPersona . ";";
+            $query = "UPDATE Equipo SET EstadoEquipo = 'Habilitado' WHERE idEquipo=" . $idEquipo . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -465,34 +396,40 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Empleado habilitado\");\n";
-                echo "</script>";
+                ?>
+                <div class="form-group">
+                    <form name="Alerta">
+                        <div class="container">
+                            <div class="row text-center">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            <div class="alert alert-success">Equipo habilitado</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <?php
+                // Recargamos la página
+                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Equipo.php\">";
             }
         }
         // Código que recibe la información del formulario modal (Editar)
-        if (isset($_POST['EditarEmpleado'])) {
+        if (isset($_POST['EditarEquipo'])) {
             // Guardamos la info en variables
-            $idPersona = $_POST['idEditar'];
-            $NombrePersona = $_POST['NombrePersona'];
-            $ApellidoPersona = $_POST['ApellidoPersona'];
-            $DireccionPersona = $_POST['DireccionPersona'];
-            $TelefonoPersona = $_POST['TelefonoPersona'];
-            $PrecioPorHora = $_POST['PrecioPorHora'];
-            $idTipoEmpleado = $_POST['NombreTipoEmpleado'];
-
-            if ($idTipoEmpleado == "") {
-                $idTipoEmpleado = 1;
-            }
+            $idEquipo = $_POST['idEditar'];
+            $NombreEquipo = $_POST['NombreEquipo'];
+            $CodigoEquipo = $_POST['CodigoEquipo'];
+            $CostoPorHora = $_POST['CostoPorHora'];
 
             // Preparamos la consulta
-            $query = "UPDATE Persona SET NombrePersona = '" . $NombrePersona . "',
-                                                ApellidoPersona = '" . $ApellidoPersona . "',
-                                                DireccionPersona = '" . $DireccionPersona . "',
-                                                TelefonoPersona = '" . $TelefonoPersona . "',
-                                                CostoXHoraPersona = " . $PrecioPorHora . ",
-                                                idTipoEmpleado = " . $idTipoEmpleado . "
-                                            WHERE idPersona=" . $idPersona . ";";
+            $query = "UPDATE Equipo SET NombreEquipo = '" . $NombreEquipo . "',
+                                                CodigoEquipo = '" . $CodigoEquipo . "',
+                                                CostoPorHora = '" . $CostoPorHora . "'
+                                            WHERE idEquipo=" . $idEquipo . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -501,9 +438,25 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Empleado editado correctamente\");\n";
-                echo "</script>";
+                ?>
+                <div class="form-group">
+                    <form name="Alerta">
+                        <div class="container">
+                            <div class="row text-center">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            <div class="alert alert-success">Equipo editado correctamente</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <?php
+                // Recargamos la página
+                echo "<meta http-equiv=\"refresh\" content=\"0;URL=Usuario.php\">";
             }
         }
         ?>
@@ -511,8 +464,8 @@
         <script src="js/jquery-1.11.3.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed --> 
         <script src="js/bootstrap.js"></script>
-        <!-- Incluimos el script que nos dará el nombre de la persona para mostrarlo en el modal -->
         <!-- Pie de página, se utilizará el mismo para todos. -->
+        <!-- Incluimos el script que nos dará el nombre de la persona para mostrarlo en el modal -->
         <script src="js/Modal.js"></script>
         <footer>
             <hr>

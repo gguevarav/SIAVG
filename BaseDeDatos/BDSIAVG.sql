@@ -40,7 +40,7 @@ CREATE TABLE Usuario(
     IdPersona                INTEGER             NOT NULL,
     idRol                   TINYINT             NOT NULL,
     INDEX (IdPersona),
-    FOREIGN KEY (IdPesona)
+    FOREIGN KEY (IdPersona)
             REFERENCES Persona(idPersona)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
@@ -58,7 +58,7 @@ CREATE TABLE Prioridad(
 
 CREATE TABLE Trazabilidad(
     idTrazabilidad          TINYINT             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
-    NombreTrazabilidada     VARCHAR(45)         NOT NULL
+    NombreTrazabilidad     VARCHAR(45)         NOT NULL
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
 CREATE TABLE Urgencia(

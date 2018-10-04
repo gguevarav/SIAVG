@@ -86,6 +86,7 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="#">Crear Orden de Trabajo</a></li>
+                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -141,7 +142,6 @@
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
                                         <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
-                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
                                         <?php
                                     }
                                     ?>
@@ -159,13 +159,23 @@
             <br>
             <br>
             <div class="form-group">
-                <form name="CrearOT" action="CrearOrdenTrabajo.php.php" method="post">
+                <form name="GenerarOT" action="GenerarOT.php" method="post">
                     <input type="hidden" name="idAveria" value="<?php echo $_POST['idAveria']; ?>" />
                     <div class="container">
                         <!-- Snackbar -->
                         <div id="snackbar"></div> 
                         <div class="row text-center">
                             <div class="container-fluid">
+                                <!-- Regresar -->
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="input-group input-group-lg">
+                                            <div class="btn-group">
+                                                <span id="Regresar"><a href="CrearOrdenTrabajo.php" > <<-Regresar</a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <h1 class="text-center">Generar orden de trabajo</h1>
@@ -189,6 +199,7 @@
                                                         <th scope="col">#</th>
                                                         <th scope="col">Equipo</th>
                                                         <th scope="col">Cantidad</th>
+                                                        <th scope="col">Horas a laborar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="CuerpoTabla">
@@ -219,6 +230,12 @@
                                                                 <input type="number" class="form-control" name="CantidadEquipo1" placeholder="Cantidad" id="CantidadEquipo1" aria-describedby="sizing-addon1" required>
                                                             </div>
                                                         </td>
+                                                        <td>
+                                                            <div class="input-group input-group-lg">
+                                                                <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-question-sign"></i></span>
+                                                                <input type="number" class="form-control" name="CantidadHorasEquipo1" placeholder="Horas" id="CantidadHorasEquipo1" aria-describedby="sizing-addon1" required>
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -226,7 +243,7 @@
                                         <div class="col-xs-1">
                                             <!-- Button trigger modal -->
                                             <div class="input-group input-group-lg">
-                                                <button type="button" class="btn btn-success btn-lg AgregarUnidadMedida" value="" data-toggle="modal" data-target="#ModalAgregarUnidadMedida" onclick="crear(this)">+</button>
+                                                <button type="button" class="btn btn-success btn-lg AgregarFilaEquipo" value="" data-toggle="modal" data-target="#AgregarFilaEquipo" onclick="crear(this)">+</button>
                                             </div>
                                         </div>
                                     </div>
@@ -243,6 +260,7 @@
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col">Empleado</th>
+                                                        <th scope="col">Cantidad horas a laborar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="CuerpoTablaPersonal">
@@ -267,6 +285,12 @@
                                                                 </select>
                                                             </div>
                                                         </td>
+                                                        <td>
+                                                            <div class="input-group input-group-lg">
+                                                                <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-question-sign"></i></span>
+                                                                <input type="number" class="form-control" name="CantidadHorasPersonal1" placeholder="Horas" id="CantidadHorasPersonal1" aria-describedby="sizing-addon1" required>
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -274,7 +298,62 @@
                                         <div class="col-xs-1">
                                             <!-- Button trigger modal -->
                                             <div class="input-group input-group-lg">
-                                                <button type="button" class="btn btn-success btn-lg AgregarUnidadMedida" value="" data-toggle="modal" data-target="#ModalAgregarUnidadMedida" onclick="crearPersonal(this)">+</button>
+                                                <button type="button" class="btn btn-success btn-lg AgregarFilaPersona" value="" data-toggle="modal" data-target="#AgregarFilaPersona" onclick="crearPersonal(this)">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <br>
+                                <hr>
+                                <h3 class="text-center">Seleccione el material a utilizar</h3>
+                                <br>
+                                <fieldset id="field">
+                                    <div class="row">
+                                        <div class="col-xs-11">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Material</th>
+                                                        <th scope="col">Cantidad</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="CuerpoTablaMaterial">
+                                                    <tr>
+                                                        <th scope="row">1</th>
+                                                        <td>
+                                                            <div class="input-group input-group-lg">
+                                                                <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
+                                                                <select class="form-control" name="Material1" id="Material1" required>
+                                                                    <option value="" disabled selected>Seleccione el material</option>
+                                                                    <!-- Acá mostraremos los puestos que existen en la base de datos -->
+                                                                    <?php
+                                                                    $VerMaterial = "SELECT idMaterial, NombreMaterial FROM Material;";
+                                                                    // Hacemos la consulta
+                                                                    $resultado = $mysqli->query($VerMaterial);
+                                                                    while ($row = mysqli_fetch_array($resultado)) {
+                                                                        ?>
+                                                                        <option value="<?php echo $row['idMaterial']; ?>"><?php echo $row['NombreMaterial'] ?></option>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group input-group-lg">
+                                                                <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-question-sign"></i></span>
+                                                                <input type="number" class="form-control" name="CantidadMaterial1" placeholder="Cantidad de Material" id="CantidadMaterial1" aria-describedby="sizing-addon1" required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <!-- Button trigger modal -->
+                                            <div class="input-group input-group-lg">
+                                                <button type="button" class="btn btn-success btn-lg AgregarFilaMaterial" value="" data-toggle="modal" data-target="#AgregarFilaMaterial" onclick="crearMaterial(this)">+</button>
                                             </div>
                                         </div>
                                     </div>
@@ -296,9 +375,147 @@
                 </form>
             </div>
             <?php
-            // Código que recibe la información del formulario modal (Deshabilitar)
-            if (isset($_POST['idAveria'])) {
-                echo $_POST['idAveria'];
+            if (isset($_POST['CrearOT'])) {
+                // Creamos variables que nos sume el total por cada suministro (Personal, equipo, material)
+                $TotalEnEquipo = 0;
+                $TotalEnPersonal = 0;
+                $TotalEnMaterial = 0;
+                // Contadores para acceder a cada array u para darle un nombre por cada array que encuentre
+                $Contador = 1;
+                $Contador2 = 0;
+                while ($post = each($_POST)) {
+                    //echo $post[$Contador2];
+                    // Para registrar todas las filas del equipo
+                    if ($post[$Contador2] = "Equipo" . $Contador) {
+                        if (isset($_POST['Equipo' . $Contador])) {
+                            $idAveria = $_POST['idAveria'];
+                            $IdEquip = $_POST['Equipo' . $Contador];
+                            //echo $IdEquip;
+                            $Cantidad = $_POST['CantidadEquipo' . $Contador];
+                            //echo $Cantidad;
+                            $HorasLaborad = $_POST['CantidadHorasEquipo' . $Contador];
+                            // Vamos a consultar a cuando nos sale cada hora y a multiplicarla por la cantidad necesitada
+                            // Primero haremos la consulta
+                            $VerCostoHora = "SELECT CostoPorHora FROM equipo WHERE idEquipo=" . $IdEquip . ";";
+                            // Ejecutamos la consulta
+                            $ResultadoConsultaCostoHora = $mysqli->query($VerCostoHora);
+                            // Guardamos la consulta en un array
+                            $ResultadoConsultaCosto = $ResultadoConsultaCostoHora->fetch_assoc();
+                            // Privilegio de usuario
+                            $CostoPorHoraEquipo = $ResultadoConsultaCosto['CostoPorHora'];
+                            // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
+                            $TotalEnEquipo += ($CostoPorHoraEquipo * $HorasLaborad) * $Cantidad;
+                            // Si contiene la palabra inicial producto seguido de un número insertamos e valor en la tabla de datalle de hojas de responsabilidad
+                            $ConsultaInsersionlistadoequipo = "INSERT INTO listadoequipo (idEquipo, idAveria, CantidadEquipo, HorasLaboradas)
+										       VALUES(" . $IdEquip . ", " . $idAveria . ", " . $Cantidad . ", " . $HorasLaborad . ");";
+                            if (!$ResultadoInsersionlistadoequipo = $mysqli->query($ConsultaInsersionlistadoequipo)) {
+                                echo "Error: La ejecución de la consulta falló debido a: \n";
+                                echo "Query: " . $ConsultaInsersionlistadoequipo . "\n";
+                                echo "Errno: " . $mysqli->errno . "\n";
+                                echo "Error: " . $mysqli->error . "\n";
+                                exit;
+                            }
+                        }
+                    }
+                    // Para registrar todas las filas del personal
+                    if ($post[$Contador2] = "Empleado" . $Contador) {
+                        if (isset($_POST['Empleado' . $Contador])) {
+                            $idAveria = $_POST['idAveria'];
+                            $IdEquip = $_POST['Empleado' . $Contador];
+                            $HorasLaborad = $_POST['CantidadHorasPersonal' . $Contador];
+                            // Vamos a consultar a cuando nos sale cada hora y a multiplicarla por la cantidad necesitada
+                            // Primero haremos la consulta
+                            $VerCostoHoraPersona = "SELECT CostoXHoraPersona FROM persona WHERE idPersona=" . $IdEquip . ";";
+                            // Ejecutamos la consulta
+                            $ResultadoConsultaCostoHoraPersona = $mysqli->query($VerCostoHoraPersona);
+                            // Guardamos la consulta en un array
+                            $ResultadoConsultaCostoHora = $ResultadoConsultaCostoHoraPersona->fetch_assoc();
+                            // Privilegio de usuario
+                            $CostoPorHoraPersona = $ResultadoConsultaCostoHora['CostoXHoraPersona'];
+                            // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
+                            $TotalEnPersonal += $CostoPorHoraPersona * $HorasLaborad;
+                            // Si contiene la palabra inicial producto seguido de un número insertamos e valor en la tabla de datalle de hojas de responsabilidad
+                            $ConsultaInsersionlistadopersonal = "INSERT INTO listadopersonal (idAveria, idPersona, HorasLaboradas)
+										       VALUES(" . $idAveria . ", " . $IdEquip . ", " . $HorasLaborad . ");";
+                            if (!$ResultadoInsersionlistadopersonal = $mysqli->query($ConsultaInsersionlistadopersonal)) {
+                                echo "Error: La ejecución de la consulta falló debido a: \n";
+                                echo "Query: " . $ConsultaInsersionlistadopersonal . "\n";
+                                echo "Errno: " . $mysqli->errno . "\n";
+                                echo "Error: " . $mysqli->error . "\n";
+                                exit;
+                            }
+                        }
+                    }
+                    // Para registrar todas las filas del material
+                    if ($post[$Contador2] = "Material" . $Contador) {
+                        if (isset($_POST['Material' . $Contador])) {
+                            $idAveria = $_POST['idAveria'];
+                            $IdMaterial = $_POST['Material' . $Contador];
+                            $CantidaMaterial = $_POST['CantidadMaterial' . $Contador];
+                            // Primero haremos la consulta
+                            $VerCostoHoraMaterial = "SELECT PrecioxUnidad FROM material WHERE idMaterial=" . $IdMaterial . ";";
+                            // Ejecutamos la consulta
+                            $ResultadoConsultaCostoHoraMaterial = $mysqli->query($VerCostoHoraMaterial);
+                            // Guardamos la consulta en un array
+                            $ResultadoConsultaCostoHoraMat = $ResultadoConsultaCostoHoraMaterial->fetch_assoc();
+                            // Privilegio de usuario
+                            $CostoPorHoraMaterial = $ResultadoConsultaCostoHoraMat['PrecioxUnidad'];
+                            // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
+                            $TotalEnMaterial += $CostoPorHoraMaterial * $CantidaMaterial;
+                            // Si contiene la palabra inicial producto seguido de un número insertamos e valor en la tabla de datalle de hojas de responsabilidad
+                            $ConsultaInsersionlistadomarterial = "INSERT INTO listadomaterial (idAveria, idMaterial, CantidadMaterial)
+										       VALUES(" . $idAveria . ", " . $IdMaterial . ", " . $CantidaMaterial . ");";
+                            if (!$ResultadoInsersionlistadomaterial = $mysqli->query($ConsultaInsersionlistadomarterial)) {
+                                echo "Error: La ejecución de la consulta falló debido a: \n";
+                                echo "Query: " . $ConsultaInsersionlistadomarterial . "\n";
+                                echo "Errno: " . $mysqli->errno . "\n";
+                                echo "Error: " . $mysqli->error . "\n";
+                                exit;
+                            }
+                        }
+                    }
+                    // Sumamos uno al contador
+                    $Contador++;
+                    $Contador2;
+                }
+                // Vamos a insertar toda la información de la orden de trabajo
+                // Obtenemos el total de la reparación a partir de la suma de todos los totales
+                $TotalNeto = $TotalEnEquipo + $TotalEnPersonal + $TotalEnMaterial;
+                // Debemos obtener el id del encargado de covial que nos solicitó el trabajo
+                // Primero haremos la consulta
+                $VerEncargadoMunicipal = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idAveria . ";";
+                // Ejecutamos la consulta
+                $ResultadoConsultaEncargadoMunicipal = $mysqli->query($VerEncargadoMunicipal);
+                // Guardamos la consulta en un array
+                $ResultadoConsultaEncargado = $ResultadoConsultaEncargadoMunicipal->fetch_assoc();
+                // Privilegio de usuario
+                $EncargadoMunicipal = $ResultadoConsultaEncargado['idUsuario'];
+                // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
+                $TotalEnMaterial += $CostoPorHoraMaterial * $CantidaMaterial;
+                $ConsultaInsersionOT = "INSERT INTO ordentrabajo (CostoPersonalOrdenTrabajo, CostoEquipoOrdenTrabajo, CostoMaterialOrdenTrabajo, CostoTotalOrdenTrabajo, idAveria, EncargadoMunicipal, EncargadoCovial, idTrazabilidad)
+                                                           VALUES(" . $TotalEnPersonal . ", " . $TotalEnEquipo . ", " . $TotalEnMaterial . ", " . $TotalNeto . ", " . $_POST['idAveria'] . ", " . $idUsuario2 . ", " . $EncargadoMunicipal . ", 3);";
+                if (!$ResultadoInsersionOT = $mysqli->query($ConsultaInsersionOT)) {
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $ConsultaInsersionOT . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    exit;
+                } else {
+                    // Actualizaremos la Avería para que cambie a estado de cotizada
+                    $ConsultaCambiarEstadoAveria = "UPDATE Averia SET idTrazabilidad=3
+                                                           WHERE idAveria=" . $idAveria . ";";
+                    if (!$ResultadoCambioEstado = $mysqli->query($ConsultaCambiarEstadoAveria)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $ConsultaCambiarEstadoAveria . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        exit;
+                    } else {
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Orden de trabajo generada\");\n";
+                        echo "</script>";
+                    }
+                }
             }
             ?>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
@@ -308,6 +525,8 @@
             <!-- Pie de página, se utilizará el mismo para todos. -->
             <!-- Incluimos el script que nos dará el nombre de la persona para mostrarlo en el modal -->
             <script src="js/Modal.js"></script>
+            <!-- Para copiar elementos -->
+            <script src="js/CopiaElementos.js"></script>
             <footer>
                 <hr>
                 <div class="row">

@@ -86,12 +86,13 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
+                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
                             }
                             ?>
-							<?php
+                            <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                 ?>
@@ -140,8 +141,7 @@
                                     <?php
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
-                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
-                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
+                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo administrador</a></li>
                                         <?php
                                     }
                                     ?>
@@ -165,7 +165,7 @@
                         <div id="snackbar"></div> 
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-xs-5">
+                                <div class="col-xs-5 col-xs-offset-1">
                                     <h1 class="text-center">Mis reportes</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
@@ -188,16 +188,16 @@
                                         <thead>
                                             <!-- Contenido -->
                                             <tr>
-                                                <th>#</th>
-                                                <th>Código</th>
-                                                <th>Fecha de reporte</th>
-                                                <th>Ubicación</th>
-                                                <th>Fotografías</th>
-                                                <th>Prioridad</th>
-                                                <th>Urgencia</th>
-                                                <th>Tamaño</th>
-                                                <th>Estado</th>
-                                                <th>Cancelar</th>
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Código</th>
+                                                <th class="text-center">Fecha de reporte</th>
+                                                <th class="text-center">Ubicación</th>
+                                                <th class="text-center">Fotografías</th>
+                                                <th class="text-center">Prioridad</th>
+                                                <th class="text-center">Urgencia</th>
+                                                <th class="text-center">Tamaño</th>
+                                                <th class="text-center">Estado</th>
+                                                <th class="text-center">Acción</th>
                                             </tr>
                                         </thead>
                                         <!-- Cuerpo de la tabla -->
@@ -266,7 +266,7 @@
                                                                 <!-- Deshabilitación -->
                                                                 <div>
                                                                     <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-warning CancelarAveria"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                        <button type="button" class="btn btn-danger CancelarAveria"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-cancel"></span>X</button>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -278,6 +278,44 @@
                                                                 <div>
                                                                     <div class="input-group input-group-lg">
                                                                         <button type="button" class="btn btn-success HabilitarAveria"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-check"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <?php
+                                                        } else if ($row['idTrazabilidad'] == 3) {
+                                                            ?>
+                                                            <td>
+                                                                <!-- Habilitación -->
+                                                                <div>
+                                                                    <div class="input-group input-group-lg">
+                                                                        <button type="button" class="btn btn-success AprobarAveria"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-check"></span>Aprovar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <!-- Habilitación -->
+                                                                <div>
+                                                                    <div class="input-group input-group-lg">
+                                                                        <button type="button" class="btn btn-danger RechazarAvería"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-remove"></span>Rechazar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <!-- Habilitación -->
+                                                                <div>
+                                                                    <div class="input-group input-group-lg">
+                                                                        <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <?php
+                                                        }else if ($row['idTrazabilidad'] == 4 || $row['idTrazabilidad'] == 5) {
+                                                            ?>
+                                                            <td>
+                                                                <!-- Habilitación -->
+                                                                <div>
+                                                                    <div class="input-group input-group-lg">
+                                                                        <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -317,7 +355,57 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="CancelarReporte" class="btn btn-warning" value="Cancelar Reporte">
+                            <input type="submit" name="CancelarReporte" class="btn btn-danger" value="Cancelar Reporte">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+        <!-- Edit Modal-->
+        <div class="modal fade" id="ModalAprobarAveria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <center><h1 class="modal-title" id="myModalLabel">Aprobar orden de trabajo</h1></center>
+                    </div>
+                    <form method="post" action="Averias.php" id="frmDeshabilitar">
+                        <div class="modal-body text-center">
+                            <p class="lead">¿Está seguro que desea aprobar esta orden de trabajo?</p>
+                            <div class="form-group input-group">
+                                <input type="text" name="idAprobar" style="width:350px; visibility:hidden;" class="form-control" id="idAprobar">
+                                <br>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="AprobarReporte" class="btn btn-success" value="Aprobar orden de trabajo">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+        <!-- Edit Modal-->
+        <div class="modal fade" id="ModalRechazarAveria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <center><h1 class="modal-title" id="myModalLabel">Recharzar orden de trabajo</h1></center>
+                    </div>
+                    <form method="post" action="Averias.php" id="frmDeshabilitar">
+                        <div class="modal-body text-center">
+                            <p class="lead">¿Está seguro que desea rechazar esta Orden de Trabajo?</p>
+                            <div class="form-group input-group">
+                                <input type="text" name="idRechazar" style="width:350px; visibility:hidden;" class="form-control" id="idRechazar">
+                                <br>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="RechazarReporte" class="btn btn-danger" value="Rechar orden de trabajo">
                         </div>
                     </form>
                 </div>
@@ -340,8 +428,66 @@
                 exit;
             } else {
                 echo "<script language=\"JavaScript\">\n";
-                        echo "myFunction(\"Reporte cancelado\");\n";
-                        echo "</script>";
+                echo "myFunction(\"Reporte cancelado\");\n";
+                echo "</script>";
+            }
+        }
+        // Código que recibe la información del formulario modal (Aprobar OT)
+        if (isset($_POST['AprobarReporte'])) {
+            // Guardamos el id en una variable
+            $idAprobar = $_POST['idAprobar'];
+            // Preparamos la consulta
+            $query = "UPDATE Averia SET idTrazabilidad = 4 WHERE idAveria=" . $idAprobar . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                $query = "UPDATE ordentrabajo SET idTrazabilidad = 4 WHERE idAveria=" . $idAprobar . ";";
+                // Ejecutamos la consulta
+                if (!$resultado = $mysqli->query($query)) {
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $query . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    exit;
+                } else {
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Orden de Trabajo aprobada\");\n";
+                    echo "</script>";
+                }
+            }
+        }
+        // Código que recibe la información del formulario modal (Rechazar OT)
+        if (isset($_POST['RechazarReporte'])) {
+            // Guardamos el id en una variable
+            $idRechazar = $_POST['idRechazar'];
+            // Preparamos la consulta
+            $query = "UPDATE Averia SET idTrazabilidad = 5 WHERE idAveria=" . $idRechazar . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                $query = "UPDATE ordentrabajo SET idTrazabilidad = 5 WHERE idAveria=" . $idRechazar . ";";
+                // Ejecutamos la consulta
+                if (!$resultado = $mysqli->query($query)) {
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $query . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    exit;
+                } else {
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Orden de Trabajo rechazada\");\n";
+                    echo "</script>";
+                }
             }
         }
         ?>

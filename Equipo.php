@@ -86,6 +86,7 @@
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
+                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                                     </ul>
                                 </li>
                                 <?php
@@ -141,7 +142,6 @@
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
                                         <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
-                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
                                         <?php
                                     }
                                     ?>
@@ -165,27 +165,13 @@
                         <div id="snackbar"></div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-xs-5">
+                                <div class="col-xs-5 col-xs-offset-1">
                                     <h1 class="text-center">Equipos registrados</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
                                 <div class="col-xs-5 Icon">
                                     <!-- Icono de usuario -->
                                     <span class="glyphicon glyphicon-asterisk"></span>
-                                </div>
-                                <div class="form-group">
-                                    <!--<form name="Exportar" action="Material.php" method="post">
-                                        <div class="col-xs-1">
-                                            <div class="input-group input-group-lg">
-                                                    <a class="btn btn-success btn-lg" href="ReporteProductos.php" target="_blank"><span class="glyphicon glyphicon-print"></span></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-1">
-                                            <div class="input-group input-group-lg">
-                                                    <input type="submit" name="Exportar" class="btn btn-success" value="Exportar a excel">
-                                            </div>
-                                        </div>
-                                    </form>-->
                                 </div>
                             </div>
                             <br>
@@ -202,13 +188,14 @@
                                         <thead>
                                             <!-- Contenido -->
                                             <tr>
-                                                <th>#</th>
-                                                <th>Código</th>´
-                                                <th>Nombre</th>´
-                                                <th>Costo por Hora</th>
-                                                <th>Estado del Equipo</th>
-                                                <th>Editar</th>
-                                                <th>Habilitar/Deshabilitar</th>
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Código</th>
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Costo por Hora<br>
+                                                                        Cifras en Quetzales</th>
+                                                <th class="text-center">Estado del Equipo</th>
+                                                <th class="text-center">Editar</th>
+                                                <th class="text-center">Habilitar/Deshabilitar</th>
                                             </tr>
                                         </thead>
                                         <!-- Cuerpo de la tabla -->

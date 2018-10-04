@@ -142,7 +142,6 @@
                                     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
                                         ?>
                                         <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
-                                        <li><a href="JuntaOficiales.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Modificar junta oficiales</a></li>
                                         <?php
                                     }
                                     ?>
@@ -166,7 +165,7 @@
                         <div id="snackbar"></div> 
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-xs-5">
+                                <div class="col-xs-5 col-xs-offset-1">
                                     <h1 class="text-center">Reportes en cola</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
@@ -189,16 +188,16 @@
                                         <thead>
                                             <!-- Contenido -->
                                             <tr>
-                                                <th>#</th>
-                                                <th>Código</th>
-                                                <th>Fecha de reporte</th>
-                                                <th>Ubicación</th>
-                                                <th>Fotografías</th>
-                                                <th>Prioridad</th>
-                                                <th>Urgencia</th>
-                                                <th>Tamaño</th>
-                                                <th>Estado</th>
-                                                <th>Generar OT</th>
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Código</th>
+                                                <th class="text-center">Fecha de reporte</th>
+                                                <th class="text-center">Ubicación</th>
+                                                <th class="text-center">Fotografías</th>
+                                                <th class="text-center">Prioridad</th>
+                                                <th class="text-center">Urgencia</th>
+                                                <th class="text-center">Tamaño</th>
+                                                <th class="text-center">Estado</th>
+                                                <th class="text-center">Generar OT</th>
                                             </tr>
                                         </thead>
                                         <!-- Cuerpo de la tabla -->
@@ -217,7 +216,7 @@
                                                         <td><span id="Correlativo<?php echo $Contador; ?>"><?php echo $Contador ?></span></td>
                                                         <td><span id="Codigo<?php echo $row['idAveria']; ?>"><?php echo $row['idAveria'] ?></span></td>
                                                         <td><span id="FechaReporteAveria<?php echo $row['idAveria']; ?>"><?php echo $row['FechaReporteAveria'] ?></span></td>
-                                                        <td><span id="UbicacionAveria<?php echo $row['idAveria']; ?>"><a href="https://maps.google.com/?ll=<?php echo $row['UbicacionAveria'] ?>&z=18&t=k" >Ir</a></span></td>
+                                                        <td><span id="UbicacionAveria<?php echo $row['idAveria']; ?>"><a href="https://maps.google.com/?ll=<?php echo $row['UbicacionAveria'] ?>&z=18&t=k" target="_blank">Ver ubicación</a></span></td>
                                                         <td><span id="ImagenAveria<?php echo $row['idAveria']; ?>">
                                                                 <form method="post" action="VerFotos.php">
                                                                     <input type="hidden" name="Path" value="<?php echo $row['ImagenAveria'] ?>" />

@@ -78,6 +78,15 @@ INSERT INTO Tamanio(NombreTamanio)
 INSERT INTO Tamanio(NombreTamanio)
 			VALUES('10');
 			
+INSERT INTO Urgencia(NombreUrgencia)
+			VALUES('Alta');
+			
+INSERT INTO Urgencia(NombreUrgencia)
+			VALUES('Media');
+			
+INSERT INTO Urgencia(NombreUrgencia)
+			VALUES('Baja');
+			
 INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona,
                     TelefonoPersona, CostoXHoraPersona, idTipoEmpleado, EstadoPersona)
               VALUES('Administrador', 'administrador', 'Ciudad',

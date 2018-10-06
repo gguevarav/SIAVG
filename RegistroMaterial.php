@@ -32,9 +32,7 @@
     include_once "Seguridad/conexion.php";
     // Si en la sesión activa tiene privilegios de administrador puede ver el formulario
     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-            $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-            $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-            $_SESSION["PrivilegioUsuario"] == 'Tesorero') {
+            $_SESSION["PrivilegioUsuario"] == 'EncCovial') {
         // Guardamos el nombre del usuario en una variable
         $NombreUsuario = $_SESSION["NombreUsuario"];
         $idUsuario2 = $_SESSION["idUsuario"];
@@ -49,26 +47,22 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="defaultNavbar1">
                         <ul class="nav navbar-nav">
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <?php
-                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Tesorero') {
-                                        ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
                                         <li><a href="Equipo.php">Listado de Equipos</a></li>
                                         <li><a href="RegistroEquipo.php">Registrar equipos</a></li>
-                                        <?php
-                                    }
-                                    ?>
-                                </ul>
-                            </li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Tesorero') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Materiales<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -80,8 +74,8 @@
                             }
                             ?>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -92,9 +86,9 @@
                                 <?php
                             }
                             ?>
-							<?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -106,8 +100,7 @@
                             }
                             ?>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -119,8 +112,8 @@
                             }
                             ?>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncMunicipal' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -139,9 +132,9 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><?php echo $NombreUsuario; ?></a></li>
                                     <?php
-                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                         ?>
-                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
+                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo administrador</a></li>
                                         <?php
                                     }
                                     ?>
@@ -170,12 +163,13 @@
                             <!-- Contenedor del ícono del Usuario -->
                             <div class="col-xs-5 Icon">
                                 <!-- Icono de usuario -->
-                                <span class="glyphicon glyphicon-edit"></span>
+                                <span class="glyphicon glyphicon-plus"></span>
                             </div>
                         </div>
                         <br>
                         <div class="form-group">
                             <form name="RegistroMaterial" action="RegistroMaterial.php" method="post">
+                                <!-- Código del material -->
                                 <div class="row">
                                     <div class="col-xs-10 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
@@ -185,7 +179,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <!-- Nombre del producto -->
+                                <!-- Nombre del material -->
                                 <div class="row">
                                     <div class="col-xs-10 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
@@ -195,11 +189,11 @@
                                     </div>
                                 </div>
                                 <br>
-                                <!-- MarcaProducto-->
+                                <!-- Unidad de medida del producto-->
                                 <div class="row">
                                     <div class="col-xs-9 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
-                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
+                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-scale"></i></span>
                                             <select class="form-control" name="UnidadMedida" id="UnidadMedida">
                                                 <option value="" disabled selected>Unidad de medida</option>
                                                 <!-- Acá mostraremos los puestos que existen en la base de datos -->
@@ -224,11 +218,11 @@
                                     </div>
                                 </div>
                                 <br>
-                                <!-- Modelo producto -->
+                                <!-- Precio del material -->
                                 <div class="row">
                                     <div class="col-xs-10 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
-                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-ok"></i></span>
+                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-usd"></i></span>
                                             <input type="number" class="form-control" min="0" step="0.50" name="PrecioMaterial" placeholder="Precio" id="PrecioMaterial" aria-describedby="sizing-addon1">
                                         </div>
                                     </div>
@@ -297,8 +291,8 @@
                 $row = mysqli_fetch_array($ResultadoExisteMaterial);
                 if ($row['CodigoMaterial'] != null) {
                     echo "<script language=\"JavaScript\">\n";
-                        echo "myFunction(\"Este código ya existe\");\n";
-                        echo "</script>";
+                    echo "myFunction(\"Este código ya existe\");\n";
+                    echo "</script>";
                 } else {
                     // Preparamos la consulta
                     $query = "INSERT INTO Material(NombreMaterial, CodigoMaterial, idUnidadMedida, PrecioxUnidad, EstadoMaterial)
@@ -328,8 +322,8 @@
                 $row = mysqli_fetch_array($ResultadoExisteUnidad);
                 if ($row['NombreUnidadMedida'] != null) {
                     echo "<script language=\"JavaScript\">\n";
-                        echo "myFunction(\"El nombre de la unidad de medida ya existe\");\n";
-                        echo "</script>";
+                    echo "myFunction(\"El nombre de la unidad de medida ya existe\");\n";
+                    echo "</script>";
                 } else {
                     // Preparamos la consulta
                     $query = "INSERT INTO unidadmedida(NombreUnidadMedida)

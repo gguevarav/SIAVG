@@ -32,9 +32,7 @@
     include_once "Seguridad/conexion.php";
     // Si en la sesión activa tiene privilegios de administrador puede ver el formulario
     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-            $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-            $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-            $_SESSION["PrivilegioUsuario"] == 'Tesorero') {
+            $_SESSION["PrivilegioUsuario"] == 'EncCovial') {
         // Guardamos el nombre del usuario en una variable
         $NombreUsuario = $_SESSION["NombreUsuario"];
         $idUsuario2 = $_SESSION["idUsuario"];
@@ -49,26 +47,22 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="defaultNavbar1">
                         <ul class="nav navbar-nav">
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <?php
-                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                            $_SESSION["PrivilegioUsuario"] == 'Tesorero') {
-                                        ?>
-                                        <li><a href="RegistroEquipo.php">Registrar equipos</a></li>
-                                        <li><a href="Equipo.php">Listado de Equipos</a></li>
-                                        <?php
-                                    }
-                                    ?>
-                                </ul>
-                            </li>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Secretario' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Tesorero') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
+                                ?>
+                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="Equipo.php">Listado de Equipos</a></li>
+                                        <li><a href="RegistroEquipo.php">Registrar equipos</a></li>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Materiales<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -80,8 +74,8 @@
                             }
                             ?>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -93,8 +87,8 @@
                             }
                             ?>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -106,8 +100,7 @@
                             }
                             ?>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -119,8 +112,8 @@
                             }
                             ?>
                             <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                            if ($_SESSION["PrivilegioUsuario"] == 'EncMunicipal' ||
+                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                 ?>
                                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
@@ -139,9 +132,9 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><?php echo $NombreUsuario; ?></a></li>
                                     <?php
-                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador' || $_SESSION["PrivilegioUsuario"] == 'Superadmin') {
+                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
                                         ?>
-                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo adminstrador</a></li>
+                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo administrador</a></li>
                                         <?php
                                     }
                                     ?>
@@ -171,7 +164,7 @@
                                 <!-- Contenedor del ícono del Usuario -->
                                 <div class="col-xs-5 Icon">
                                     <!-- Icono de usuario -->
-                                    <span class="glyphicon glyphicon-asterisk"></span>
+                                    <span class="glyphicon glyphicon-user"></span>
                                 </div>
                             </div>
                             <br>

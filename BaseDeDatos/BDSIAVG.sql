@@ -24,7 +24,8 @@ CREATE TABLE Persona(
     ApellidoPersona         VARCHAR(45)         NOT NULL,
     DireccionPersona        VARCHAR(45)         NOT NULL,
     TelefonoPersona         VARCHAR(45)         NOT NULL,
-	EstadoPersona			VARCHAR(20)			NOT NULL,
+    CostoXHoraPersona       DECIMAL(10,2)       NOT NULL,
+    EstadoPersona           VARCHAR(20)         NOT NULL,
     idTipoEmpleado          TINYINT             NOT NULL,
     INDEX (idTipoEmpleado),
     FOREIGN KEY (idTipoEmpleado)
@@ -80,7 +81,7 @@ CREATE TABLE Averia(
     idTrazabilidad          TINYINT             NOT NULL,
     idUrgencia              TINYINT             NOT NULL,
     idTamanio               TINYINT             NOT NULL,
-	idUsuario				INTEGER				NOT NULL,
+    idUsuario               INTEGER		NOT NULL,
     INDEX (idPrioridad),
     FOREIGN KEY (idPrioridad)
             REFERENCES Prioridad(idPrioridad)
@@ -112,7 +113,7 @@ CREATE TABLE Equipo(
     idEquipo                INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
     NombreEquipo            VARCHAR(100)        NOT NULL,
     CodigoEquipo            VARCHAR(20)         NOT NULL,
-    CostoPorHora            DECIMAL             NOT NULL,
+    CostoPorHora            DECIMAL(10,2)       NOT NULL,
     EstadoEquipo            VARCHAR(20)         NOT NULL
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
@@ -137,8 +138,15 @@ CREATE TABLE Material(
 
 CREATE TABLE ListadoEquipo(
     idListadoEquipo         INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
+    idAveria                INTEGER             NOT NULL,
     idEquipo                INTEGER             NOT NULL,
-    CantidadEquipo          DECIMAL             NOT NULL,
+    CantidadEquipo          DECIMAL(10,2)       NOT NULL,
+    HorasLaboradas          DECIMAL(10,2)       NOT NULL,
+    INDEX (idAveria),
+    FOREIGN KEY (idAveria)
+            REFERENCES Averia(idAveria)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
     INDEX (idEquipo),
     FOREIGN KEY (idEquipo)
             REFERENCES Equipo(idEquipo)
@@ -148,8 +156,14 @@ CREATE TABLE ListadoEquipo(
 
 CREATE TABLE ListadoMaterial(
     idListadoMaterial       INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
+    idAveria                INTEGER             NOT NULL,
     idMaterial              INTEGER             NOT NULL,
     CantidadMaterial        DECIMAl             NOT NULL,
+    INDEX (idAveria),
+    FOREIGN KEY (idAveria)
+            REFERENCES Averia(idAveria)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
     INDEX (idMaterial),
     FOREIGN KEY (idMaterial)
             REFERENCES Material(idMaterial)
@@ -159,8 +173,14 @@ CREATE TABLE ListadoMaterial(
 
 CREATE TABLE ListadoPersonal(
     idListadoPersonal       INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
+    idAveria                INTEGER             NOT NULL,
     idPersona               INTEGER             NOT NULL,
-    CantidadPersona         INTEGER             NOT NULL,
+    HorasLaboradas          INTEGER             NOT NULL,
+    INDEX (idAveria),
+    FOREIGN KEY (idAveria)
+            REFERENCES Averia(idAveria)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
     INDEX (idPersona),
     FOREIGN KEY (idPersona)
             REFERENCES Persona(idPersona)
@@ -170,33 +190,18 @@ CREATE TABLE ListadoPersonal(
 
 CREATE TABLE OrdenTrabajo(
     idOrdenTrabajo          INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
-    FechaOrdenTrabajo       DATE                NOT NULL,
-    CostoTotalOrdenTrabajo  DECIMAL             NOT NULL,
+    FechaOrdenTrabajo       TIMESTAMP           NOT NULL,
+    CostoPersonalOrdenTrabajo   DECIMAL(10,2)   NOT NULL,
+    CostoEquipoOrdenTrabajo     DECIMAL(10,2)   NOT NULL,
+    CostoMaterialOrdenTrabajo   DECIMAL(10,2)   NOT NULL,
+    CostoTotalOrdenTrabajo  DECIMAL(10,2)       NOT NULL,
     idAveria                INTEGER             NOT NULL,
-    idListadoEquipo         INTEGER             NOT NULL,
-    idListadoMaterial       INTEGER             NOT NULL,
-    idListadoPersonal       INTEGER             NOT NULL,
     EncargadoMunicipal      INTEGER             NOT NULL,
     EncargadoCovial         INTEGER             NOT NULL,
-	Estado					INTEGER				NOT NULL,
+    idTrazabilidad          TINYINT             NOT NULL,
     INDEX (idAveria),
     FOREIGN KEY (idAveria)
             REFERENCES Averia(idAveria)
-            ON DELETE CASCADE
-            ON UPDATE NO ACTION,
-    INDEX (idListadoEquipo),
-    FOREIGN KEY (idListadoEquipo)
-            REFERENCES ListadoEquipo(idListadoEquipo)
-            ON DELETE CASCADE
-            ON UPDATE NO ACTION,
-    INDEX (idListadoMaterial),
-    FOREIGN KEY (idListadoMaterial)
-            REFERENCES ListadoMaterial(idListadoMaterial)
-            ON DELETE CASCADE
-            ON UPDATE NO ACTION,
-    INDEX (idListadoPersonal),
-    FOREIGN KEY (idListadoPersonal)
-            REFERENCES ListadoPersonal(idListadoPersonal)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
     INDEX (EncargadoMunicipal),
@@ -207,6 +212,11 @@ CREATE TABLE OrdenTrabajo(
     INDEX (EncargadoCovial),
     FOREIGN KEY (EncargadoCovial)
             REFERENCES Persona(idPersona)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
+    INDEX (idTrazabilidad),
+    FOREIGN KEY (idTrazabilidad)
+            REFERENCES Trazabilidad(idTrazabilidad)
             ON DELETE CASCADE
             ON UPDATE NO ACTION
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;

@@ -186,7 +186,7 @@
                                                 <th class="text-center">Nombre</th>
                                                 <th class="text-center">UM</th>
                                                 <th class="text-center">Precio<br>
-                                                    Cifras en Quetzales</th>
+                                                    (Cifras en Quetzales)</th>
                                                 <th class="text-center">Estado del Material</th>
                                                 <th class="text-center">Editar</th>
                                                 <th class="text-center">Habilitar/Deshabilitar</th>

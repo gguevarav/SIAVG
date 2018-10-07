@@ -170,17 +170,14 @@
                                 <br>
                                 <!-- Nombre del usuario -->
                                 <div class="row">
-                                    <div class="col-xs-10 col-xs-offset-1">
+                                    <div class="col-xs-5 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-edit"></i></span>
                                             <input type="text" class="form-control" name="NombreUsuario" placeholder="Nombre" id="NombreUsuario" aria-describedby="sizing-addon1" required>
                                         </div>
                                     </div>
-                                </div>
-                                <br>
-                                <!-- Apellido del usuario -->
-                                <div class="row">
-                                    <div class="col-xs-10 col-xs-offset-1">
+                                    <!-- Apellido del usuario -->
+                                    <div class="col-xs-5">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-edit"></i></span>
                                             <input type="text" class="form-control" name="ApellidoUsuario" placeholder="Apellido" id="ApellidoUsuario" aria-describedby="sizing-addon1" required>
@@ -190,14 +187,37 @@
                                 <br>
                                 <!-- Dirección del usuario -->
                                 <div class="row">
-                                    <div class="col-xs-6 col-xs-offset-1">
+                                    <div class="col-xs-10 col-xs-offset-1">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-map-marker"></i></span>
                                             <input type="text" class="form-control" name="DireccionUsuario" placeholder="Dirección" id="DireccionUsuario" aria-describedby="sizing-addon1" required>
                                         </div>
                                     </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <!-- Municipalidad del usuario -->
+                                    <div class="col-xs-5 col-xs-offset-1">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                            <select class="form-control" name="idMunicipalidad" id="idMunicipalidad">
+                                                <option value="" disabled selected>Municipalidad a la que pertenece el usuario</option>
+                                                <!-- Acá mostraremos los puestos que existen en la base de datos -->
+                                                <?php
+                                                $VerMuni = "SELECT * FROM Municipalidad;";
+                                                // Hacemos la consulta
+                                                $resultadoMuni = $mysqli->query($VerMuni);
+                                                while ($row = mysqli_fetch_array($resultadoMuni)) {
+                                                    ?>
+                                                    <option value="<?php echo $row['idMunicipalidad']; ?>"><?php echo $row['NombreMunicipalidad'] ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <!-- Teléfono del usuario -->
-                                    <div class="col-xs-4">
+                                    <div class="col-xs-5">
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-earphone"></i></span>
                                             <input type="tel" class="form-control" name="TelefonoUsuario" placeholder="Teléfono" id="TelefonoUsuario" aria-describedby="sizing-addon1" required>
@@ -304,6 +324,7 @@
                 $TelefonoUsuario = $_POST['TelefonoUsuario'];
                 $NombreTipoEmpleadoUsuario = $_POST['NombreTipoEmpleado'];
                 $Nombrerolusuario = $_POST['NombreRol'];
+                $idMunicipalidad = $_POST['idMunicipalidad'];
                 $username = $_POST['username'];
                 $PasswordUsuario = $_POST['PasswordUsuario'];
                 $RePasswordUsuario = $_POST['RePasswordUsuario'];
@@ -323,8 +344,8 @@
                         exit;
                     }
                     // Preparamos la consulta
-                    $InsertarUsuario = "INSERT INTO Usuario (NombreUsuario, PasswordUsuario, idPersona, idRol)
-						      VALUES('" . $username . "', '" . $ContraseniaEncriptada . "', " . mysqli_insert_id($mysqli) . ", " . $Nombrerolusuario . ");";
+                    $InsertarUsuario = "INSERT INTO Usuario (NombreUsuario, PasswordUsuario, idMunicipalidad, idPersona, idRol)
+						      VALUES('" . $username . "', '" . $ContraseniaEncriptada . "', " . $idMunicipalidad . ", " . mysqli_insert_id($mysqli) . ", " . $Nombrerolusuario . ");";
 
                     if (!$resultado2 = $mysqli->query($InsertarUsuario)) {
                         echo "Error: La ejecución de la consulta falló debido a: \n";

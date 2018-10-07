@@ -185,6 +185,7 @@
                                                 <th class="text-center">Apellido</th>
                                                 <th class="text-center">Nombre usuario</th>
                                                 <th class="text-center">Dirección</th>
+                                                <th class="text-center">Municipalidad a la que pertenece</th>
                                                 <th class="text-center">No. de teléfono</th>
                                                 <th class="text-center">Tipo de Empleado</th>
                                                 <th class="text-center">Rol</th>
@@ -237,6 +238,15 @@
                                                         <td><span id="ApellidoUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['ApellidoPersona'] ?></span></td>
                                                         <td><span id="NombreUsuario<?php echo $row['idPersona']; ?>"><?php echo $NombreDeUsuario ?></span></td>
                                                         <td><span id="DireccionUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['DireccionPersona'] ?></span></td>
+                                                        <td><span id="Municipalidad<?php echo $row['idPersona']; ?>">
+                                                                <?php
+                                                                $VerMunicipalidad = "SELECT NombreMunicipalidad FROM Municipalidad WHERE idMunicipalidad='" . $ResultadoConsulta['idMunicipalidad'] . "';";
+                                                                // Hacemos la consulta
+                                                                $ResultadoConsultaMunicipalidad = $mysqli->query($VerMunicipalidad);
+                                                                $FilaResultadoMunicipalidad = $ResultadoConsultaMunicipalidad->fetch_assoc();
+                                                                $NombreMunicipalidad = $FilaResultadoMunicipalidad['NombreMunicipalidad'];
+                                                                echo $NombreMunicipalidad;
+                                                                ?></span></td>
                                                         <td><span id="TelefonoUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['TelefonoPersona'] ?></span></td>
                                                         <td><span id="TipoEmpleadoUsuario<?php echo $row['idPersona']; ?>"><?php echo $TipoDeEmpleado ?></span></td>
                                                         <td><span id="NombreRol<?php echo $row['idPersona']; ?>"><?php echo $NombreRol ?></span></td>

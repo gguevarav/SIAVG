@@ -46,7 +46,7 @@
                         <a class="navbar-brand" href="index.php"><img src="imagenes/logo.png" class="img-circle" width="25" height="25"></a></div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="defaultNavbar1">
-                       <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav">
                             <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Administrador') {
@@ -245,10 +245,18 @@
                                                     if ($NombreTrazabilidad == "Cotizada") {
                                                         ?>
                                                         <td>
+                                                            <!-- Habilitación -->
+                                                            <div>
+                                                                <div class="input-group input-group-lg">
+                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
                                                             <!-- Deshabilitación -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-danger CancelarOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                    <button type="button" class="btn btn-danger CancelarOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-remove"></span> Cancelar OT</button>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -264,7 +272,56 @@
                                                             </div>
                                                         </td>
                                                         <?php
-                                                    } else if ($NombreTrazabilidad == "Aprobada" || $NombreTrazabilidad == "Rechazada") {
+                                                    } else if ($NombreTrazabilidad == "Aprobada") {
+                                                        ?>
+                                                        <td>
+                                                            <!-- Habilitación -->
+                                                            <div>
+                                                                <div class="input-group input-group-lg">
+                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Habilitación -->
+                                                            <div>
+                                                                <div class="input-group input-group-lg">
+                                                                    <button type="button" class="btn btn-success CambiarAEnProcesoOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Iniciar trabajo</button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <?php
+                                                    } else if ($NombreTrazabilidad == "En Proceso") {
+                                                        ?>
+                                                        <td>
+                                                            <!-- Habilitación -->
+                                                            <div>
+                                                                <div class="input-group input-group-lg">
+                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Habilitación -->
+                                                            <div>
+                                                                <div class="input-group input-group-lg">
+                                                                    <button type="button" class="btn btn-success FinalizarOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>CerrarOT</button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <?php
+                                                    } else if ($NombreTrazabilidad == "Rechazada") {
+                                                        ?>
+                                                        <td>
+                                                            <!-- Habilitación -->
+                                                            <div>
+                                                                <div class="input-group input-group-lg">
+                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <?php
+                                                    } else if ($NombreTrazabilidad == "Finalizada") {
                                                         ?>
                                                         <td>
                                                             <!-- Habilitación -->
@@ -314,7 +371,77 @@
             </div>
         </div>
         <!-- /.modal -->
+        <!-- Edit Modal-->
+        <div class="modal fade" id="ModalEnProcesoOT" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <center><h1 class="modal-title" id="myModalLabel">Cambio de estado de orden de trabajo</h1></center>
+                    </div>
+                    <form method="post" action="ListarOrdenTrabajo.php" id="frmDeshabilitar">
+                        <div class="modal-body text-center">
+                            <p class="lead">¿Está seguro que desea cambiar el estado de esta orden de trabajo?</p>
+                            <div class="form-group input-group">
+                                <input type="text" name="idEnProceso" style="width:350px; visibility:hidden;" class="form-control" id="idEnProceso">
+                                <input type="text" name="idAveriaEnProceso" style="width:350px; visibility:hidden;" class="form-control" id="idAveriaEnProceso">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="EnProcesoOT" class="btn btn-success" value="Iniciar trabajo">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+        <!-- Edit Modal-->
+        <div class="modal fade" id="ModalCerrarOT" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <center><h1 class="modal-title" id="myModalLabel">Cerrar la orden de trabajo</h1></center>
+                    </div>
+                    <form method="post" action="ListarOrdenTrabajo.php" id="frmDeshabilitar">
+                        <div class="modal-body text-center">
+                            <p class="lead">¿Está seguro que desea cerrar esta orden de trabajo?</p>
+                            <div class="form-group input-group">
+                                <input type="text" name="idCerrar" style="width:350px; visibility:hidden;" class="form-control" id="idCerrar">
+                                <input type="text" name="idAveriaCerrar" style="width:350px; visibility:hidden;" class="form-control" id="idAveriaCerrar">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="CerrarOT" class="btn btn-success" value="Cerrar OT">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
         <?php
+        require("phpmailer/class.phpmailer.php"); //Importamos la función PHP class.phpmailer
+        $mail = new PHPMailer();
+
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true; // True para que verifique autentificación de la cuenta o de lo contrario False
+
+        $mail->SMTPSecure = "ssl";
+        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 465;
+        
+        //Nuestra cuenta
+        $mail->Username = 'info.4890132950.net@gmail.com';
+        $mail->Password = 'Alovelyday_0295'; //Su password
+        $mail->From = "info.4890132950.net@gmail.com";
+        $mail->FromName = "SIAVG";
+        $mail->Subject = "Seguimiento de averia";
+        $mail->AddAddress("gemisdguevarav@gmail.com", "Seguimiento de Averias");
+
+        $mail->WordWrap = 50;
+
         // Código que recibe la información del formulario modal (Deshabilitar)
         if (isset($_POST['CancelarOT'])) {
             // Guardamos el id en una variable
@@ -343,6 +470,186 @@
                     echo "<script language=\"JavaScript\">\n";
                     echo "myFunction(\"Orden de trabajo cancelada\");\n";
                     echo "</script>";
+                }
+            }
+        }
+        // Código que recibe la información del formulario modal (Orden de trabajo en proceso)
+        if (isset($_POST['EnProcesoOT'])) {
+            // Guardamos el id en una variable
+            $idEnProceso = $_POST['idEnProceso'];
+            $idAveriaEnProceso = $_POST['idAveriaEnProceso'];
+            // Preparamos la consulta
+            $query = "UPDATE OrdenTrabajo SET idTrazabilidad = 6 WHERE idOrdenTrabajo=" . $idEnProceso . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                // Preparamos la consulta, vamos a cambiar el estado de la Avería a solicitada
+                $query = "UPDATE Averia SET idTrazabilidad = 6 WHERE idAveria=" . $idAveriaEnProceso . ";";
+                // Ejecutamos la consulta
+                if (!$resultado = $mysqli->query($query)) {
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $query . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    exit;
+                } else {
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Orden de trabajo en proceso\");\n";
+                    echo "</script>";
+                    // Enviamos el correo
+                    $mail->msgHTML("<html>
+                                    <head>
+                                    <title>Reporte de seguimiento a avería</title>
+                                    <style type='text/css'>
+                                            #datos {
+                                                    position:absolute;
+                                                    width:780px;
+                                                    left: 164px;
+                                                    top: 316px;
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #form1 table tr td {
+                                                    text-align: center;
+                                                    font-weight: bold;
+                                            }
+                                            #apDiv2 {
+                                                    position:absolute;
+                                                    width:49px;
+                                                    height:45px;
+                                                    z-index:2;
+                                                    left: 12px;
+                                                    top: 11px;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: left;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                                    font-family: Arial, Helvetica, sans-serif;
+                                            }
+                                            #apDiv3 {
+                                                    position:absolute;
+                                                    width:833px;
+                                                    height:115px;
+                                                    z-index:1;
+                                                    left: 99px;
+                                                    text-align: center;
+                                                    top: 16px;
+                                            }
+                                    </style>
+                                    </head>
+                                    <body>
+                                        <div id='apDiv3'>
+                                            <h1>Su solicitud No. " . $idAveriaEnProceso . ", con numero de OT No. " . $idEnProceso . " se encuenta en proceso de ejecucion</h2>
+                                        </div>								
+                                    </body>
+                                    </html>");
+
+                    // Notificamos al usuario del estado del mensaje
+
+                    if (!$mail->Send()) {
+                        //echo "No se pudo enviar el Mensaje.";
+                    } else {
+                        //echo "Mensaje enviado";
+                    }
+                }
+            }
+        }
+        // Código que recibe la información del formulario modal (Cerrar OT)
+        if (isset($_POST['CerrarOT'])) {
+            // Guardamos el id en una variable
+            $idCerrar = $_POST['idCerrar'];
+            $idAveriaCerrar = $_POST['idAveriaCerrar'];
+            // Preparamos la consulta
+            $query = "UPDATE OrdenTrabajo SET idTrazabilidad = 7 WHERE idOrdenTrabajo=" . $idCerrar . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                // Preparamos la consulta, vamos a cambiar el estado de la Avería a solicitada
+                $query = "UPDATE Averia SET idTrazabilidad = 7 WHERE idAveria=" . $idAveriaCerrar . ";";
+                // Ejecutamos la consulta
+                if (!$resultado = $mysqli->query($query)) {
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $query . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    exit;
+                } else {
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Orden de trabajo finalizada\");\n";
+                    echo "</script>";
+                    // Enviamos el correo
+                    $mail->msgHTML("<html>
+                                    <head>
+                                    <title>Reporte de seguimiento a avería</title>
+                                    <style type='text/css'>
+                                            #datos {
+                                                    position:absolute;
+                                                    width:780px;
+                                                    left: 164px;
+                                                    top: 316px;
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #form1 table tr td {
+                                                    text-align: center;
+                                                    font-weight: bold;
+                                            }
+                                            #apDiv2 {
+                                                    position:absolute;
+                                                    width:49px;
+                                                    height:45px;
+                                                    z-index:2;
+                                                    left: 12px;
+                                                    top: 11px;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: left;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                                    font-family: Arial, Helvetica, sans-serif;
+                                            }
+                                            #apDiv3 {
+                                                    position:absolute;
+                                                    width:833px;
+                                                    height:115px;
+                                                    z-index:1;
+                                                    left: 99px;
+                                                    text-align: center;
+                                                    top: 16px;
+                                            }
+                                    </style>
+                                    </head>
+                                    <body>
+                                        <div id='apDiv3'>
+                                            <h1>Se finalizo su solicitud No. " . $idAveriaCerrar . ", con numero de OT No. " . $idCerrar . ".</h2>
+                                        </div>								
+                                    </body>
+                                    </html>");
+
+                    // Notificamos al usuario del estado del mensaje
+
+                    if (!$mail->Send()) {
+                        //echo "No se pudo enviar el Mensaje.";
+                    } else {
+                        //echo "Mensaje enviado";
+                    }
                 }
             }
         }

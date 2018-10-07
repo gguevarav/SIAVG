@@ -32,7 +32,7 @@
     include_once "Seguridad/conexion.php";
     // Si en la sesión activa tiene privilegios de administrador puede ver el formulario
     if ($_SESSION["PrivilegioUsuario"] == 'Administrador' ||
-            $_SESSION["PrivilegioUsuario"] == 'EncCovial'){
+            $_SESSION["PrivilegioUsuario"] == 'EncCovial') {
         // Guardamos el nombre del usuario en una variable
         $NombreUsuario = $_SESSION["NombreUsuario"];
         $idUsuario2 = $_SESSION["idUsuario"];
@@ -46,7 +46,7 @@
                         <a class="navbar-brand" href="index.php"><img src="imagenes/logo.png" class="img-circle" width="25" height="25"></a></div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="defaultNavbar1">
-                       <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav">
                             <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Administrador') {
@@ -184,6 +184,7 @@
                                                 <th class="text-center">#</th>
                                                 <th class="text-center">Código</th>
                                                 <th class="text-center">Fecha de reporte</th>
+                                                <th class="text-center">Municipalidad</th>
                                                 <th class="text-center">Ubicación</th>
                                                 <th class="text-center">Fotografías</th>
                                                 <th class="text-center">Prioridad</th>
@@ -203,92 +204,99 @@
                                             $resultado = $mysqli->query($ListadoAverias);
                                             $Contador = 1;
                                             while ($row = mysqli_fetch_array($resultado)) {
-                                                 
-                                                    ?>
-                                                    <tr>
-                                                        <td><span id="Correlativo<?php echo $Contador; ?>"><?php echo $Contador ?></span></td>
-                                                        <td><span id="Codigo<?php echo $row['idAveria']; ?>"><?php echo $row['idAveria'] ?></span></td>
-                                                        <td><span id="FechaReporteAveria<?php echo $row['idAveria']; ?>"><?php echo $row['FechaReporteAveria'] ?></span></td>
-                                                        <td><span id="UbicacionAveria<?php echo $row['idAveria']; ?>"><a href="https://maps.google.com/?ll=<?php echo $row['UbicacionAveria'] ?>&z=18&t=k" target="_blank">Ver ubicación</a></span></td>
-                                                        <td><span id="ImagenAveria<?php echo $row['idAveria']; ?>">
-                                                                <form method="post" action="VerFotos.php">
-                                                                    <input type="hidden" name="Path" value="<?php echo $row['ImagenAveria'] ?>" />
-                                                                    <input type="submit" name="VerFotos" class="btn" value="Ver fotos">
-                                                                </form>
-                                                            </span></td>
-                                                        <td><span id="idPrioridad<?php echo $row['idAveria']; ?>">
-                                                                <?php
-                                                                $VerNombrePrioridad = "SELECT NombrePrioridad FROM Prioridad WHERE idPrioridad='" . $row['idPrioridad'] . "';";
-                                                                // Hacemos la consulta
-                                                                $ResultadoConsultaNombrePrioridad = $mysqli->query($VerNombrePrioridad);
-                                                                $FilaResultadoNombrePrioridad = $ResultadoConsultaNombrePrioridad->fetch_assoc();
-                                                                $NombrePrioridad = $FilaResultadoNombrePrioridad['NombrePrioridad'];
-                                                                echo $NombrePrioridad;
-                                                                ?></span></td>
-                                                        <td><span id="idUrgencia<?php echo $row['idAveria']; ?>">
-                                                                <?php
-                                                                $VerNombreUrgencia = "SELECT NombreUrgencia FROM Urgencia WHERE idUrgencia='" . $row['idUrgencia'] . "';";
-                                                                // Hacemos la consulta
-                                                                $ResultadoConsultaNombreUrgencia = $mysqli->query($VerNombreUrgencia);
-                                                                $FilaResultadoNombreUrgencia = $ResultadoConsultaNombreUrgencia->fetch_assoc();
-                                                                $NombreUrgencia = $FilaResultadoNombreUrgencia['NombreUrgencia'];
-                                                                echo $NombreUrgencia;
-                                                                ?></span></td>
-                                                        <td><span id="idTamanio<?php echo $row['idAveria']; ?>">
-                                                                <?php
-                                                                $VerNombreTamanio = "SELECT NombreTamanio FROM Tamanio WHERE idTamanio='" . $row['idTamanio'] . "';";
-                                                                // Hacemos la consulta
-                                                                $ResultadoConsultaNombreTamanio = $mysqli->query($VerNombreTamanio);
-                                                                $FilaResultadoNombreTamanio = $ResultadoConsultaNombreTamanio->fetch_assoc();
-                                                                $NombreTamanio = $FilaResultadoNombreTamanio['NombreTamanio'];
-                                                                echo $NombreTamanio;
-                                                                ?></span></td>
-                                                        <td><span id="idTrazabilidad<?php echo $row['idAveria']; ?>">
-                                                                <?php
-                                                                $VerNombreTrazabilidad = "SELECT NombreTrazabilidad FROM Trazabilidad WHERE idTrazabilidad='" . $row['idTrazabilidad'] . "';";
-                                                                // Hacemos la consulta
-                                                                $ResultadoConsultaNombreTrazabilidad = $mysqli->query($VerNombreTrazabilidad);
-                                                                $FilaResultadoNombreTrazabilidad = $ResultadoConsultaNombreTrazabilidad->fetch_assoc();
-                                                                $NombreTrazabilidad = $FilaResultadoNombreTrazabilidad['NombreTrazabilidad'];
-                                                                echo $NombreTrazabilidad;
-                                                                ?></span></td>
+                                                ?>
+                                                <tr>
+                                                    <td><span id="Correlativo<?php echo $Contador; ?>"><?php echo $Contador ?></span></td>
+                                                    <td><span id="Codigo<?php echo $row['idAveria']; ?>"><?php echo $row['idAveria'] ?></span></td>
+                                                    <td><span id="FechaReporteAveria<?php echo $row['idAveria']; ?>"><?php echo $row['FechaReporteAveria'] ?></span></td>
+                                                    <td><span id="Municipalidad<?php echo $row['idAveria']; ?>">
+                                                            <?php
+                                                            $VerMunicipalidad = "SELECT NombreMunicipalidad FROM Municipalidad WHERE idMunicipalidad=" . $row['idMunicipalidad'] . ";";
+                                                            // Hacemos la consulta
+                                                            $ResultadoConsultaMunicipalidad = $mysqli->query($VerMunicipalidad);
+                                                            $FilaResultadoNombreMunicipalidad = $ResultadoConsultaMunicipalidad->fetch_assoc();
+                                                            $NombreMunicipalidad = $FilaResultadoNombreMunicipalidad['NombreMunicipalidad'];
+                                                            echo $NombreMunicipalidad;
+                                                            ?></span></td>
+                                                    <td><span id="UbicacionAveria<?php echo $row['idAveria']; ?>"><a href="https://maps.google.com/?ll=<?php echo $row['UbicacionAveria'] ?>&z=18&t=k" target="_blank">Ver ubicación</a></span></td>
+                                                    <td><span id="ImagenAveria<?php echo $row['idAveria']; ?>">
+                                                            <form method="post" action="VerFotos.php">
+                                                                <input type="hidden" name="Path" value="<?php echo $row['ImagenAveria'] ?>" />
+                                                                <input type="submit" name="VerFotos" class="btn" value="Ver fotos">
+                                                            </form>
+                                                        </span></td>
+                                                    <td><span id="idPrioridad<?php echo $row['idAveria']; ?>">
+                                                            <?php
+                                                            $VerNombrePrioridad = "SELECT NombrePrioridad FROM Prioridad WHERE idPrioridad='" . $row['idPrioridad'] . "';";
+                                                            // Hacemos la consulta
+                                                            $ResultadoConsultaNombrePrioridad = $mysqli->query($VerNombrePrioridad);
+                                                            $FilaResultadoNombrePrioridad = $ResultadoConsultaNombrePrioridad->fetch_assoc();
+                                                            $NombrePrioridad = $FilaResultadoNombrePrioridad['NombrePrioridad'];
+                                                            echo $NombrePrioridad;
+                                                            ?></span></td>
+                                                    <td><span id="idUrgencia<?php echo $row['idAveria']; ?>">
+                                                            <?php
+                                                            $VerNombreUrgencia = "SELECT NombreUrgencia FROM Urgencia WHERE idUrgencia='" . $row['idUrgencia'] . "';";
+                                                            // Hacemos la consulta
+                                                            $ResultadoConsultaNombreUrgencia = $mysqli->query($VerNombreUrgencia);
+                                                            $FilaResultadoNombreUrgencia = $ResultadoConsultaNombreUrgencia->fetch_assoc();
+                                                            $NombreUrgencia = $FilaResultadoNombreUrgencia['NombreUrgencia'];
+                                                            echo $NombreUrgencia;
+                                                            ?></span></td>
+                                                    <td><span id="idTamanio<?php echo $row['idAveria']; ?>">
+                                                            <?php
+                                                            $VerNombreTamanio = "SELECT NombreTamanio FROM Tamanio WHERE idTamanio='" . $row['idTamanio'] . "';";
+                                                            // Hacemos la consulta
+                                                            $ResultadoConsultaNombreTamanio = $mysqli->query($VerNombreTamanio);
+                                                            $FilaResultadoNombreTamanio = $ResultadoConsultaNombreTamanio->fetch_assoc();
+                                                            $NombreTamanio = $FilaResultadoNombreTamanio['NombreTamanio'];
+                                                            echo $NombreTamanio;
+                                                            ?></span></td>
+                                                    <td><span id="idTrazabilidad<?php echo $row['idAveria']; ?>">
+                                                            <?php
+                                                            $VerNombreTrazabilidad = "SELECT NombreTrazabilidad FROM Trazabilidad WHERE idTrazabilidad='" . $row['idTrazabilidad'] . "';";
+                                                            // Hacemos la consulta
+                                                            $ResultadoConsultaNombreTrazabilidad = $mysqli->query($VerNombreTrazabilidad);
+                                                            $FilaResultadoNombreTrazabilidad = $ResultadoConsultaNombreTrazabilidad->fetch_assoc();
+                                                            $NombreTrazabilidad = $FilaResultadoNombreTrazabilidad['NombreTrazabilidad'];
+                                                            echo $NombreTrazabilidad;
+                                                            ?></span></td>
+                                                            <?php
+                                                    if ($row['idTrazabilidad'] == 1) {
+                                                        ?>
+                                                        <td>
+                                                            <!-- GenerarOT -->
+                                                            <div>
+                                                                <div class="input-group input-group-lg">
+                                                                    <form method="post" action="GenerarOT.php">
+                                                                        <input type="hidden" name="idAveria" value="<?php echo $row['idAveria']; ?>" />
+                                                                        <input type="submit" name="GenerarOT" class="btn btn-success GenerarOT" value="+">
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                         <?php
-                                                        if ($row['idTrazabilidad'] == 1) {
-                                                            ?>
-                                                            <td>
-                                                                <!-- GenerarOT -->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <form method="post" action="GenerarOT.php">
-                                                                            <input type="hidden" name="idAveria" value="<?php echo $row['idAveria']; ?>" />
-                                                                            <input type="submit" name="GenerarOT" class="btn btn-success GenerarOT" value="+">
-                                                                        </form>
-                                                                    </div>
+                                                    } else {
+                                                        ?>
+                                                        <td>
+                                                            <!-- GenerarOT -->
+                                                            <div>
+                                                                <div class="input-group input-group-lg">
+                                                                    <form method="post" action="GenerarOT.php">
+                                                                        <input type="hidden" name="idAveria" value="<?php echo $row['idAveria']; ?>" />
+                                                                        <input type="submit" name="GenerarOT" class="btn btn-success" disabled="true" value="+">
+                                                                    </form>
                                                                 </div>
-                                                            </td>
-                                                            <?php
-                                                        } else {
-                                                            ?>
-                                                            <td>
-                                                                <!-- GenerarOT -->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <form method="post" action="GenerarOT.php">
-                                                                            <input type="hidden" name="idAveria" value="<?php echo $row['idAveria']; ?>" />
-                                                                            <input type="submit" name="GenerarOT" class="btn btn-success" disabled="true" value="+">
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <?php
-                                                        
+                                                            </div>
+                                                        </td>
+                                                        <?php
                                                         ?>
                                                     </tr>
-                                                    <?php
-                                                    $Contador++;
+                                                        <?php
+                                                        $Contador++;
+                                                    }
                                                 }
-                                            }
-                                            ?>
+                                                ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -323,27 +331,27 @@
             </div>
         </div>
         <!-- /.modal -->
-        <?php
-        // Código que recibe la información del formulario modal (Deshabilitar)
-        if (isset($_POST['CancelarReporte'])) {
-            // Guardamos el id en una variable
-            $idAEliminar = $_POST['idAEliminar'];
-            // Preparamos la consulta
-            $query = "UPDATE Averia SET idTrazabilidad = 2 WHERE idAveria=" . $idAEliminar . ";";
-            // Ejecutamos la consulta
-            if (!$resultado = $mysqli->query($query)) {
-                echo "Error: La ejecución de la consulta falló debido a: \n";
-                echo "Query: " . $query . "\n";
-                echo "Errno: " . $mysqli->errno . "\n";
-                echo "Error: " . $mysqli->error . "\n";
-                exit;
-            } else {
-                echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Reporte cancelado\");\n";
-                echo "</script>";
-            }
+    <?php
+    // Código que recibe la información del formulario modal (Deshabilitar)
+    if (isset($_POST['CancelarReporte'])) {
+        // Guardamos el id en una variable
+        $idAEliminar = $_POST['idAEliminar'];
+        // Preparamos la consulta
+        $query = "UPDATE Averia SET idTrazabilidad = 2 WHERE idAveria=" . $idAEliminar . ";";
+        // Ejecutamos la consulta
+        if (!$resultado = $mysqli->query($query)) {
+            echo "Error: La ejecución de la consulta falló debido a: \n";
+            echo "Query: " . $query . "\n";
+            echo "Errno: " . $mysqli->errno . "\n";
+            echo "Error: " . $mysqli->error . "\n";
+            exit;
+        } else {
+            echo "<script language=\"JavaScript\">\n";
+            echo "myFunction(\"Reporte cancelado\");\n";
+            echo "</script>";
         }
-        ?>
+    }
+    ?>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
         <script src="js/jquery-1.11.3.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed --> 

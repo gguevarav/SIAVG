@@ -18,6 +18,11 @@ CREATE TABLE TipoEmpleado(
     NombreTipoEmpleado      VARCHAR(50)         NOT NULL
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
 
+CREATE TABLE Municipalidad(
+	idMunicipalidad			TINYINT				NOT NULL				PRIMARY KEY				AUTO_INCREMENT,
+	NombreMunicipalidad		VARCHAR(150)		NOT NULL
+)ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;
+
 CREATE TABLE Persona(
     idPersona               INTEGER             NOT NULL                PRIMARY KEY             AUTO_INCREMENT,
     NombrePersona           VARCHAR(75)         NOT NULL,
@@ -38,7 +43,8 @@ CREATE TABLE Usuario(
     idUsuario               INTEGER             NOT NULL                PRIMARY KEY             AUTO_INCREMENT,
     NombreUsuario           VARCHAR(50)         NOT NULL,
     PasswordUsuario         VARCHAR(80)         NOT NULL,
-    IdPersona                INTEGER             NOT NULL,
+	idMunicipalidad			TINYINT				NOT NULL,
+    IdPersona               INTEGER             NOT NULL,
     idRol                   TINYINT             NOT NULL,
     INDEX (IdPersona),
     FOREIGN KEY (IdPersona)
@@ -48,6 +54,11 @@ CREATE TABLE Usuario(
     INDEX (idRol),
     FOREIGN KEY (idRol)
             REFERENCES Rol(idRol)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
+	INDEX (idMunicipalidad),
+    FOREIGN KEY (idMunicipalidad)
+            REFERENCES Municipalidad(idMunicipalidad)
             ON DELETE CASCADE
             ON UPDATE NO ACTION
 )ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_spanish_ci;

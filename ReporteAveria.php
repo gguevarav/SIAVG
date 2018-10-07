@@ -475,6 +475,26 @@
             <!-- /Modal Agregar Unidad de medida -->
 
             <?php
+            require("phpmailer/class.phpmailer.php"); //Importamos la función PHP class.phpmailer
+            $mail = new PHPMailer();
+
+            $mail->IsSMTP();
+            $mail->SMTPAuth = true; // True para que verifique autentificación de la cuenta o de lo contrario False
+
+            $mail->SMTPSecure = "ssl";
+            $mail->Host = "smtp.gmail.com";
+            $mail->Port = 465;
+
+            //Nuestra cuenta
+            $mail->Username = 'info.4890132950.net@gmail.com';
+            $mail->Password = 'Alovelyday_0295'; //Su password
+            $mail->From = "info.4890132950.net@gmail.com";
+            $mail->FromName = "SIAVG";
+            $mail->Subject = "Seguimiento de averia";
+            $mail->AddAddress("gemisdguevarav@gmail.com", "Seguimiento de Averias");
+
+            $mail->WordWrap = 50;
+            
             // Código que recibe la información para registrar un producto
             if (isset($_POST['ReportarAveria'])) {
                 $ImagenAveria;
@@ -505,9 +525,16 @@
                 $Urgencia = $_POST['Urgencia'];
                 $Tamanio = $_POST['Tamanio'];
 
+                // Obtenemos el id de la municipalidad del usuario que reporta para incluirlo en la tabla de averia
+                $VeridMunicipalidad = "SELECT idMunicipalidad FROM Usuario WHERE idUsuario='" . $idUsuario2 . "';";
+                // Hacemos la consulta
+                $ResultadoConsultaMunicipalidad = $mysqli->query($VeridMunicipalidad);
+                $FilaResultadoMunicipalidad = $ResultadoConsultaMunicipalidad->fetch_assoc();
+                $idMunicipalidad = $FilaResultadoMunicipalidad['idMunicipalidad'];
+
                 // Preparamos la consulta
-                $query = "INSERT INTO Averia(UbicacionAveria, ImagenAveria, idPrioridad, idTrazabilidad, idUrgencia, idTamanio, idUsuario)
-											VALUES('" . $Ubicacion . "', '" . $ImagenAveria . "', " . $Prioridad . ", 1, " . $Urgencia . ", " . $Tamanio . ", " . $idUsuario2 . ")";
+                $query = "INSERT INTO Averia(UbicacionAveria, ImagenAveria, idMunicipalidad, idPrioridad, idTrazabilidad, idUrgencia, idTamanio, idUsuario)
+											VALUES('" . $Ubicacion . "', '" . $ImagenAveria . "', " . $idMunicipalidad . ", " . $Prioridad . ", 1, " . $Urgencia . ", " . $Tamanio . ", " . $idUsuario2 . ")";
                 // Ejecutamos la consulta
                 if (!$resultado = $mysqli->query($query)) {
                     echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -519,6 +546,65 @@
                     echo "<script language=\"JavaScript\">\n";
                     echo "myFunction(\"Incidente Reportado\");\n";
                     echo "</script>";
+                    // Enviamos el correo
+                    $mail->msgHTML("<html>
+                                    <head>
+                                    <title>Reporte de seguimiento a avería</title>
+                                    <style type='text/css'>
+                                            #datos {
+                                                    position:absolute;
+                                                    width:780px;
+                                                    left: 164px;
+                                                    top: 316px;
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #form1 table tr td {
+                                                    text-align: center;
+                                                    font-weight: bold;
+                                            }
+                                            #apDiv2 {
+                                                    position:absolute;
+                                                    width:49px;
+                                                    height:45px;
+                                                    z-index:2;
+                                                    left: 12px;
+                                                    top: 11px;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: left;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                                    font-family: Arial, Helvetica, sans-serif;
+                                            }
+                                            #apDiv3 {
+                                                    position:absolute;
+                                                    width:833px;
+                                                    height:115px;
+                                                    z-index:1;
+                                                    left: 99px;
+                                                    text-align: center;
+                                                    top: 16px;
+                                            }
+                                    </style>
+                                    </head>
+                                    <body>
+                                        <div id='apDiv3'>
+                                            <h1>Se ha reportado el incidente No. " . mysqli_insert_id($mysqli) . "</h1>
+                                        </div>								
+                                    </body>
+                                    </html>");
+
+                    // Notificamos al usuario del estado del mensaje
+
+                    if (!$mail->Send()) {
+                        //echo "No se pudo enviar el Mensaje.";
+                    } else {
+                        //echo "Mensaje enviado";
+                    }
                 }
             }
             // Código que recibe la información para agregar nueva prioridad

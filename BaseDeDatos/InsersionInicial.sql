@@ -33,6 +33,12 @@ INSERT INTO Trazabilidad(NombreTrazabilidad)
 INSERT INTO Trazabilidad(NombreTrazabilidad)
 			VALUES('Rechazada');
 			
+INSERT INTO Trazabilidad(NombreTrazabilidad)
+			VALUES('En Proceso');
+			
+INSERT INTO Trazabilidad(NombreTrazabilidad)
+			VALUES('Finalizada');
+			
 INSERT INTO Prioridad(NombrePrioridad)
 			VALUES('1');
 			
@@ -86,6 +92,15 @@ INSERT INTO Urgencia(NombreUrgencia)
 			
 INSERT INTO Urgencia(NombreUrgencia)
 			VALUES('Baja');
+			
+INSERT INTO Municipalidad(NombreMunicipalidad)
+			VALUES('Morales, Izabal');
+			
+INSERT INTO Municipalidad(NombreMunicipalidad)
+			VALUES('Zacapa, Zacapa');
+			
+INSERT INTO Municipalidad(NombreMunicipalidad)
+			VALUES('Guatemala, Guatemala');
 			
 INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona,
                     TelefonoPersona, CostoXHoraPersona, idTipoEmpleado, EstadoPersona)

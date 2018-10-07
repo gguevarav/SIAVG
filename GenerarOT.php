@@ -369,6 +369,26 @@
             </div>
             <?php
             if (isset($_POST['CrearOT'])) {
+                // enviaremos un correo para confirmar que ya está creada la OT
+                require("phpmailer/class.phpmailer.php"); //Importamos la función PHP class.phpmailer
+                $mail = new PHPMailer();
+
+                $mail->IsSMTP();
+                $mail->SMTPAuth = true; // True para que verifique autentificación de la cuenta o de lo contrario False
+
+                $mail->SMTPSecure = "ssl";
+                $mail->Host = "smtp.gmail.com";
+                $mail->Port = 465;
+
+                //Nuestra cuenta
+                $mail->Username = 'info.4890132950.net@gmail.com';
+                $mail->Password = 'Alovelyday_0295'; //Su password
+                $mail->From = "info.4890132950.net@gmail.com";
+                $mail->FromName = "SIAVG";
+                $mail->Subject = "Seguimiento de averia";
+                $mail->AddAddress("gemisdguevarav@gmail.com", "Seguimiento de Averias");
+
+                $mail->WordWrap = 50;
                 // Creamos variables que nos sume el total por cada suministro (Personal, equipo, material)
                 $TotalEnEquipo = 0;
                 $TotalEnPersonal = 0;
@@ -471,6 +491,10 @@
                     $Contador++;
                     $Contador2;
                 }
+                // En esta variable guardaremos el valor de la insersión por la OT
+                $idOrdenTrabajoGenerada = 0;
+                /////////////////////////////////////////////////////////////
+                //
                 // Vamos a insertar toda la información de la orden de trabajo
                 // Obtenemos el total de la reparación a partir de la suma de todos los totales
                 $TotalNeto = $TotalEnEquipo + $TotalEnPersonal + $TotalEnMaterial;
@@ -494,6 +518,7 @@
                     echo "Error: " . $mysqli->error . "\n";
                     exit;
                 } else {
+                    $idOrdenTrabajoGenerada = mysqli_insert_id($mysqli);
                     // Actualizaremos la Avería para que cambie a estado de cotizada
                     $ConsultaCambiarEstadoAveria = "UPDATE Averia SET idTrazabilidad=3
                                                            WHERE idAveria=" . $idAveria . ";";
@@ -507,6 +532,65 @@
                         echo "<script language=\"JavaScript\">\n";
                         echo "myFunction(\"Orden de trabajo generada\");\n";
                         echo "</script>";
+                        // Enviamos el correo
+                        $mail->msgHTML("<html>
+                                    <head>
+                                    <title>Reporte de seguimiento a avería</title>
+                                    <style type='text/css'>
+                                            #datos {
+                                                    position:absolute;
+                                                    width:780px;
+                                                    left: 164px;
+                                                    top: 316px;
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #form1 table tr td {
+                                                    text-align: center;
+                                                    font-weight: bold;
+                                            }
+                                            #apDiv2 {
+                                                    position:absolute;
+                                                    width:49px;
+                                                    height:45px;
+                                                    z-index:2;
+                                                    left: 12px;
+                                                    top: 11px;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: left;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                                    font-family: Arial, Helvetica, sans-serif;
+                                            }
+                                            #apDiv3 {
+                                                    position:absolute;
+                                                    width:833px;
+                                                    height:115px;
+                                                    z-index:1;
+                                                    left: 99px;
+                                                    text-align: center;
+                                                    top: 16px;
+                                            }
+                                    </style>
+                                    </head>
+                                    <body>
+                                        <div id='apDiv3'>
+                                            <h1>Se ah generado la orden de trabajo No. " . $idOrdenTrabajoGenerada . " de la averia No. " . $idAveria . "</h1>
+                                        </div>								
+                                    </body>
+                                    </html>");
+
+                        // Notificamos al usuario del estado del mensaje
+
+                        if (!$mail->Send()) {
+                            //echo "No se pudo enviar el Mensaje.";
+                        } else {
+                            //echo "Mensaje enviado";
+                        }
                     }
                 }
             }

@@ -47,7 +47,7 @@
                         <a class="navbar-brand" href="index.php"><img src="imagenes/logo.png" class="img-circle" width="25" height="25"></a></div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="defaultNavbar1">
-                       <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav">
                             <?php
                             if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
                                     $_SESSION["PrivilegioUsuario"] == 'Administrador') {
@@ -160,7 +160,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-5 col-xs-offset-1">
-                                    <h1 class="text-center">Mis reportes</h1>
+                                    <h1 class="text-center">Averías reportadas por mí</h1>
                                 </div>
                                 <!-- Contenedor del ícono del Usuario -->
                                 <div class="col-xs-5 Icon">
@@ -254,7 +254,7 @@
                                                                 echo $NombreTrazabilidad;
                                                                 ?></span></td>
                                                         <?php
-                                                        if ($row['idTrazabilidad'] == 1) {
+                                                        if ($NombreTrazabilidad == 'Solicitada') {
                                                             ?>
                                                             <td>
                                                                 <!-- Deshabilitación -->
@@ -265,7 +265,7 @@
                                                                 </div>
                                                             </td>
                                                             <?php
-                                                        } else if ($row['idTrazabilidad'] == 1) {
+                                                        } else if ($NombreTrazabilidad == 'Solicitada') {
                                                             ?>
                                                             <td>
                                                                 <!-- Habilitación -->
@@ -276,7 +276,7 @@
                                                                 </div>
                                                             </td>
                                                             <?php
-                                                        } else if ($row['idTrazabilidad'] == 3) {
+                                                        } else if ($NombreTrazabilidad == 'Cotizada') {
                                                             ?>
                                                             <td>
                                                                 <!-- Habilitación -->
@@ -303,7 +303,7 @@
                                                                 </div>
                                                             </td>
                                                             <?php
-                                                        } else if ($row['idTrazabilidad'] == 4 || $row['idTrazabilidad'] == 5) {
+                                                        } else if ($NombreTrazabilidad != 'Cancelada') {
                                                             ?>
                                                             <td>
                                                                 <!-- Habilitación -->
@@ -407,6 +407,26 @@
         </div>
         <!-- /.modal -->
         <?php
+        require("phpmailer/class.phpmailer.php"); //Importamos la función PHP class.phpmailer
+        $mail = new PHPMailer();
+
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true; // True para que verifique autentificación de la cuenta o de lo contrario False
+
+        $mail->SMTPSecure = "ssl";
+        $mail->Host = "smtp.gmail.com";
+        $mail->Port = 465;
+
+        //Nuestra cuenta
+        $mail->Username = 'info.4890132950.net@gmail.com';
+        $mail->Password = 'Alovelyday_0295'; //Su password
+        $mail->From = "info.4890132950.net@gmail.com";
+        $mail->FromName = "SIAVG";
+        $mail->Subject = "Seguimiento de averia";
+        $mail->AddAddress("gemisdguevarav@gmail.com", "Seguimiento de Averias");
+
+        $mail->WordWrap = 50;
+
         // Código que recibe la información del formulario modal (Deshabilitar)
         if (isset($_POST['CancelarReporte'])) {
             // Guardamos el id en una variable
@@ -424,6 +444,66 @@
                 echo "<script language=\"JavaScript\">\n";
                 echo "myFunction(\"Reporte cancelado\");\n";
                 echo "</script>";
+
+                // Enviamos el correo
+                $mail->msgHTML("<html>
+                                    <head>
+                                    <title>Reporte de seguimiento a avería</title>
+                                    <style type='text/css'>
+                                            #datos {
+                                                    position:absolute;
+                                                    width:780px;
+                                                    left: 164px;
+                                                    top: 316px;
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #form1 table tr td {
+                                                    text-align: center;
+                                                    font-weight: bold;
+                                            }
+                                            #apDiv2 {
+                                                    position:absolute;
+                                                    width:49px;
+                                                    height:45px;
+                                                    z-index:2;
+                                                    left: 12px;
+                                                    top: 11px;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: left;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                                    font-family: Arial, Helvetica, sans-serif;
+                                            }
+                                            #apDiv3 {
+                                                    position:absolute;
+                                                    width:833px;
+                                                    height:115px;
+                                                    z-index:1;
+                                                    left: 99px;
+                                                    text-align: center;
+                                                    top: 16px;
+                                            }
+                                    </style>
+                                    </head>
+                                    <body>
+                                        <div id='apDiv3'>
+                                            <h1>Su solicitud No. " . $idAEliminar . " ah sido cancelada</h2>
+                                        </div>								
+                                    </body>
+                                    </html>");
+
+                // Notificamos al usuario del estado del mensaje
+
+                if (!$mail->Send()) {
+                    //echo "No se pudo enviar el Mensaje.";
+                } else {
+                    //echo "Mensaje enviado";
+                }
             }
         }
         // Código que recibe la información del formulario modal (Aprobar OT)
@@ -452,6 +532,73 @@
                     echo "<script language=\"JavaScript\">\n";
                     echo "myFunction(\"Orden de Trabajo aprobada\");\n";
                     echo "</script>";
+
+                    // Obtendremos el numero de OT
+                    $VerIdOT = "SELECT idOrdenTrabajo FROM ordentrabajo WHERE idAveria=" . $idAveria . ";";
+                    // Hacemos la consulta
+                    $ResultadoConsultaidOT = $mysqli->query($VerIdOT);
+                    $FilaResultadoidOT = $ResultadoConsultaidOT->fetch_assoc();
+                    $idOT = $FilaResultadoidOT['idOrdenTrabajo'];
+
+                    // Enviamos el correo
+                    $mail->msgHTML("<html>
+                                    <head>
+                                    <title>Reporte de seguimiento a avería</title>
+                                    <style type='text/css'>
+                                            #datos {
+                                                    position:absolute;
+                                                    width:780px;
+                                                    left: 164px;
+                                                    top: 316px;
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #form1 table tr td {
+                                                    text-align: center;
+                                                    font-weight: bold;
+                                            }
+                                            #apDiv2 {
+                                                    position:absolute;
+                                                    width:49px;
+                                                    height:45px;
+                                                    z-index:2;
+                                                    left: 12px;
+                                                    top: 11px;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: left;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                                    font-family: Arial, Helvetica, sans-serif;
+                                            }
+                                            #apDiv3 {
+                                                    position:absolute;
+                                                    width:833px;
+                                                    height:115px;
+                                                    z-index:1;
+                                                    left: 99px;
+                                                    text-align: center;
+                                                    top: 16px;
+                                            }
+                                    </style>
+                                    </head>
+                                    <body>
+                                        <div id='apDiv3'>
+                                            <h1>Se ah aprobado la orden de trabajo No. " . $idOT . " de la solicitud No. " . $idAprobar . ".</h2>
+                                        </div>								
+                                    </body>
+                                    </html>");
+
+                    // Notificamos al usuario del estado del mensaje
+
+                    if (!$mail->Send()) {
+                        //echo "No se pudo enviar el Mensaje.";
+                    } else {
+                        //echo "Mensaje enviado";
+                    }
                 }
             }
         }
@@ -481,6 +628,72 @@
                     echo "<script language=\"JavaScript\">\n";
                     echo "myFunction(\"Orden de Trabajo rechazada\");\n";
                     echo "</script>";
+                    // Obtendremos el numero de OT
+                    $VerIdOT = "SELECT idOrdenTrabajo FROM ordentrabajo WHERE idAveria=" . $idRechazar . ";";
+                    // Hacemos la consulta
+                    $ResultadoConsultaidOT = $mysqli->query($VerIdOT);
+                    $FilaResultadoidOT = $ResultadoConsultaidOT->fetch_assoc();
+                    $idOT = $FilaResultadoidOT['idOrdenTrabajo'];
+
+                    // Enviamos el correo
+                    $mail->msgHTML("<html>
+                                    <head>
+                                    <title>Reporte de seguimiento a avería</title>
+                                    <style type='text/css'>
+                                            #datos {
+                                                    position:absolute;
+                                                    width:780px;
+                                                    left: 164px;
+                                                    top: 316px;
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #form1 table tr td {
+                                                    text-align: center;
+                                                    font-weight: bold;
+                                            }
+                                            #apDiv2 {
+                                                    position:absolute;
+                                                    width:49px;
+                                                    height:45px;
+                                                    z-index:2;
+                                                    left: 12px;
+                                                    top: 11px;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: left;
+                                            }
+                                            #apDiv1 #notificacion table tr td {
+                                                    text-align: center;
+                                                    font-family: Arial, Helvetica, sans-serif;
+                                            }
+                                            #apDiv3 {
+                                                    position:absolute;
+                                                    width:833px;
+                                                    height:115px;
+                                                    z-index:1;
+                                                    left: 99px;
+                                                    text-align: center;
+                                                    top: 16px;
+                                            }
+                                    </style>
+                                    </head>
+                                    <body>
+                                        <div id='apDiv3'>
+                                            <h1>Se ah rechazado la orden de trabajo No. " . $idOT . " de la solicitud No. " . $idAprobar . ".</h2>
+                                        </div>								
+                                    </body>
+                                    </html>");
+
+                    // Notificamos al usuario del estado del mensaje
+
+                    if (!$mail->Send()) {
+                        //echo "No se pudo enviar el Mensaje.";
+                    } else {
+                        //echo "Mensaje enviado";
+                    }
                 }
             }
         }

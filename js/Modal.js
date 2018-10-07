@@ -2,7 +2,7 @@
 $(document).ready(function () {
     $(document).on('click', '.CambiarRol', function () {
         var id = $(this).val();
-        var Nombres = $('#NombrePersona' + id).text() + " " + $('#ApellidoUsuario' + id).text() ;
+        var Nombres = $('#NombrePersona' + id).text() + " " + $('#ApellidoUsuario' + id).text();
 
         $('#ModalCambioRol').modal('show');
         document.querySelector('#NombresApellidos').innerText = Nombres;
@@ -65,6 +65,30 @@ $(document).ready(function () {
         $('#ModalCancelarOT').modal('show');
         $('#idCancelar').val(id);
         $('#idAveriaCancelar').val(idAveria);
+    });
+});
+
+// Cambiar estado a en proceso de OT
+$(document).ready(function () {
+    $(document).on('click', '.CambiarAEnProcesoOT', function () {
+        var id = $(this).val();
+        var idAveria = $('#CodigoAveria' + id).text();
+
+        $('#ModalEnProcesoOT').modal('show');
+        $('#idEnProceso').val(id);
+        $('#idAveriaEnProceso').val(idAveria);
+    });
+});
+
+// Cerrar OT
+$(document).ready(function () {
+    $(document).on('click', '.FinalizarOT', function () {
+        var id = $(this).val();
+        var idAveria = $('#CodigoAveria' + id).text();
+
+        $('#ModalCerrarOT').modal('show');
+        $('#idCerrar').val(id);
+        $('#idAveriaCerrar').val(idAveria);
     });
 });
 

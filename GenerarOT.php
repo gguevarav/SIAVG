@@ -369,8 +369,25 @@
             </div>
             <?php
             if (isset($_POST['CrearOT'])) {
+                // Guardamos el id de la avería
+                $idAveria = $_POST['idAveria'];
                 // enviaremos un correo para confirmar que ya está creada la OT
                 require("phpmailer/class.phpmailer.php"); //Importamos la función PHP class.phpmailer
+                
+                // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
+                $VeridUsuario = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idAveria . ";";
+                // Hacemos la consulta
+                $ResultadoConsultaID = $mysqli->query($VeridUsuario);
+                $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
+                $idUsuarioObtenerCorreo = $FilaResultadoID['idUsuario'];
+
+                // Entonces ahora obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
+                $VerCorreoUsuario = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuarioObtenerCorreo . ";";
+                // Hacemos la consulta
+                $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
+                $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
+                $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
+                
                 $mail = new PHPMailer();
 
                 $mail->IsSMTP();
@@ -381,12 +398,12 @@
                 $mail->Port = 465;
 
                 //Nuestra cuenta
-                $mail->Username = 'info.4890132950.net@gmail.com';
-                $mail->Password = 'Alovelyday_0295'; //Su password
-                $mail->From = "info.4890132950.net@gmail.com";
+                $mail->Username = 'noreply.siavg@gmail.com';
+                $mail->Password = 'Sudo-aptget2018'; //Su password
+                $mail->From = "noreply.siavg@gmail.com";
                 $mail->FromName = "SIAVG";
                 $mail->Subject = "Seguimiento de averia";
-                $mail->AddAddress("gemisdguevarav@gmail.com", "Seguimiento de Averias");
+                $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
 
                 $mail->WordWrap = 50;
                 // Creamos variables que nos sume el total por cada suministro (Personal, equipo, material)
@@ -401,7 +418,6 @@
                     // Para registrar todas las filas del equipo
                     if ($post[$Contador2] = "Equipo" . $Contador) {
                         if (isset($_POST['Equipo' . $Contador])) {
-                            $idAveria = $_POST['idAveria'];
                             $IdEquip = $_POST['Equipo' . $Contador];
                             //echo $IdEquip;
                             $Cantidad = $_POST['CantidadEquipo' . $Contador];

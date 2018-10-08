@@ -268,6 +268,16 @@
                                     </div>
                                 </div>
                                 <br>
+                                <!-- Correo de usuario -->
+                                <div class="row">
+                                    <div class="col-xs-10 col-xs-offset-1">
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+                                            <input type="email" class="form-control" name="Correo" placeholder="Correo del usuario" id="Correo" aria-describedby="sizing-addon1" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
                                 <!-- Nombre de usuario -->
                                 <div class="row">
                                     <div class="col-xs-10 col-xs-offset-1">
@@ -328,6 +338,7 @@
                 $username = $_POST['username'];
                 $PasswordUsuario = $_POST['PasswordUsuario'];
                 $RePasswordUsuario = $_POST['RePasswordUsuario'];
+                $Correo = $_POST['Correo'];
                 if ($PasswordUsuario != $RePasswordUsuario) {
                     echo "<script language=\"JavaScript\">\n";
                     echo "myFunction(\"Las contraseñas no coinciden\");\n";
@@ -344,8 +355,8 @@
                         exit;
                     }
                     // Preparamos la consulta
-                    $InsertarUsuario = "INSERT INTO Usuario (NombreUsuario, PasswordUsuario, idMunicipalidad, idPersona, idRol)
-						      VALUES('" . $username . "', '" . $ContraseniaEncriptada . "', " . $idMunicipalidad . ", " . mysqli_insert_id($mysqli) . ", " . $Nombrerolusuario . ");";
+                    $InsertarUsuario = "INSERT INTO Usuario (NombreUsuario, PasswordUsuario, CorreoUsuario, idMunicipalidad, idPersona, idRol)
+						      VALUES('" . $username . "', '" . $ContraseniaEncriptada . "', '" . $Correo . "', " . $idMunicipalidad . ", " . mysqli_insert_id($mysqli) . ", " . $Nombrerolusuario . ");";
 
                     if (!$resultado2 = $mysqli->query($InsertarUsuario)) {
                         echo "Error: La ejecución de la consulta falló debido a: \n";

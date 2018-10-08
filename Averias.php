@@ -418,12 +418,11 @@
         $mail->Port = 465;
 
         //Nuestra cuenta
-        $mail->Username = 'info.4890132950.net@gmail.com';
-        $mail->Password = 'Alovelyday_0295'; //Su password
-        $mail->From = "info.4890132950.net@gmail.com";
+        $mail->Username = 'noreply.siavg@gmail.com';
+        $mail->Password = 'Sudo-aptget2018'; //Su password
+        $mail->From = "noreply.siavg@gmail.com";
         $mail->FromName = "SIAVG";
         $mail->Subject = "Seguimiento de averia";
-        $mail->AddAddress("gemisdguevarav@gmail.com", "Seguimiento de Averias");
 
         $mail->WordWrap = 50;
 
@@ -431,6 +430,23 @@
         if (isset($_POST['CancelarReporte'])) {
             // Guardamos el id en una variable
             $idAEliminar = $_POST['idAEliminar'];
+            // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
+            $VeridUsuario = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idAEliminar . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaID = $mysqli->query($VeridUsuario);
+            $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
+            $idUsuarioObtenerCorreo = $FilaResultadoID['idUsuario'];
+
+            // Entonces ahora obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
+            $VerCorreoUsuario = "SELECT CorreoPersona FROM Usuario WHERE idUsuario=" . $idUsuarioObtenerCorreo . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
+            $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
+            $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoPersona'];
+            
+            // Pasamos la dirección de correo
+            $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
+            
             // Preparamos la consulta
             $query = "UPDATE Averia SET idTrazabilidad = 2 WHERE idAveria=" . $idAEliminar . ";";
             // Ejecutamos la consulta
@@ -510,6 +526,24 @@
         if (isset($_POST['AprobarReporte'])) {
             // Guardamos el id en una variable
             $idAprobar = $_POST['idAprobar'];
+            
+            // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
+            $VeridUsuario = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idAprobar . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaID = $mysqli->query($VeridUsuario);
+            $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
+            $idUsuarioObtenerCorreo = $FilaResultadoID['idUsuario'];
+
+            // Entonces ahora obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
+            $VerCorreoUsuario = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuarioObtenerCorreo . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
+            $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
+            $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
+            
+            // Pasamos la dirección de correo
+            $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
+            
             // Preparamos la consulta
             $query = "UPDATE Averia SET idTrazabilidad = 4 WHERE idAveria=" . $idAprobar . ";";
             // Ejecutamos la consulta
@@ -534,7 +568,7 @@
                     echo "</script>";
 
                     // Obtendremos el numero de OT
-                    $VerIdOT = "SELECT idOrdenTrabajo FROM ordentrabajo WHERE idAveria=" . $idAveria . ";";
+                    $VerIdOT = "SELECT idOrdenTrabajo FROM ordentrabajo WHERE idAveria=" . $idAprobar . ";";
                     // Hacemos la consulta
                     $ResultadoConsultaidOT = $mysqli->query($VerIdOT);
                     $FilaResultadoidOT = $ResultadoConsultaidOT->fetch_assoc();
@@ -606,6 +640,24 @@
         if (isset($_POST['RechazarReporte'])) {
             // Guardamos el id en una variable
             $idRechazar = $_POST['idRechazar'];
+            
+            // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
+            $VeridUsuario = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idRechazar . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaID = $mysqli->query($VeridUsuario);
+            $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
+            $idUsuarioObtenerCorreo = $FilaResultadoID['idUsuario'];
+
+            // Entonces ahora obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
+            $VerCorreoUsuario = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuarioObtenerCorreo . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
+            $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
+            $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
+            
+            // Pasamos la dirección de correo
+            $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
+            
             // Preparamos la consulta
             $query = "UPDATE Averia SET idTrazabilidad = 5 WHERE idAveria=" . $idRechazar . ";";
             // Ejecutamos la consulta
@@ -682,7 +734,7 @@
                                     </head>
                                     <body>
                                         <div id='apDiv3'>
-                                            <h1>Se ah rechazado la orden de trabajo No. " . $idOT . " de la solicitud No. " . $idAprobar . ".</h2>
+                                            <h1>Se ah rechazado la orden de trabajo No. " . $idOT . " de la solicitud No. " . $idRechazar . ".</h2>
                                         </div>								
                                     </body>
                                     </html>");

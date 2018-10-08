@@ -476,6 +476,14 @@
 
             <?php
             require("phpmailer/class.phpmailer.php"); //Importamos la función PHP class.phpmailer
+            //
+            // Primero obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
+            $VerCorreoUsuario = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuario2 . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
+            $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
+            $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
+            
             $mail = new PHPMailer();
 
             $mail->IsSMTP();
@@ -486,15 +494,15 @@
             $mail->Port = 465;
 
             //Nuestra cuenta
-            $mail->Username = 'info.4890132950.net@gmail.com';
-            $mail->Password = 'Alovelyday_0295'; //Su password
-            $mail->From = "info.4890132950.net@gmail.com";
+            $mail->Username = 'noreply.siavg@gmail.com';
+            $mail->Password = 'Sudo-aptget2018'; //Su password
+            $mail->From = "noreply.siavg@gmail.com";
             $mail->FromName = "SIAVG";
             $mail->Subject = "Seguimiento de averia";
-            $mail->AddAddress("gemisdguevarav@gmail.com", "Seguimiento de Averias");
+            $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
 
             $mail->WordWrap = 50;
-            
+
             // Código que recibe la información para registrar un producto
             if (isset($_POST['ReportarAveria'])) {
                 $ImagenAveria;

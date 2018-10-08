@@ -286,7 +286,7 @@
                                                             <!-- Habilitación -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-success CambiarAEnProcesoOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Iniciar trabajo</button>
+                                                                    <button type="button" class="btn btn-success CambiarAEnProcesoOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-play"></span>Iniciar trabajo</button>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -305,7 +305,7 @@
                                                             <!-- Habilitación -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-success FinalizarOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>CerrarOT</button>
+                                                                    <button type="button" class="btn btn-success FinalizarOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-thumbs-up"></span>CerrarOT</button>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -423,6 +423,7 @@
         <!-- /.modal -->
         <?php
         require("phpmailer/class.phpmailer.php"); //Importamos la función PHP class.phpmailer
+
         $mail = new PHPMailer();
 
         $mail->IsSMTP();
@@ -431,19 +432,18 @@
         $mail->SMTPSecure = "ssl";
         $mail->Host = "smtp.gmail.com";
         $mail->Port = 465;
-        
+
         //Nuestra cuenta
-        $mail->Username = 'info.4890132950.net@gmail.com';
-        $mail->Password = 'Alovelyday_0295'; //Su password
-        $mail->From = "info.4890132950.net@gmail.com";
+        $mail->Username = 'noreply.siavg@gmail.com';
+        $mail->Password = 'Sudo-aptget2018'; //Su password
+        $mail->From = "noreply.siavg@gmail.com";
         $mail->FromName = "SIAVG";
         $mail->Subject = "Seguimiento de averia";
-        $mail->AddAddress("gemisdguevarav@gmail.com", "Seguimiento de Averias");
 
         $mail->WordWrap = 50;
 
         // Código que recibe la información del formulario modal (Deshabilitar)
-        if (isset($_POST['CancelarOT'])) {
+        if (isset($_POST['CancelarOT'])) {            
             // Guardamos el id en una variable
             $idCancelar = $_POST['idCancelar'];
             $idAveriaCambiar = $_POST['idAveriaCancelar'];
@@ -477,6 +477,24 @@
         if (isset($_POST['EnProcesoOT'])) {
             // Guardamos el id en una variable
             $idEnProceso = $_POST['idEnProceso'];
+            
+            // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
+            $VeridUsuario = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idEnProceso . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaID = $mysqli->query($VeridUsuario);
+            $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
+            $idUsuarioObtenerCorreo = $FilaResultadoID['idUsuario'];
+
+            // Entonces ahora obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
+            $VerCorreoUsuario = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuarioObtenerCorreo . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
+            $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
+            $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
+            
+            // Pasamos la dirección de correo
+            $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
+            
             $idAveriaEnProceso = $_POST['idAveriaEnProceso'];
             // Preparamos la consulta
             $query = "UPDATE OrdenTrabajo SET idTrazabilidad = 6 WHERE idOrdenTrabajo=" . $idEnProceso . ";";
@@ -567,6 +585,24 @@
         if (isset($_POST['CerrarOT'])) {
             // Guardamos el id en una variable
             $idCerrar = $_POST['idCerrar'];
+            
+            // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
+            $VeridUsuario = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idCerrar . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaID = $mysqli->query($VeridUsuario);
+            $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
+            $idUsuarioObtenerCorreo = $FilaResultadoID['idUsuario'];
+
+            // Entonces ahora obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
+            $VerCorreoUsuario = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuarioObtenerCorreo . ";";
+            // Hacemos la consulta
+            $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
+            $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
+            $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
+            
+            // Pasamos la dirección de correo
+            $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
+            
             $idAveriaCerrar = $_POST['idAveriaCerrar'];
             // Preparamos la consulta
             $query = "UPDATE OrdenTrabajo SET idTrazabilidad = 7 WHERE idOrdenTrabajo=" . $idCerrar . ";";

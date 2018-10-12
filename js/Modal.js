@@ -1,4 +1,4 @@
-// Eliminación de usuario
+// Cambio de rol de usuario
 $(document).ready(function () {
     $(document).on('click', '.CambiarRol', function () {
         var id = $(this).val();
@@ -7,6 +7,18 @@ $(document).ready(function () {
         $('#ModalCambioRol').modal('show');
         document.querySelector('#NombresApellidos').innerText = Nombres;
         $('#idUsuarioCambioRol').val(id);
+    });
+});
+
+// Cambio de correo de usuario
+$(document).ready(function () {
+    $(document).on('click', '.CambiarCorreo', function () {
+        var id = $(this).val();
+        var Nombres = $('#NombrePersona' + id).text() + " " + $('#ApellidoUsuario' + id).text();
+
+        $('#ModalCambioCorreo').modal('show');
+        document.querySelector('#NombresApellidos').innerText = Nombres;
+        $('#idUsuarioCambioCorreo').val(id);
     });
 });
 

@@ -20,6 +20,8 @@
         <!-- Toast-->
         <link rel="stylesheet" type="text/css" href="css/Toast.css">
         <script src="js/Toast.js"></script>
+        <!-- Para validar la contraseña -->
+        <script src="js/ValidarPassword.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -151,7 +153,7 @@
             <br>
             <br>
             <div class="form-group">
-                <form name="CrearUsuario" action="CrearUsuario.php" method="post">
+                <form name="CrearUsuario" onSubmit="return validarPassword()" action="CrearUsuario.php" method="post">
                     <div class="container">
                         <!-- Snackbar -->
                         <div id="snackbar"></div> 
@@ -327,46 +329,57 @@
             <?php
             // Código que recibe la información para registrar un producto
             if (isset($_POST['CrearUsuario'])) {
-                // Guardamos la información en variables
-                $NombreUsuario = $_POST['NombreUsuario'];
-                $ApellidoUsuario = $_POST['ApellidoUsuario'];
-                $DireccionUsuario = $_POST['DireccionUsuario'];
-                $TelefonoUsuario = $_POST['TelefonoUsuario'];
-                $NombreTipoEmpleadoUsuario = $_POST['NombreTipoEmpleado'];
-                $Nombrerolusuario = $_POST['NombreRol'];
-                $idMunicipalidad = $_POST['idMunicipalidad'];
-                $username = $_POST['username'];
-                $PasswordUsuario = $_POST['PasswordUsuario'];
-                $RePasswordUsuario = $_POST['RePasswordUsuario'];
-                $Correo = $_POST['Correo'];
-                if ($PasswordUsuario != $RePasswordUsuario) {
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteUsuario = "SELECT NombreUsuario FROM usuario WHERE NombreUsuario='" . $_POST['username'] . "';";
+                $ResultadoExisteUsuario = $mysqli->query($ConsultaExisteUsuario);
+                $row = mysqli_fetch_array($ResultadoExisteUsuario);
+                if ($row['NombreUsuario'] != null) {
                     echo "<script language=\"JavaScript\">\n";
-                    echo "myFunction(\"Las contraseñas no coinciden\");\n";
+                    echo "myFunction(\"Este usuario ya existe\");\n";
                     echo "</script>";
                 } else {
-                    $ContraseniaEncriptada = md5($PasswordUsuario);
-                    $InsertarPersona = "INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona, TelefonoPersona, EstadoPersona, idTipoEmpleado)
+
+                    // Guardamos la información en variables
+                    $NombreUsuario = $_POST['NombreUsuario'];
+                    $ApellidoUsuario = $_POST['ApellidoUsuario'];
+                    $DireccionUsuario = $_POST['DireccionUsuario'];
+                    $TelefonoUsuario = $_POST['TelefonoUsuario'];
+                    $NombreTipoEmpleadoUsuario = $_POST['NombreTipoEmpleado'];
+                    $Nombrerolusuario = $_POST['NombreRol'];
+                    $idMunicipalidad = $_POST['idMunicipalidad'];
+                    $username = $_POST['username'];
+                    $PasswordUsuario = $_POST['PasswordUsuario'];
+                    $RePasswordUsuario = $_POST['RePasswordUsuario'];
+                    $Correo = $_POST['Correo'];
+                    if ($PasswordUsuario != $RePasswordUsuario) {
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Las contraseñas no coinciden\");\n";
+                        echo "</script>";
+                    } else {
+                        $ContraseniaEncriptada = md5($PasswordUsuario);
+                        $InsertarPersona = "INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona, TelefonoPersona, EstadoPersona, idTipoEmpleado)
 						     Values('" . $NombreUsuario . "', '" . $ApellidoUsuario . "', '" . $DireccionUsuario . "', '" . $TelefonoUsuario . "', 'Activo', " . $NombreTipoEmpleadoUsuario . ")";
 
-                    if (!$resultado = $mysqli->query($InsertarPersona)) {
-                        echo "Error: La ejecución de la consulta falló debido a: \n";
-                        echo "Query: " . $InsertarPersona . "\n";
-                        echo "Error: " . $mysqli->errno . "\n";
-                        exit;
-                    }
-                    // Preparamos la consulta
-                    $InsertarUsuario = "INSERT INTO Usuario (NombreUsuario, PasswordUsuario, CorreoUsuario, idMunicipalidad, idPersona, idRol)
+                        if (!$resultado = $mysqli->query($InsertarPersona)) {
+                            echo "Error: La ejecución de la consulta falló debido a: \n";
+                            echo "Query: " . $InsertarPersona . "\n";
+                            echo "Error: " . $mysqli->errno . "\n";
+                            exit;
+                        }
+                        // Preparamos la consulta
+                        $InsertarUsuario = "INSERT INTO Usuario (NombreUsuario, PasswordUsuario, CorreoUsuario, idMunicipalidad, idPersona, idRol)
 						      VALUES('" . $username . "', '" . $ContraseniaEncriptada . "', '" . $Correo . "', " . $idMunicipalidad . ", " . mysqli_insert_id($mysqli) . ", " . $Nombrerolusuario . ");";
 
-                    if (!$resultado2 = $mysqli->query($InsertarUsuario)) {
-                        echo "Error: La ejecución de la consulta falló debido a: \n";
-                        echo "Query: " . $InsertarUsuario . "\n";
-                        echo "Error: " . $mysqli->errno . "\n";
-                        exit;
+                        if (!$resultado2 = $mysqli->query($InsertarUsuario)) {
+                            echo "Error: La ejecución de la consulta falló debido a: \n";
+                            echo "Query: " . $InsertarUsuario . "\n";
+                            echo "Error: " . $mysqli->errno . "\n";
+                            exit;
+                        }
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Usuario registrado\");\n";
+                        echo "</script>";
                     }
-                    echo "<script language=\"JavaScript\">\n";
-                    echo "myFunction(\"Usuario registrado\");\n";
-                    echo "</script>";
                 }
             }
             ?>			

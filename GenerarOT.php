@@ -191,7 +191,6 @@
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col">Equipo</th>
-                                                        <th scope="col">Cantidad</th>
                                                         <th scope="col">Horas a laborar</th>
                                                     </tr>
                                                 </thead>
@@ -215,12 +214,6 @@
                                                                     }
                                                                     ?>
                                                                 </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="input-group input-group-lg">
-                                                                <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-question-sign"></i></span>
-                                                                <input type="number" class="form-control" name="CantidadEquipo1" placeholder="Cantidad" id="CantidadEquipo1" aria-describedby="sizing-addon1" required>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -435,8 +428,8 @@
                             // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
                             $TotalEnEquipo += ($CostoPorHoraEquipo * $HorasLaborad) * $Cantidad;
                             // Si contiene la palabra inicial producto seguido de un número insertamos e valor en la tabla de datalle de hojas de responsabilidad
-                            $ConsultaInsersionlistadoequipo = "INSERT INTO listadoequipo (idEquipo, idAveria, CantidadEquipo, HorasLaboradas)
-										       VALUES(" . $IdEquip . ", " . $idAveria . ", " . $Cantidad . ", " . $HorasLaborad . ");";
+                            $ConsultaInsersionlistadoequipo = "INSERT INTO listadoequipo (idEquipo, idAveria, HorasLaboradas)
+										       VALUES(" . $IdEquip . ", " . $idAveria . ", " . $HorasLaborad . ");";
                             if (!$ResultadoInsersionlistadoequipo = $mysqli->query($ConsultaInsersionlistadoequipo)) {
                                 echo "Error: La ejecución de la consulta falló debido a: \n";
                                 echo "Query: " . $ConsultaInsersionlistadoequipo . "\n";

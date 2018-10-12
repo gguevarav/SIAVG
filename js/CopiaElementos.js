@@ -30,25 +30,7 @@ function crear(obj) {
     DivInputGroup.appendChild(SpanSizing);
     DivInputGroup.appendChild(SelectProducto);
     ColumnaFila1.appendChild(DivInputGroup);
-    // Creamos la segunda columna
-    ColumnaFila2 = document.createElement('td');
-    DivInputGroup2 = document.createElement('div');
-    DivInputGroup2.className = 'input-group input-group-lg';
-    SpanSizing2 = document.createElement('span');
-    SpanSizing2.id = 'sizing-addon1';
-    SpanSizing2.className = 'input-group-addon';
-    Icono2 = document.createElement('i');
-    Icono2.className = 'glyphicon glyphicon-question-sign';
-    InputCantidad = document.createElement('input');
-    InputCantidad.id = 'CantidadEquipo' + ContadorNumeroFila;
-    InputCantidad.className = 'form-control';
-    InputCantidad.name = 'CantidadEquipo' + ContadorNumeroFila;
-    InputCantidad.placeholder = 'Cantidad';
-    InputCantidad.type = 'number';
-    SpanSizing2.appendChild(Icono2);
-    DivInputGroup2.appendChild(SpanSizing2);
-    DivInputGroup2.appendChild(InputCantidad);
-    ColumnaFila2.appendChild(DivInputGroup2);
+    
     // Creamos la tercer columna
     ColumnaFila3 = document.createElement('td');
     DivInputGroup3 = document.createElement('div');
@@ -71,7 +53,7 @@ function crear(obj) {
     FilaTabla.appendChild(NumeroFila);
     // Agregamos las dos columnas a la fila
     FilaTabla.appendChild(ColumnaFila1);
-    FilaTabla.appendChild(ColumnaFila2);
+
     FilaTabla.appendChild(ColumnaFila3);
     // Agregamos la fila al cuerpo de la tabla
     CuerpoTabla.appendChild(FilaTabla);

@@ -248,12 +248,15 @@
                                                             <!-- Habilitación -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                    <form method="get" action="GenerarOTPDF.php">
+                                                                        <input type="hidden" name="idOrdenTrabajo" value="<?php echo $row['idAveria'] ?>" />
+                                                                        <input type="submit" class="btn btn-primary" class="btn" value="Ver Cotización">
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <!-- Deshabilitación -->
+                                                            <!-- Cancelar OT -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
                                                                     <button type="button" class="btn btn-danger CancelarOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-remove"></span> Cancelar OT</button>
@@ -264,7 +267,7 @@
                                                     } else if ($NombreTrazabilidad == "Cotizada") {
                                                         ?>
                                                         <td>
-                                                            <!-- Habilitación -->
+                                                            <!-- Habilitar OT -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
                                                                     <button type="button" class="btn btn-success HabilitarOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-check"></span></button>
@@ -275,15 +278,18 @@
                                                     } else if ($NombreTrazabilidad == "Aprobada") {
                                                         ?>
                                                         <td>
-                                                            <!-- Habilitación -->
+                                                            <!-- Ver OT -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                    <form method="get" action="GenerarOTPDF.php">
+                                                                        <input type="hidden" name="idOrdenTrabajo" value="<?php echo $row['idAveria'] ?>" />
+                                                                        <input type="submit" class="btn btn-primary" class="btn" value="Ver Cotización">
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <!-- Habilitación -->
+                                                            <!-- En Proceso OT -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
                                                                     <button type="button" class="btn btn-success CambiarAEnProcesoOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-play"></span>Iniciar trabajo</button>
@@ -294,15 +300,18 @@
                                                     } else if ($NombreTrazabilidad == "En Proceso") {
                                                         ?>
                                                         <td>
-                                                            <!-- Habilitación -->
+                                                            <!-- Ver OT -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                    <form method="get" action="GenerarOTPDF.php">
+                                                                        <input type="hidden" name="idOrdenTrabajo" value="<?php echo $row['idAveria'] ?>" />
+                                                                        <input type="submit" class="btn btn-primary" class="btn" value="Ver Cotización">
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <!-- Habilitación -->
+                                                            <!-- Finalizar OT -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
                                                                     <button type="button" class="btn btn-success FinalizarOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-thumbs-up"></span>CerrarOT</button>
@@ -313,10 +322,13 @@
                                                     } else if ($NombreTrazabilidad == "Rechazada") {
                                                         ?>
                                                         <td>
-                                                            <!-- Habilitación -->
+                                                            <!-- Ver OT -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                    <form method="get" action="GenerarOTPDF.php">
+                                                                        <input type="hidden" name="idOrdenTrabajo" value="<?php echo $row['idAveria'] ?>" />
+                                                                        <input type="submit" class="btn btn-primary" class="btn" value="Ver Cotización">
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -324,10 +336,13 @@
                                                     } else if ($NombreTrazabilidad == "Finalizada") {
                                                         ?>
                                                         <td>
-                                                            <!-- Habilitación -->
+                                                            <!-- Ver OT -->
                                                             <div>
                                                                 <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idOrdenTrabajo']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                    <form method="get" action="GenerarOTPDF.php">
+                                                                        <input type="hidden" name="idOrdenTrabajo" value="<?php echo $row['idAveria'] ?>" />
+                                                                        <input type="submit" class="btn btn-primary" class="btn" value="Ver Cotización">
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </td>

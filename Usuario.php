@@ -191,6 +191,7 @@
                                                 <th class="text-center">Tipo de Empleado</th>
                                                 <th class="text-center">Rol</th>
                                                 <th class="text-center">Cambiar rol</th>
+                                                <th class="text-center">Cambiar correo</th>
                                                 <th class="text-center">Habilitar/<br>Deshabilitar</th>
                                             </tr>
                                         </thead>
@@ -275,6 +276,29 @@
                                                             }
                                                             ?>
                                                         </td>
+                                                        <td>
+                                                            <?php
+                                                            if ($row['EstadoPersona'] == 'Activo') {
+                                                                ?>
+                                                                <!-- Edición activada-->
+                                                                <div>
+                                                                    <div class="input-group input-group-lg">
+                                                                        <button type="button" class="btn btn-success CambiarCorreo" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                                <?php
+                                                            } else if ($row['EstadoPersona'] == 'Inactivo') {
+                                                                ?>
+                                                                <!-- Edición desactivada-->
+                                                                <div>
+                                                                    <div class="input-group input-group-lg">
+                                                                        <button type="button" class="btn btn-success CambiarCorreoDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </td>
                                                         <?php
                                                         if ($row['EstadoPersona'] == 'Activo') {
                                                             ?>
@@ -314,6 +338,41 @@
                 </div>
             </div>
         </div>
+        <!-- Edit Modal-->
+        <div class="modal fade" id="ModalCambioCorreo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <center><h1 class="modal-title" id="myModalLabel">Cambio de rol</h1></center>
+                    </div>
+                    <form method="post" action="Usuario.php" id="frmDeshabilitar">
+                        <div class="modal-body text-center">
+                            <div class="container-fluid">
+                                <p class="lead">Ingrese el nuevo correo del usuario</p>
+                                <div class="form-group input-group">
+                                    <input type="text" name="idUsuarioCambioCorreo" style="width:350px; visibility:hidden;" class="form-control" id="idUsuarioCambioCorreo">
+                                    <br>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon" style="width:150px;">Nombre del usuario</span>
+                                    <label class="form-control" style="width:350px;" id="NombresApellidos" name="NombresApellidos"></label>
+                                </div>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon" style="width:150px;">Correo</span>
+                                    <input type="email" style="width:350px;" class="form-control" name="CorreoUsuario" id="CorreoUsuario">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="CambiarCorreo" class="btn btn-success" value="Cambiar correo">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
         <!-- Edit Modal-->
         <div class="modal fade" id="ModalCambioRol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -452,6 +511,26 @@
             } else {
                 echo "<script language=\"JavaScript\">\n";
                 echo "myFunction(\"Cambio de rol satisfactiorio\");\n";
+                echo "</script>";
+            }
+        }// Código que recibe la información del formulario modal para cambiar el correo del usuario
+        if (isset($_POST['CambiarCorreo'])) {
+            // Guardamos el id en una variable
+            $idUsuario = $_POST['idUsuarioCambioCorreo'];
+            // Guardamos el id del rol en una variable
+            $CorreoUsuario = $_POST['CorreoUsuario'];
+            // Preparamos la consulta
+            $query = "UPDATE Usuario SET CorreoUsuario ='" . $CorreoUsuario . "' WHERE idUsuario=" . $idUsuario . ";";
+            // Ejecutamos la consulta
+            if (!$resultado = $mysqli->query($query)) {
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $query . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            } else {
+                echo "<script language=\"JavaScript\">\n";
+                echo "myFunction(\"Cambio de correo satisfactiorio\");\n";
                 echo "</script>";
             }
         }

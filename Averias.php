@@ -298,7 +298,10 @@
                                                                 <!-- Habilitación -->
                                                                 <div>
                                                                     <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                        <form method="get" action="GenerarOTPDF.php">
+                                                                            <input type="hidden" name="idOrdenTrabajo" value="<?php echo $row['idAveria'] ?>" />
+                                                                            <input type="submit" class="btn btn-primary" class="btn" value="Ver Cotización">
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -309,7 +312,10 @@
                                                                 <!-- Habilitación -->
                                                                 <div>
                                                                     <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-primary VerOT"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-search"></span>Ver OT</button>
+                                                                        <form method="get" action="GenerarOTPDF.php">
+                                                                            <input type="hidden" name="idOrdenTrabajo" value="<?php echo $row['idAveria'] ?>" />
+                                                                            <input type="submit" class="btn btn-primary" class="btn" value="Ver Cotización">
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </td>

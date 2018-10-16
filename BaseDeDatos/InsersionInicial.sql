@@ -107,5 +107,5 @@ INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona,
               VALUES('Administrador', 'administrador', 'Ciudad',
                      '1234-5678', 0.0, 1, 'Activo');
 
-INSERT INTO Usuario (NombreUsuario, PasswordUsuario, CorreoUsuario, idPersona, idRol)
-              VALUES('admin', '21232f297a57a5a743894a0e4a801fc3', 'gemisdguevarav@gmail.com', 1, 1);
+INSERT INTO Usuario (NombreUsuario, PasswordUsuario, CorreoUsuario, idMunicipalidad, idPersona, idRol)
+              VALUES('admin', '21232f297a57a5a743894a0e4a801fc3', 'gemisdguevarav@gmail.com', 1, 1, 1);

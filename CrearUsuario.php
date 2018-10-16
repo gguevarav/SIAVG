@@ -357,8 +357,8 @@
                         echo "</script>";
                     } else {
                         $ContraseniaEncriptada = md5($PasswordUsuario);
-                        $InsertarPersona = "INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona, TelefonoPersona, EstadoPersona, idTipoEmpleado)
-						     Values('" . $NombreUsuario . "', '" . $ApellidoUsuario . "', '" . $DireccionUsuario . "', '" . $TelefonoUsuario . "', 'Activo', " . $NombreTipoEmpleadoUsuario . ")";
+                        $InsertarPersona = "INSERT INTO Persona(NombrePersona, ApellidoPersona, DireccionPersona, TelefonoPersona, CostoXHoraPersona, EstadoPersona, idTipoEmpleado)
+						     Values('" . $NombreUsuario . "', '" . $ApellidoUsuario . "', '" . $DireccionUsuario . "', '" . $TelefonoUsuario . "', 0.00, 'Activo', " . $NombreTipoEmpleadoUsuario . ")";
 
                         if (!$resultado = $mysqli->query($InsertarPersona)) {
                             echo "Error: La ejecución de la consulta falló debido a: \n";

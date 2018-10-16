@@ -89,11 +89,18 @@ CREATE TABLE Averia(
     UbicacionAveria         VARCHAR(100)        NOT NULL,
     FechaReporteAveria      TIMESTAMP			NOT NULL			DEFAULT CURRENT_TIMESTAMP,
     ImagenAveria            VARCHAR(100)        NOT NULL,
+	idMunicipalidad			TINYINT				NOT NULL,
     idPrioridad             TINYINT             NOT NULL,
     idTrazabilidad          TINYINT             NOT NULL,
     idUrgencia              TINYINT             NOT NULL,
     idTamanio               TINYINT             NOT NULL,
     idUsuario               INTEGER		NOT NULL,
+	INDEX (idMunicipalidad),
+    FOREIGN KEY (idMunicipalidad)
+            REFERENCES Municipalidad(idMunicipalidad)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
+    INDEX (idTrazabilidad),
     INDEX (idPrioridad),
     FOREIGN KEY (idPrioridad)
             REFERENCES Prioridad(idPrioridad)
@@ -217,12 +224,12 @@ CREATE TABLE OrdenTrabajo(
             ON UPDATE NO ACTION,
     INDEX (EncargadoMunicipal),
     FOREIGN KEY (EncargadoMunicipal)
-            REFERENCES Persona(idPersona)
+            REFERENCES Usuario(idUsuario)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
     INDEX (EncargadoCovial),
     FOREIGN KEY (EncargadoCovial)
-            REFERENCES Persona(idPersona)
+            REFERENCES Usuario(idUsuario)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
     INDEX (idTrazabilidad),

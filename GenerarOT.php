@@ -413,7 +413,7 @@
                         if (isset($_POST['Equipo' . $Contador])) {
                             $IdEquip = $_POST['Equipo' . $Contador];
                             //echo $IdEquip;
-                            $Cantidad = $_POST['CantidadEquipo' . $Contador];
+                            //$Cantidad = $_POST['CantidadEquipo' . $Contador];
                             //echo $Cantidad;
                             $HorasLaborad = $_POST['CantidadHorasEquipo' . $Contador];
                             // Vamos a consultar a cuando nos sale cada hora y a multiplicarla por la cantidad necesitada
@@ -426,7 +426,7 @@
                             // Privilegio de usuario
                             $CostoPorHoraEquipo = $ResultadoConsultaCosto['CostoPorHora'];
                             // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
-                            $TotalEnEquipo += ($CostoPorHoraEquipo * $HorasLaborad) * $Cantidad;
+                            $TotalEnEquipo += $CostoPorHoraEquipo * $HorasLaborad;
                             // Si contiene la palabra inicial producto seguido de un número insertamos e valor en la tabla de datalle de hojas de responsabilidad
                             $ConsultaInsersionlistadoequipo = "INSERT INTO listadoequipo (idEquipo, idAveria, HorasLaboradas)
 										       VALUES(" . $IdEquip . ", " . $idAveria . ", " . $HorasLaborad . ");";

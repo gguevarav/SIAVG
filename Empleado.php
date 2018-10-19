@@ -24,6 +24,31 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <script type="text/javascript">
+            function MostrarTablaEmpleados() {
+                var xmlhttp;
+                if (window.XMLHttpRequest)
+                {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else
+                {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState == 4)
+                    {
+                        document.getElementById("buscar").innerHTML = xmlhttp.responseText;
+                        setTimeout('MostrarTablaEmpleados()', 1000);
+                    }
+                }
+                xmlhttp.open("GET", "TablaEmpleados.php?SolicitarTabla=si", true);
+                xmlhttp.send();
+            }
+            window.onload = function startrefresh() {
+                setTimeout('MostrarTablaEmpleados()', 1000);
+            }
+        </script>
     </head>
     <?php
     // Incluimos el archivo que valida si hay una sesión activa
@@ -38,116 +63,10 @@
         $idUsuario2 = $_SESSION["idUsuario"];
         ?>
         <body>
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid"> 
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                        <a class="navbar-brand" href="index.php"><img src="imagenes/logo.png" class="img-circle" width="25" height="25"></a></div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="defaultNavbar1">
-                        <ul class="nav navbar-nav">
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="Equipo.php">Listado de Equipos</a></li>
-                                        <li><a href="RegistroEquipo.php">Registrar equipos</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Materiales<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroMaterial.php">Registrar Material</a></li>
-                                        <li><a href="Material.php">Lista de Materiales</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroEmpleado.php">Crear empleado</a></li>
-                                        <li><a href="#">Listado de empleados</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearUsuario.php">Crear usuario</a></li>
-                                        <li><a href="Usuario.php">Ver usuarios</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncMunicipal' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
-                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <!-- Acá mostramos el nombre del usuario -->
-                                <a href="#" class="dropdown-toggle negrita" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-option-vertical"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><?php echo $NombreUsuario; ?></a></li>
-                                    <?php
-                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                        ?>
-                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo administrador</a></li>
-                                        <?php
-                                    }
-                                    ?>
-                                    <li><a href="AcercaDe.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Acerca de...</a></li>
-                                    <li><a href="Seguridad/logout.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Cerrar Sesión</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse --> 
-                </div>
-                <!-- /.container-fluid --> 
-            </nav>
+            <?php
+            // incluimos el menú para mostrarlo
+            include_once "MenuPrincipal.php";
+            ?>
             <br>
             <br>
             <br>
@@ -194,83 +113,10 @@
                                             </tr>
                                         </thead>
                                         <!-- Cuerpo de la tabla -->
-                                        <tbody class="buscar">
-                                            <!-- Contenido de la tabla -->
-                                            <!-- Acá mostraremos los usuarios y seleccionaremos el que deseamos eliminar -->
-                                            <?php
-                                            $VerEmpleado = "SELECT * FROM Persona";
-                                            // Hacemos la consulta
-                                            $resultado = $mysqli->query($VerEmpleado);
-                                            while ($row = mysqli_fetch_array($resultado)) {
-                                                ?>
-                                                <tr>
-                                                    <td><span id="idPersona<?php echo $row['idPersona']; ?>"><?php echo $row['idPersona'] ?></span></td>
-                                                    <td><span id="NombrePersona<?php echo $row['idPersona']; ?>"><?php echo $row['NombrePersona'] ?></span></td>
-                                                    <td><span id="ApellidoPersona<?php echo $row['idPersona']; ?>"><?php echo $row['ApellidoPersona'] ?></span></td>
-                                                    <td><span id="DireccionPersona<?php echo $row['idPersona']; ?>"><?php echo $row['DireccionPersona'] ?></span></td>
-                                                    <td><span id="TelefonoPersona<?php echo $row['idPersona']; ?>"><?php echo $row['TelefonoPersona'] ?></span></td>
-                                                    <td><span id="PrecioPorHora<?php echo $row['idPersona']; ?>"><?php echo $row['CostoXHoraPersona'] ?></span></td>
-                                                    <td><span id="Puesto<?php echo $row['idPersona']; ?>"><!-- Acá mostraremos el nombre del puesto a partir del id que se tiene en la tabla -->
-                                                            <?php
-                                                            $VerTipoEmpleado = "SELECT NombreTipoEmpleado FROM TipoEmpleado WHERE idTipoEmpleado='" . $row['idTipoEmpleado'] . "';";
-                                                            // Hacemos la consulta
-                                                            $ResultadoConsultaTipoEmpleado = $mysqli->query($VerTipoEmpleado);
-                                                            $FilaResultadoTipoEmpleado = $ResultadoConsultaTipoEmpleado->fetch_assoc();
-                                                            $NombrePuesto = $FilaResultadoTipoEmpleado['NombreTipoEmpleado'];
-                                                            echo $NombrePuesto;
-                                                            ?></span></td>
-                                                    <td>
-                                                        <?php
-                                                        if ($row['EstadoPersona'] == 'Activo') {
-                                                            ?>
-                                                            <!-- Edición activada-->
-                                                            <div>
-                                                                <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-success EditarPersona" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
-                                                                </div>
-                                                            </div>
-                                                            <?php
-                                                        } else if ($row['EstadoPersona'] == 'Inactivo') {
-                                                            ?>
-                                                            <!-- Edición desactivada-->
-                                                            <div>
-                                                                <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-success EditarPersonaDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
-                                                                </div>
-                                                            </div>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <?php
-                                                    if ($row['EstadoPersona'] == 'Activo') {
-                                                        ?>
-                                                        <td>
-                                                            <!-- Deshabilitación -->
-                                                            <div>
-                                                                <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-warning DeshabilitarPersona"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <?php
-                                                    } else if ($row['EstadoPersona'] == 'Inactivo') {
-                                                        ?>
-                                                        <td>
-                                                            <!-- Habilitación -->
-                                                            <div>
-                                                                <div class="input-group input-group-lg">
-                                                                    <button type="button" class="btn btn-success HabilitarPersona"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-check"></span></button>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </tr>
-                                                <?php
-                                            }
-                                            ?>
+                                        <tbody class="buscar" id="buscar">
+                                            <script type="text/javascript">
+                                                MostrarTablaEmpleados();
+                                            </script>
                                         </tbody>
                                     </table>
                                 </div>

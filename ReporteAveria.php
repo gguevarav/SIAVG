@@ -9,9 +9,9 @@
     -
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" href="imagenes/icono.ico">
         <title>Sistema de Información de Averías Viales de Guatemala</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,14 +24,71 @@
         <!-- Toast-->
         <link rel="stylesheet" type="text/css" href="css/Toast.css">
         <script src="js/Toast.js"></script>
-        <!-- Importamos la API de Google para hacer uso de coordenadas-->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpKmSyylxEF4rZfw-FAo1NWBwU_Id9B4k&callback=initMap" async defer></script>
-        <style>
+		<!-- Importamos la API de Google para hacer uso de coordenadas-->
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUxltWYaXVQJJB-VZJ1EvyUb75M3yM6qQ&sensor=true"></script>
+		<!-- css para el mapa -->
+        <style type="text/css">
             #map {
                 width: 200px;
                 height: 150px;
             }
         </style>
+		<script type="text/javascript">
+			var marker;          //variable del marcador
+			var coords = {};    //coordenadas obtenidas con la geolocalización
+			//Funcion principal
+			function initMap()
+			{
+				//usamos la API para geolocalizar el usuario
+				//navigator.geolocation.getCurrentPosition(
+				//		function (position) {
+				//			coords = {
+				//				lng: position.coords.longitude,
+				//				lat: position.coords.latitude
+				//			};
+							setMapa();  //pasamos las coordenadas al metodo para crear el mapa
+				//		}, function (error) {
+				//	console.log(error);
+				//}
+				//);
+			}
+			function setMapa() {
+				//Se crea una nueva instancia del objeto mapa
+				var map = new google.maps.Map(document.getElementById('map'),
+						{
+							zoom: 25,
+							center: new google.maps.LatLng(15.466751985073822,-88.84044371226844),
+							// Tipo de Mapa (Tipo Satélite)
+							mapTypeId: 'satellite'
+						});
+				//Creamos el marcador en el mapa con sus propiedades
+				//para nuestro obetivo tenemos que poner el atributo draggable en true
+				//position pondremos las mismas coordenas que obtuvimos en la geolocalización
+				marker = new google.maps.Marker({
+					map: map,
+					draggable: true,
+					animation: google.maps.Animation.DROP,
+					position: new google.maps.LatLng(15.466751985073822,-88.84044371226844), }
+				);
+				//agregamos un evento al marcador junto con la funcion callback al igual que el evento dragend que indica 
+				//cuando el usuario a soltado el marcador
+				marker.addListener('click', toggleBounce);
+				marker.addListener('dragend', function (event)
+				{
+					//escribimos las coordenadas de la posicion actual del marcador dentro del input #coords
+					document.getElementById("coords").value = this.getPosition().lat() + "," + this.getPosition().lng();
+				});
+			}
+			//callback al hacer clic en el marcador lo que hace es quitar y poner la animacion BOUNCE
+			function toggleBounce() {
+				if (marker.getAnimation() !== null) {
+					marker.setAnimation(null);
+				} else {
+					marker.setAnimation(google.maps.Animation.BOUNCE);
+				}
+			}
+			// Carga de la libreria de google maps              
+		</script>
     </head>
     <?php
     // Incluimos el archivo que valida si hay una sesión activa
@@ -45,7 +102,7 @@
         $NombreUsuario = $_SESSION["NombreUsuario"];
         $idUsuario2 = $_SESSION["idUsuario"];
         ?>
-        <body>
+        <body onload="initMap()">
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid"> 
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -160,7 +217,6 @@
             <br>
             <br>
             <div class="container">
-                <div class="row text-center">
                     <div class="container-fluid">
                         <!-- Snackbar -->
                         <div id="snackbar"></div> 
@@ -302,65 +358,6 @@
                     </div>
                 </div>
             </div>
-            <script>
-                var marker;          //variable del marcador
-                var coords = {};    //coordenadas obtenidas con la geolocalización
-
-                //Funcion principal
-                initMap = function ()
-                {
-                    //usamos la API para geolocalizar el usuario
-                    navigator.geolocation.getCurrentPosition(
-                            function (position) {
-                                coords = {
-                                    lng: position.coords.longitude,
-                                    lat: position.coords.latitude
-                                };
-                                setMapa(coords);  //pasamos las coordenadas al metodo para crear el mapa
-                            }, function (error) {
-                        console.log(error);
-                    }
-                    );
-                }
-                function setMapa(coords) {
-                    //Se crea una nueva instancia del objeto mapa
-                    var map = new google.maps.Map(document.getElementById('map'),
-                            {
-                                zoom: 25,
-                                center: new google.maps.LatLng(coords.lat, coords.lng),
-                                // Tipo de Mapa (Tipo Satélite)
-                                mapTypeId: 'satellite'
-                            });
-
-
-                    //Creamos el marcador en el mapa con sus propiedades
-                    //para nuestro obetivo tenemos que poner el atributo draggable en true
-                    //position pondremos las mismas coordenas que obtuvimos en la geolocalización
-                    marker = new google.maps.Marker({
-                        map: map,
-                        draggable: true,
-                        animation: google.maps.Animation.DROP,
-                        position: new google.maps.LatLng(coords.lat, coords.lng), }
-                    );
-                    //agregamos un evento al marcador junto con la funcion callback al igual que el evento dragend que indica 
-                    //cuando el usuario a soltado el marcador
-                    marker.addListener('click', toggleBounce);
-                    marker.addListener('dragend', function (event)
-                    {
-                        //escribimos las coordenadas de la posicion actual del marcador dentro del input #coords
-                        document.getElementById("coords").value = this.getPosition().lat() + "," + this.getPosition().lng();
-                    });
-                }
-                //callback al hacer clic en el marcador lo que hace es quitar y poner la animacion BOUNCE
-                function toggleBounce() {
-                    if (marker.getAnimation() !== null) {
-                        marker.setAnimation(null);
-                    } else {
-                        marker.setAnimation(google.maps.Animation.BOUNCE);
-                    }
-                }
-                // Carga de la libreria de google maps              
-            </script>
             <!-- Modal para crear UnidadMedida -->
             <div class="modal fade slide left" id="ModalAgregarPrioridad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -483,7 +480,7 @@
             $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
             $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
             $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
-            
+
             $mail = new PHPMailer();
 
             $mail->IsSMTP();

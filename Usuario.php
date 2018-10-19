@@ -24,6 +24,31 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <script type="text/javascript">
+            function MostrarTablaUsuarios() {
+                var xmlhttp;
+                if (window.XMLHttpRequest)
+                {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else
+                {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState == 4)
+                    {
+                        document.getElementById("buscar").innerHTML = xmlhttp.responseText;
+                        setTimeout('MostrarTablaUsuarios()', 1000);
+                    }
+                }
+                xmlhttp.open("GET", "TablaUsuarios.php?SolicitarTabla=si", true);
+                xmlhttp.send();
+            }
+            window.onload = function startrefresh() {
+                setTimeout('MostrarTablaUsuarios()', 1000);
+            }
+        </script>
     </head>
     <?php
     // Incluimos el archivo que valida si hay una sesión activa
@@ -37,116 +62,10 @@
         $idUsuario2 = $_SESSION["idUsuario"];
         ?>
         <body>
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid"> 
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                        <a class="navbar-brand" href="index.php"><img src="imagenes/logo.png" class="img-circle" width="25" height="25"></a></div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="defaultNavbar1">
-                        <ul class="nav navbar-nav">
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="Equipo.php">Listado de Equipos</a></li>
-                                        <li><a href="RegistroEquipo.php">Registrar equipos</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Materiales<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroMaterial.php">Registrar Material</a></li>
-                                        <li><a href="Material.php">Lista de Materiales</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroEmpleado.php">Crear empleado</a></li>
-                                        <li><a href="Empleado.php">Listado de empleados</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearUsuario.php">Crear usuario</a></li>
-                                        <li><a href="#">Ver usuarios</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncMunicipal' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
-                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <!-- Acá mostramos el nombre del usuario -->
-                                <a href="#" class="dropdown-toggle negrita" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-option-vertical"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><?php echo $NombreUsuario; ?></a></li>
-                                    <?php
-                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                        ?>
-                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo administrador</a></li>
-                                        <?php
-                                    }
-                                    ?>
-                                    <li><a href="AcercaDe.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Acerca de...</a></li>
-                                    <li><a href="Seguridad/logout.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Cerrar Sesión</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse --> 
-                </div>
-                <!-- /.container-fluid --> 
-            </nav>
+            <?php
+            // incluimos el menú para mostrarlo
+            include_once "MenuPrincipal.php";
+            ?>
             <br>
             <br>
             <br>
@@ -181,6 +100,7 @@
                                             <!-- Contenido -->
                                             <tr>
                                                 <th class="text-center">#</th>
+                                                <th class="text-center">Código</th>
                                                 <th class="text-center">Nombre</th>
                                                 <th class="text-center">Apellido</th>
                                                 <th class="text-center">Nombre usuario</th>
@@ -195,140 +115,10 @@
                                                 <th class="text-center">Habilitar/<br>Deshabilitar</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="buscar">
-                                            <!-- Contenido de la tabla -->
-                                            <!-- Acá mostraremos los usuarios y seleccionaremos el que deseamos eliminar -->
-                                            <?php
-                                            // Primero hacemos la consulta en la tabla de persona
-                                            // Si somos el superadministrador podremos editar nuestro usuario mientras no
-                                            $VerPersonas = "SELECT * FROM persona WHERE NombrePersona!='Gemis Daniel'";
-                                            // Hacemos la consulta
-                                            $resultado = $mysqli->query($VerPersonas);
-                                            while ($row = mysqli_fetch_array($resultado)) {
-                                                // Obtenemos el nombre de usuario y privilegio de cada persona
-                                                // Primero haremos la consulta
-                                                $VerUsuario = "SELECT * FROM usuario WHERE idPersona='" . $row['idPersona'] . "'";
-                                                // Ejecutamos la consulta
-                                                $ResultadoConsultaUsuario = $mysqli->query($VerUsuario);
-                                                // Guardamos la consulta en un array
-                                                $ResultadoConsulta = $ResultadoConsultaUsuario->fetch_assoc();
-                                                // Nombre de usuario
-                                                $NombreDeUsuario = $ResultadoConsulta['NombreUsuario'];
-                                                // Primero haremos la consulta
-                                                $VerTipoEmpleado = "SELECT NombreTipoEmpleado FROM TipoEmpleado WHERE idTipoEmpleado='" . $row['idTipoEmpleado'] . "'";
-                                                // Ejecutamos la consulta
-                                                $ResultadoConsultaTipoEmpleado = $mysqli->query($VerTipoEmpleado);
-                                                // Guardamos la consulta en un array
-                                                $ResultadoConsultaTipo = $ResultadoConsultaTipoEmpleado->fetch_assoc();
-                                                // Privilegio de usuario
-                                                $TipoDeEmpleado = $ResultadoConsultaTipo['NombreTipoEmpleado'];
-                                                if ($NombreDeUsuario != "") {
-                                                    // NombreRol
-                                                    $idRol = $ResultadoConsulta['idRol'];
-                                                    // Primero haremos la consulta
-                                                    $VerNombreRol = "SELECT NombreRol FROM rol WHERE idRol=" . $idRol . ";";
-                                                    // Ejecutamos la consulta
-                                                    $ResultadoConsultaNombreRol = $mysqli->query($VerNombreRol);
-                                                    // Guardamos la consulta en un array
-                                                    $ResultadoConsultaRol = $ResultadoConsultaNombreRol->fetch_assoc();
-                                                    // Privilegio de usuario
-                                                    $NombreRol = $ResultadoConsultaRol['NombreRol'];
-                                                    ?>
-                                                    <tr>
-                                                        <td><span id="idPersonaEliminar<?php echo $row['idPersona']; ?>"><?php echo $row['idPersona'] ?></span></td>
-                                                        <td><span id="NombrePersona<?php echo $row['idPersona']; ?>"><?php echo $row['NombrePersona'] ?></span></td>
-                                                        <td><span id="ApellidoUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['ApellidoPersona'] ?></span></td>
-                                                        <td><span id="NombreUsuario<?php echo $row['idPersona']; ?>"><?php echo $NombreDeUsuario ?></span></td>
-                                                        <td><span id="DireccionUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['DireccionPersona'] ?></span></td>
-                                                        <td><span id="Correo<?php echo $row['idPersona']; ?>"><?php echo $ResultadoConsulta['CorreoUsuario'] ?></span></td>
-                                                        <td><span id="Municipalidad<?php echo $row['idPersona']; ?>">
-                                                                <?php
-                                                                $VerMunicipalidad = "SELECT NombreMunicipalidad FROM Municipalidad WHERE idMunicipalidad='" . $ResultadoConsulta['idMunicipalidad'] . "';";
-                                                                // Hacemos la consulta
-                                                                $ResultadoConsultaMunicipalidad = $mysqli->query($VerMunicipalidad);
-                                                                $FilaResultadoMunicipalidad = $ResultadoConsultaMunicipalidad->fetch_assoc();
-                                                                $NombreMunicipalidad = $FilaResultadoMunicipalidad['NombreMunicipalidad'];
-                                                                echo $NombreMunicipalidad;
-                                                                ?></span></td>
-                                                        <td><span id="TelefonoUsuario<?php echo $row['idPersona']; ?>"><?php echo $row['TelefonoPersona'] ?></span></td>
-                                                        <td><span id="TipoEmpleadoUsuario<?php echo $row['idPersona']; ?>"><?php echo $TipoDeEmpleado ?></span></td>
-                                                        <td><span id="NombreRol<?php echo $row['idPersona']; ?>"><?php echo $NombreRol ?></span></td>
-                                                        <td>
-                                                            <?php
-                                                            if ($row['EstadoPersona'] == 'Activo') {
-                                                                ?>
-                                                                <!-- Edición activada-->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success CambiarRol" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                                <?php
-                                                            } else if ($row['EstadoPersona'] == 'Inactivo') {
-                                                                ?>
-                                                                <!-- Edición desactivada-->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success CambiarRolDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php
-                                                            if ($row['EstadoPersona'] == 'Activo') {
-                                                                ?>
-                                                                <!-- Edición activada-->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success CambiarCorreo" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                                <?php
-                                                            } else if ($row['EstadoPersona'] == 'Inactivo') {
-                                                                ?>
-                                                                <!-- Edición desactivada-->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success CambiarCorreoDesac" disabled="true"><span class="glyphicon glyphicon-edit"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <?php
-                                                        if ($row['EstadoPersona'] == 'Activo') {
-                                                            ?>
-                                                            <td>
-                                                                <!-- Deshabilitación -->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-warning DeshabilitarPersona"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <?php
-                                                        } else if ($row['EstadoPersona'] == 'Inactivo') {
-                                                            ?>
-                                                            <td>
-                                                                <!-- Habilitación -->
-                                                                <div>
-                                                                    <div class="input-group input-group-lg">
-                                                                        <button type="button" class="btn btn-success HabilitarPersona"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-check"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </tr>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
+                                        <tbody class="buscar" id="buscar">
+                                        <script type="text/javascript">
+                                            MostrarTablaUsuarios();
+                                        </script>
                                         </tbody>
                                     </table>
                                 </div>
@@ -432,11 +222,12 @@
                     <form method="post" action="Usuario.php" id="frmDeshabilitar">
                         <div class="modal-body text-center">
                             <p class="lead">¿Está seguro que desea deshabilitar el siguiente empleado?</p>
+                            <input type="text" name="idEmpleadoDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEmpleadoDeshabilitar">
                             <div class="form-group input-group">
-                                <input type="text" name="idEmpleadoDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idEmpleadoDeshabilitar">
-                                <br>
-                                <label id="NombreEmpledoDeshabilitar" name="NombreEmpledoDeshabilitar"></label>
+                                <span class="input-group-addon" style="width:150px;">Nombre del usuario</span>
+                                <label class="form-control" style="width:350px;" id="NombreEmpledoDeshabilitar" name="NombreEmpledoDeshabilitar"></label>
                             </div>
+                            <input type="text" name="idUsuarioDeshabilitar" style="width:350px; visibility:hidden;" class="form-control" id="idUsuarioDeshabilitar">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
@@ -458,11 +249,12 @@
                     <form method="post" action="Usuario.php" id="myForm">
                         <div class="modal-body text-center">
                             <p class="lead">¿Está seguro que desea habilitar la siguiente empleado?</p>
+                            <input type="text" name="idEmpleadoHabilitar" style="width:350px; visibility:hidden;" id="idEmpleadoHabilitar"  class="form-control">
                             <div class="form-group input-group">
-                                <input type="text" name="idEmpleadoHabilitar" id="idEmpleadoHabilitar" style="width:350px; visibility:hidden;" class="form-control">
-                                <br>
-                                <label id="NombreEmpleadoHabilitar" name="NombreEmpleadoHabilitar"></label>
+                                <span class="input-group-addon" style="width:150px;">Nombre del usuario</span>
+                                <label class="form-control" style="width:350px;" id="NombreEmpleadoHabilitar" name="NombreEmpleadoHabilitar"></label>
                             </div>
+                            <input type="text" name="idUsuarioHabilitar" style="width:350px; visibility:hidden;" id="idUsuarioHabilitar" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
@@ -478,8 +270,9 @@
         if (isset($_POST['DeshabilitarEmpleado'])) {
             // Guardamos el id en una variable
             $idPersona = $_POST['idEmpleadoDeshabilitar'];
+            $idUsuario = $_POST['idUsuarioDeshabilitar'];
             // Preparamos la consulta
-            $query = "UPDATE Persona SET EstadoPersona = 'Inactivo' WHERE idPersona=" . $idPersona . ";";
+            $query = "UPDATE Usuario SET EstadoUsuario = 'Inactivo' WHERE idUsuario=" . $idUsuario . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -488,9 +281,20 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Empleado deshabilitado\");\n";
-                echo "</script>";
+                // Preparamos la consulta
+                $query = "UPDATE Persona SET EstadoPersona = 'Inactivo' WHERE idPersona=" . $idPersona . ";";
+                // Ejecutamos la consulta
+                if (!$resultado = $mysqli->query($query)) {
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $query . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    exit;
+                } else {
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Usuario deshabilitado\");\n";
+                    echo "</script>";
+                }
             }
         }
         // Código que recibe la información del formulario modal para cambiar el rol del usuario
@@ -538,8 +342,9 @@
         if (isset($_POST['HabilitarEmpleado'])) {
             // Guardamos el id en una variable
             $idPersona = $_POST['idEmpleadoHabilitar'];
+            $idUsuario = $_POST['idUsuarioHabilitar'];
             // Preparamos la consulta
-            $query = "UPDATE Persona SET EstadoPersona = 'Activo' WHERE idPersona=" . $idPersona . ";";
+            $query = "UPDATE Usuario SET EstadoUsuario = 'Activo' WHERE idUsuario=" . $idUsuario . ";";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -548,9 +353,19 @@
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
             } else {
-                echo "<script language=\"JavaScript\">\n";
-                echo "myFunction(\"Empleado habilitado\");\n";
-                echo "</script>";
+                $query = "UPDATE Persona SET EstadoPersona = 'Activo' WHERE idPersona=" . $idPersona . ";";
+                // Ejecutamos la consulta
+                if (!$resultado = $mysqli->query($query)) {
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $query . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    exit;
+                } else {
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"Usuario habilitado\");\n";
+                    echo "</script>";
+                }
             }
         }
         // Código que recibe la información del formulario modal (Editar)

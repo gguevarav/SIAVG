@@ -113,34 +113,54 @@
                         exit;
                     } else {
                         $ResultadoConsulta = $resultado->fetch_assoc();
-                        if ($ResultadoConsulta['NombreUsuario'] = $Usuario) {
-                            if ($ResultadoConsulta['PasswordUsuario'] == $password) {
-                                $idPersona = $ResultadoConsulta['IdPersona'];
-                                $query = "SELECT * FROM persona WHERE idPersona='" . $idPersona . "'";
-                                if (!$resultado = $mysqli->query($query)) {
-                                    echo "Error: La ejecución de la consulta falló debido a: \n";
-                                    echo "Query: " . $query . "\n";
-                                    echo "Errno: " . $mysqli->errno . "\n";
-                                    echo "Error: " . $mysqli->error . "\n";
-                                    exit;
-                                } else {
-                                    $ResultadoConsultaPersona = $resultado->fetch_assoc();
-                                    $query = "SELECT * FROM rol WHERE idRol='" . $ResultadoConsulta['idRol'] . "'";
-                                    if (!$resultadoRol = $mysqli->query($query)) {
+                        if ($ResultadoConsulta['EstadoUsuario'] == "Activo") {
+                            if ($ResultadoConsulta['NombreUsuario'] == $Usuario) {
+                                if ($ResultadoConsulta['PasswordUsuario'] == $password) {
+                                    $idPersona = $ResultadoConsulta['IdPersona'];
+                                    $query = "SELECT * FROM persona WHERE idPersona=" . $idPersona . "";
+                                    if (!$resultado = $mysqli->query($query)) {
                                         echo "Error: La ejecución de la consulta falló debido a: \n";
                                         echo "Query: " . $query . "\n";
                                         echo "Errno: " . $mysqli->errno . "\n";
                                         echo "Error: " . $mysqli->error . "\n";
                                         exit;
+                                    } else {
+                                        $ResultadoConsultaPersona = $resultado->fetch_assoc();
+                                        $query = "SELECT * FROM rol WHERE idRol='" . $ResultadoConsulta['idRol'] . "'";
+                                        if (!$resultadoRol = $mysqli->query($query)) {
+                                            echo "Error: La ejecución de la consulta falló debido a: \n";
+                                            echo "Query: " . $query . "\n";
+                                            echo "Errno: " . $mysqli->errno . "\n";
+                                            echo "Error: " . $mysqli->error . "\n";
+                                            exit;
+                                        }
+                                        session_start();
+                                        $ResultadoConsultaRol = $resultadoRol->fetch_assoc();
+                                        $_SESSION['NombreUsuario'] = $ResultadoConsultaPersona['NombrePersona'] . " " . $ResultadoConsultaPersona['ApellidoPersona'];
+                                        $_SESSION['Usuario'] = $ResultadoConsulta['NombreUsuario'];
+                                        $_SESSION['ContrasenaUsuario'] = $password;
+                                        $_SESSION['idUsuario'] = $ResultadoConsulta['idUsuario'];
+                                        $_SESSION['PrivilegioUsuario'] = $ResultadoConsultaRol['NombreRol'];
+                                        header("location:index.php");
                                     }
-                                    session_start();
-                                    $ResultadoConsultaRol = $resultadoRol->fetch_assoc();
-                                    $_SESSION['NombreUsuario'] = $ResultadoConsultaPersona['NombrePersona'] . " " . $ResultadoConsultaPersona['ApellidoPersona'];
-                                    $_SESSION['Usuario'] = $ResultadoConsulta['NombreUsuario'];
-                                    $_SESSION['ContrasenaUsuario'] = $password;
-                                    $_SESSION['idUsuario'] = $ResultadoConsulta['idUsuario'];
-                                    $_SESSION['PrivilegioUsuario'] = $ResultadoConsultaRol['NombreRol'];
-                                    header("location:index.php");
+                                } else {
+                                    ?>
+                                    <div class="form-group">
+                                        <form name="Alerta">
+                                            <div class="container">
+                                                <div class="row text-center">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-xs-10 col-xs-offset-1">
+                                                                <div class="alert alert-warning">Contraseña erronea</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <?php
                                 }
                             } else {
                                 ?>
@@ -151,7 +171,7 @@
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <div class="col-xs-10 col-xs-offset-1">
-                                                            <div class="alert alert-warning">Contraseña erronea</div>
+                                                            <div class="alert alert-danger">Usuario erroneo</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -170,7 +190,7 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-10 col-xs-offset-1">
-                                                        <div class="alert alert-danger">Usuario erroneo</div>
+                                                        <div class="alert alert-danger">Su usuario se encuentra bloqueado</div>
                                                     </div>
                                                 </div>
                                             </div>

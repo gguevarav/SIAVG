@@ -127,29 +127,63 @@ $(document).ready(function () {
     });
 });
 
-// Deshabilitacion de empleado
+// Deshabilitacion de persona
 $(document).ready(function () {
     $(document).on('click', '.DeshabilitarPersona', function () {
         var id = $(this).val();
         var Nombre = $('#NombrePersona' + id).text();
+        var Apellido = $('#ApellidoUsuario' + id).text();
         var Producto = $('#idPersona' + id).text();
 
         $('#ModalDeshabilitarEmpleado').modal('show');
-        document.querySelector('#NombreEmpledoDeshabilitar').innerText = Nombre;
+        document.querySelector('#NombreEmpledoDeshabilitar').innerText = Nombre + " " + Apellido;
         $('#idEmpleadoDeshabilitar').val(id);
     });
 });
 
-// Habilitacion de Material
+// Habilitacion de persona
 $(document).ready(function () {
     $(document).on('click', '.HabilitarPersona', function () {
         var id = $(this).val();
         var Nombre = $('#NombrePersona' + id).text();
+        var Apellido = $('#ApellidoUsuario' + id).text();
         var Producto = $('#idPersona' + id).text();
 
         $('#ModalHabilitarEmpleado').modal('show');
-        document.querySelector('#NombreEmpleadoHabilitar').innerText = Nombre;
+        document.querySelector('#NombreEmpleadoHabilitar').innerText = Nombre + " " + Apellido;
         $('#idEmpleadoHabilitar').val(id);
+    });
+});
+
+// Deshabilitacion de usuario
+$(document).ready(function () {
+    $(document).on('click', '.DeshabilitarUsuario', function () {
+        var id = $(this).val();
+        var Nombre = $('#NombrePersona' + id).text();
+        var Apellido = $('#ApellidoUsuario' + id).text();
+        var Producto = $('#idPersona' + id).text();
+        var idUsuario = $('#idUsuario' + id).text();
+
+        $('#ModalDeshabilitarEmpleado').modal('show');
+        document.querySelector('#NombreEmpledoDeshabilitar').innerText = Nombre + " " + Apellido;
+        $('#idEmpleadoDeshabilitar').val(id);
+        $('#idUsuarioDeshabilitar').val(idUsuario);
+    });
+});
+
+// Habilitacion de usuario
+$(document).ready(function () {
+    $(document).on('click', '.HabilitarUsuario', function () {
+        var id = $(this).val();
+        var Nombre = $('#NombrePersona' + id).text();
+        var Apellido = $('#ApellidoUsuario' + id).text();
+        var Producto = $('#idPersona' + id).text();
+        var idUsuario = $('#idUsuario' + id).text();
+
+        $('#ModalHabilitarEmpleado').modal('show');
+        document.querySelector('#NombreEmpleadoHabilitar').innerText = Nombre + " " + Apellido;
+        $('#idEmpleadoHabilitar').val(id);
+        $('#idUsuarioHabilitar').val(idUsuario);
     });
 });
 
@@ -183,12 +217,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     $(document).on('click', '.CancelarAveria', function () {
         var id = $(this).val();
-        var Nombres = $('#NombreUsuario' + id).text();
-        var Apellidos = $('#ApellidoUsuario' + id).text();
-        var Usuario = $('#idPersonaEliminar' + id).text();
 
         $('#ModalCancelarAveria').modal('show');
-        //document.querySelector('#NombresApellidos').innerText = Nombres + " " + Apellidos;
         $('#idAEliminar').val(id);
     });
 });

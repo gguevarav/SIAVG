@@ -24,6 +24,31 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <script type="text/javascript">
+            function MostrarTablaColaAverias() {
+                var xmlhttp;
+                if (window.XMLHttpRequest)
+                {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else
+                {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState == 4)
+                    {
+                        document.getElementById("buscar").innerHTML = xmlhttp.responseText;
+                        setTimeout('MostrarTablaColaAverias()',1000);
+                    }
+                }
+                xmlhttp.open("GET", "TablaColaAverias.php?SolicitarTabla=si", true);
+                xmlhttp.send();
+            }
+            window.onload = function startrefresh() {
+                setTimeout('MostrarTablaColaAverias()', 1000);
+            }
+        </script>
     </head>
     <?php
     // Incluimos el archivo que valida si hay una sesión activa
@@ -38,116 +63,10 @@
         $idUsuario2 = $_SESSION["idUsuario"];
         ?>
         <body>
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid"> 
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                        <a class="navbar-brand" href="index.php"><img src="imagenes/logo.png" class="img-circle" width="25" height="25"></a></div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="defaultNavbar1">
-                        <ul class="nav navbar-nav">
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equipos<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="Equipo.php">Listado de Equipos</a></li>
-                                        <li><a href="RegistroEquipo.php">Registrar equipos</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Materiales<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroMaterial.php">Registrar Material</a></li>
-                                        <li><a href="Material.php">Lista de Materiales</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Crear Orden de Trabajo</a></li>
-                                        <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="RegistroEmpleado.php">Crear empleado</a></li>
-                                        <li><a href="Empleado.php">Listado de empleados</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de usuarios<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="CrearUsuario.php">Crear usuario</a></li>
-                                        <li><a href="Usuario.php">Ver usuarios</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_SESSION["PrivilegioUsuario"] == 'EncMunicipal' ||
-                                    $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                ?>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Solicitudes<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
-                                        <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
-                                    </ul>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <!-- Acá mostramos el nombre del usuario -->
-                                <a href="#" class="dropdown-toggle negrita" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-option-vertical"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i><?php echo $NombreUsuario; ?></a></li>
-                                    <?php
-                                    if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                                        ?>
-                                        <li><a href="Administrador.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Módulo administrador</a></li>
-                                        <?php
-                                    }
-                                    ?>
-                                    <li><a href="AcercaDe.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Acerca de...</a></li>
-                                    <li><a href="Seguridad/logout.php"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Cerrar Sesión</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse --> 
-                </div>
-                <!-- /.container-fluid --> 
-            </nav>
+            <?php
+            // incluimos el menú para mostrarlo
+            include_once "MenuPrincipal.php";
+            ?>
             <br>
             <br>
             <br>
@@ -195,108 +114,10 @@
                                             </tr>
                                         </thead>
                                         <!-- Cuerpo de la tabla -->
-                                        <tbody class="buscar">
-                                            <!-- Contenido de la tabla -->
-                                            <!-- Acá mostraremos los usuarios y seleccionaremos el que deseamos eliminar -->
-                                            <?php
-                                            $ListadoAverias = "SELECT * FROM Averia";
-                                            // Hacemos la consulta
-                                            $resultado = $mysqli->query($ListadoAverias);
-                                            $Contador = 1;
-                                            while ($row = mysqli_fetch_array($resultado)) {
-                                                ?>
-                                                <tr>
-                                                    <td><span id="Correlativo<?php echo $Contador; ?>"><?php echo $Contador ?></span></td>
-                                                    <td><span id="Codigo<?php echo $row['idAveria']; ?>"><?php echo $row['idAveria'] ?></span></td>
-                                                    <td><span id="FechaReporteAveria<?php echo $row['idAveria']; ?>"><?php echo $row['FechaReporteAveria'] ?></span></td>
-                                                    <td><span id="Municipalidad<?php echo $row['idAveria']; ?>">
-                                                            <?php
-                                                            $VerMunicipalidad = "SELECT NombreMunicipalidad FROM Municipalidad WHERE idMunicipalidad=" . $row['idMunicipalidad'] . ";";
-                                                            // Hacemos la consulta
-                                                            $ResultadoConsultaMunicipalidad = $mysqli->query($VerMunicipalidad);
-                                                            $FilaResultadoNombreMunicipalidad = $ResultadoConsultaMunicipalidad->fetch_assoc();
-                                                            $NombreMunicipalidad = $FilaResultadoNombreMunicipalidad['NombreMunicipalidad'];
-                                                            echo $NombreMunicipalidad;
-                                                            ?></span></td>
-                                                    <td><span id="UbicacionAveria<?php echo $row['idAveria']; ?>"><a href="https://maps.google.com/?ll=<?php echo $row['UbicacionAveria'] ?>&z=18&t=k" target="_blank">Ver ubicación</a></span></td>
-                                                    <td><span id="ImagenAveria<?php echo $row['idAveria']; ?>">
-                                                            <form method="post" action="VerFotos.php">
-                                                                <input type="hidden" name="Path" value="<?php echo $row['ImagenAveria'] ?>" />
-                                                                <input type="submit" name="VerFotos" class="btn" value="Ver fotos">
-                                                            </form>
-                                                        </span></td>
-                                                    <td><span id="idPrioridad<?php echo $row['idAveria']; ?>">
-                                                            <?php
-                                                            $VerNombrePrioridad = "SELECT NombrePrioridad FROM Prioridad WHERE idPrioridad='" . $row['idPrioridad'] . "';";
-                                                            // Hacemos la consulta
-                                                            $ResultadoConsultaNombrePrioridad = $mysqli->query($VerNombrePrioridad);
-                                                            $FilaResultadoNombrePrioridad = $ResultadoConsultaNombrePrioridad->fetch_assoc();
-                                                            $NombrePrioridad = $FilaResultadoNombrePrioridad['NombrePrioridad'];
-                                                            echo $NombrePrioridad;
-                                                            ?></span></td>
-                                                    <td><span id="idUrgencia<?php echo $row['idAveria']; ?>">
-                                                            <?php
-                                                            $VerNombreUrgencia = "SELECT NombreUrgencia FROM Urgencia WHERE idUrgencia='" . $row['idUrgencia'] . "';";
-                                                            // Hacemos la consulta
-                                                            $ResultadoConsultaNombreUrgencia = $mysqli->query($VerNombreUrgencia);
-                                                            $FilaResultadoNombreUrgencia = $ResultadoConsultaNombreUrgencia->fetch_assoc();
-                                                            $NombreUrgencia = $FilaResultadoNombreUrgencia['NombreUrgencia'];
-                                                            echo $NombreUrgencia;
-                                                            ?></span></td>
-                                                    <td><span id="idTamanio<?php echo $row['idAveria']; ?>">
-                                                            <?php
-                                                            $VerNombreTamanio = "SELECT NombreTamanio FROM Tamanio WHERE idTamanio='" . $row['idTamanio'] . "';";
-                                                            // Hacemos la consulta
-                                                            $ResultadoConsultaNombreTamanio = $mysqli->query($VerNombreTamanio);
-                                                            $FilaResultadoNombreTamanio = $ResultadoConsultaNombreTamanio->fetch_assoc();
-                                                            $NombreTamanio = $FilaResultadoNombreTamanio['NombreTamanio'];
-                                                            echo $NombreTamanio;
-                                                            ?></span></td>
-                                                    <td><span id="idTrazabilidad<?php echo $row['idAveria']; ?>">
-                                                            <?php
-                                                            $VerNombreTrazabilidad = "SELECT NombreTrazabilidad FROM Trazabilidad WHERE idTrazabilidad='" . $row['idTrazabilidad'] . "';";
-                                                            // Hacemos la consulta
-                                                            $ResultadoConsultaNombreTrazabilidad = $mysqli->query($VerNombreTrazabilidad);
-                                                            $FilaResultadoNombreTrazabilidad = $ResultadoConsultaNombreTrazabilidad->fetch_assoc();
-                                                            $NombreTrazabilidad = $FilaResultadoNombreTrazabilidad['NombreTrazabilidad'];
-                                                            echo $NombreTrazabilidad;
-                                                            ?></span></td>
-                                                            <?php
-                                                    if ($row['idTrazabilidad'] == 1) {
-                                                        ?>
-                                                        <td>
-                                                            <!-- GenerarOT -->
-                                                            <div>
-                                                                <div class="input-group input-group-lg">
-                                                                    <form method="post" action="GenerarOT.php">
-                                                                        <input type="hidden" name="idAveria" value="<?php echo $row['idAveria']; ?>" />
-                                                                        <input type="submit" name="GenerarOT" class="btn btn-success GenerarOT" value="+">
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <?php
-                                                    } else {
-                                                        ?>
-                                                        <td>
-                                                            <!-- GenerarOT -->
-                                                            <div>
-                                                                <div class="input-group input-group-lg">
-                                                                    <form method="post" action="GenerarOT.php">
-                                                                        <input type="hidden" name="idAveria" value="<?php echo $row['idAveria']; ?>" />
-                                                                        <input type="submit" name="GenerarOT" class="btn btn-success" disabled="true" value="+">
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <?php
-                                                        ?>
-                                                    </tr>
-                                                        <?php
-                                                        $Contador++;
-                                                    }
-                                                }
-                                                ?>
+                                        <tbody class="buscar" id="buscar">
+                                            <script type="text/javascript">
+                                                MostrarTablaColaAverias();
+                                            </script>
                                         </tbody>
                                     </table>
                                 </div>

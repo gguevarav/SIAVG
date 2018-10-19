@@ -44,7 +44,8 @@ CREATE TABLE Usuario(
     NombreUsuario           VARCHAR(50)         NOT NULL,
     PasswordUsuario         VARCHAR(80)         NOT NULL,
     CorreoUsuario           VARCHAR(100)        NOT NULL,
-    idMunicipalidad         TINYINT		NOT NULL,
+	EstadoUsuario			VARCHAR(20)			NOT NULL,
+    idMunicipalidad         TINYINT				NOT NULL,
     IdPersona               INTEGER             NOT NULL,
     idRol                   TINYINT             NOT NULL,
     INDEX (IdPersona),
@@ -89,11 +90,18 @@ CREATE TABLE Averia(
     UbicacionAveria         VARCHAR(100)        NOT NULL,
     FechaReporteAveria      TIMESTAMP			NOT NULL			DEFAULT CURRENT_TIMESTAMP,
     ImagenAveria            VARCHAR(100)        NOT NULL,
+	idMunicipalidad			TINYINT				NOT NULL,
     idPrioridad             TINYINT             NOT NULL,
     idTrazabilidad          TINYINT             NOT NULL,
     idUrgencia              TINYINT             NOT NULL,
     idTamanio               TINYINT             NOT NULL,
     idUsuario               INTEGER		NOT NULL,
+	INDEX (idMunicipalidad),
+    FOREIGN KEY (idMunicipalidad)
+            REFERENCES Municipalidad(idMunicipalidad)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION,
+    INDEX (idTrazabilidad),
     INDEX (idPrioridad),
     FOREIGN KEY (idPrioridad)
             REFERENCES Prioridad(idPrioridad)

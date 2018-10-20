@@ -228,12 +228,12 @@
                 // Guardamos el id en una variable
                 $idAEliminar = $_POST['idAEliminar'];
                 // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-                $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM ordentrabajo WHERE idAveria=" . $idAEliminar . ";";
+                $VeridUsuario = "SELECT idUsuario FROM averia WHERE idAveria=" . $idAEliminar . ";";
                 // Hacemos la consulta
                 $ResultadoConsultaID = $mysqli->query($VeridUsuario);
                 $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
-                $idUsuarioMunicipal = $FilaResultadoID['EncargadoMunicipal'];
-                $idUsuarioCovial = $FilaResultadoID['EncargadoCovial'];
+                $idUsuarioMunicipal = $FilaResultadoID['idUsuario'];
+                //$idUsuarioCovial = $FilaResultadoID['EncargadoCovial'];
 
                 // Entonces ahora obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
                 $VerCorreoUsuario = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuarioMunicipal . ";";
@@ -326,7 +326,7 @@
                 $idAprobar = $_POST['idAprobar'];
 
                 // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-                $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM ordentrabajo WHERE idAveria=" . $idAEliminar . ";";
+                $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM ordentrabajo WHERE idAveria=" . $idAprobar . ";";
                 // Hacemos la consulta
                 $ResultadoConsultaID = $mysqli->query($VeridUsuario);
                 $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();

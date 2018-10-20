@@ -272,7 +272,7 @@
                 $VerCorreoUsuario = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuarioObtenerCorreo . ";";
                 // Hacemos la consulta
                 $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
-                $UsuarioCovialFilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
+                $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
                 $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
                 
                 // Obtendremos el correo del usuario que está creando la OT para enviarle el seguimiento
@@ -282,6 +282,9 @@
                 $ResultadoConsultaCorreoUsuarioCovial = $mysqli->query($VerCorreoUsuarioCovial);
                 $FilaResultadoCorreoUsuarioCovial = $ResultadoConsultaCorreoUsuarioCovial->fetch_assoc();
                 $CorreoUsuarioGenera = $FilaResultadoCorreoUsuarioCovial['CorreoUsuario'];
+                
+                echo $CorreoUsuarioReporta;
+                echo $CorreoUsuarioGenera;
                 
                 $mail = new PHPMailer();
 

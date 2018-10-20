@@ -283,9 +283,6 @@
                 $FilaResultadoCorreoUsuarioCovial = $ResultadoConsultaCorreoUsuarioCovial->fetch_assoc();
                 $CorreoUsuarioGenera = $FilaResultadoCorreoUsuarioCovial['CorreoUsuario'];
                 
-                echo $CorreoUsuarioReporta;
-                echo $CorreoUsuarioGenera;
-                
                 $mail = new PHPMailer();
 
                 $mail->IsSMTP();

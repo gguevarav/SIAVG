@@ -1,0 +1,1 @@
+SELECT usuario.NombreUsuario, usuario.CorreoUsuario, usuario.EstadoUsuario, usuario.IdPersona, usuario.idMunicipalidad, persona.NombrePersona, municipalidad.NombreMunicipalidad FROM `usuario` INNER JOIN Persona ON usuario.IdPersona = Persona.idPersona INNER JOIN municipalidad ON usuario.idMunicipalidad = municipalidad.idMunicipalidad;

@@ -89,7 +89,7 @@ CREATE TABLE Averia(
     idAveria                INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
     UbicacionAveria         VARCHAR(100)        NOT NULL,
     FechaReporteAveria      TIMESTAMP			NOT NULL			DEFAULT CURRENT_TIMESTAMP,
-    ImagenAveria            VARCHAR(100)        NOT NULL,
+    ImagenAveria            TEXT		        NOT NULL,
 	idMunicipalidad			TINYINT				NOT NULL,
     idPrioridad             TINYINT             NOT NULL,
     idTrazabilidad          TINYINT             NOT NULL,

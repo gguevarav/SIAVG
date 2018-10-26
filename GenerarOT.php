@@ -24,6 +24,33 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <script type="text/javascript">
+            function ObtenerDatos(Opcion) {
+                var xmlhttp;
+                if (window.XMLHttpRequest)
+                {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else
+                {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState == 4)
+                    {
+                        if (Opcion == "Equipos") {
+                            document.getElementById("Equipo1").innerHTML = xmlhttp.responseText;
+                        } else if (Opcion == "Empleados") {
+                            document.getElementById("Empleado1").innerHTML = xmlhttp.responseText;
+                        } else if (Opcion == "Material") {
+                            document.getElementById("Material1").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                }
+                xmlhttp.open("GET", "ObtenerDatos.php?Solicitud=" + Opcion, true);
+                xmlhttp.send();
+            }
+        </script>
     </head>
     <?php
     // Incluimos el archivo que valida si hay una sesión activa
@@ -95,18 +122,10 @@
                                                             <div class="input-group input-group-lg">
                                                                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
                                                                 <select class="form-control" name="Equipo1" id="Equipo1" required>
-                                                                    <option value="" disabled selected>Seleccione el equipo</option>
-                                                                    <!-- Acá mostraremos los puestos que existen en la base de datos -->
-                                                                    <?php
-                                                                    $VerEquipos = "SELECT idEquipo, NombreEquipo FROM Equipo;";
-                                                                    // Hacemos la consulta
-                                                                    $resultado = $mysqli->query($VerEquipos);
-                                                                    while ($row = mysqli_fetch_array($resultado)) {
-                                                                        ?>
-                                                                        <option value="<?php echo $row['idEquipo']; ?>"><?php echo $row['NombreEquipo'] ?></option>
-                                                                        <?php
-                                                                    }
-                                                                    ?>
+                                                                    <!-- Acá mostraremos los equipos que existen en la base de datos -->
+                                                                    <script type="text/javascript">
+                                                                        ObtenerDatos('Equipos');
+                                                                    </script>
                                                                 </select>
                                                             </div>
                                                         </td>
@@ -150,18 +169,10 @@
                                                             <div class="input-group input-group-lg">
                                                                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
                                                                 <select class="form-control" name="Empleado1" id="Empleado1" required>
-                                                                    <option value="" disabled selected>Seleccione el empleado</option>
-                                                                    <!-- Acá mostraremos los puestos que existen en la base de datos -->
-                                                                    <?php
-                                                                    $VerEmpleado = "SELECT idPersona, NombrePersona, ApellidoPersona FROM Persona;";
-                                                                    // Hacemos la consulta
-                                                                    $resultado = $mysqli->query($VerEmpleado);
-                                                                    while ($row = mysqli_fetch_array($resultado)) {
-                                                                        ?>
-                                                                        <option value="<?php echo $row['idPersona']; ?>"><?php echo $row['NombrePersona'] . " " . $row['ApellidoPersona'] ?></option>
-                                                                        <?php
-                                                                    }
-                                                                    ?>
+                                                                    <!-- Acá mostraremos el personal que existen en la base de datos -->
+                                                                    <script type="text/javascript">
+                                                                        ObtenerDatos('Empleados');
+                                                                    </script>
                                                                 </select>
                                                             </div>
                                                         </td>
@@ -205,18 +216,10 @@
                                                             <div class="input-group input-group-lg">
                                                                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-asterisk"></i></span>
                                                                 <select class="form-control" name="Material1" id="Material1" required>
-                                                                    <option value="" disabled selected>Seleccione el material</option>
                                                                     <!-- Acá mostraremos los puestos que existen en la base de datos -->
-                                                                    <?php
-                                                                    $VerMaterial = "SELECT idMaterial, NombreMaterial FROM Material;";
-                                                                    // Hacemos la consulta
-                                                                    $resultado = $mysqli->query($VerMaterial);
-                                                                    while ($row = mysqli_fetch_array($resultado)) {
-                                                                        ?>
-                                                                        <option value="<?php echo $row['idMaterial']; ?>"><?php echo $row['NombreMaterial'] ?></option>
-                                                                        <?php
-                                                                    }
-                                                                    ?>
+                                                                    <script type="text/javascript">
+                                                                        ObtenerDatos('Material');
+                                                                    </script>
                                                                 </select>
                                                             </div>
                                                         </td>
@@ -260,7 +263,6 @@
                 $idAveria = $_POST['idAveria'];
                 // enviaremos un correo para confirmar que ya está creada la OT
                 require("phpmailer/class.phpmailer.php"); //Importamos la función PHP class.phpmailer
-                
                 // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
                 $VeridUsuario = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idAveria . ";";
                 // Hacemos la consulta
@@ -274,7 +276,7 @@
                 $ResultadoConsultaCorreo = $mysqli->query($VerCorreoUsuario);
                 $FilaResultadoCorreo = $ResultadoConsultaCorreo->fetch_assoc();
                 $CorreoUsuarioReporta = $FilaResultadoCorreo['CorreoUsuario'];
-                
+
                 // Obtendremos el correo del usuario que está creando la OT para enviarle el seguimiento
                 // Entonces ahora obtendremos el correo del usuario que está reportando para poder enviarle el numero de Avería que se ah creado
                 $VerCorreoUsuarioCovial = "SELECT CorreoUsuario FROM Usuario WHERE idUsuario=" . $idUsuario2 . ";";
@@ -282,7 +284,7 @@
                 $ResultadoConsultaCorreoUsuarioCovial = $mysqli->query($VerCorreoUsuarioCovial);
                 $FilaResultadoCorreoUsuarioCovial = $ResultadoConsultaCorreoUsuarioCovial->fetch_assoc();
                 $CorreoUsuarioGenera = $FilaResultadoCorreoUsuarioCovial['CorreoUsuario'];
-                
+
                 $mail = new PHPMailer();
 
                 $mail->IsSMTP();

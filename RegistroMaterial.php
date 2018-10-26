@@ -24,6 +24,27 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <script type="text/javascript">
+            function ObtenerDatos(Opcion) {
+                var xmlhttp;
+                if (window.XMLHttpRequest)
+                {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else
+                {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState == 4)
+                    {
+                        document.getElementById("UnidadMedida").innerHTML = xmlhttp.responseText;
+                    }
+                }
+                xmlhttp.open("GET", "ObtenerDatos.php?Solicitud=" + Opcion, true);
+                xmlhttp.send();
+            }
+        </script>
     </head>
     <?php
     // Incluimos el archivo que valida si hay una sesión activa
@@ -89,18 +110,10 @@
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-scale"></i></span>
                                             <select class="form-control" name="UnidadMedida" id="UnidadMedida">
-                                                <option value="" disabled selected>Unidad de medida</option>
-                                                <!-- Acá mostraremos los puestos que existen en la base de datos -->
-                                                <?php
-                                                $VerUM = "SELECT * FROM unidadmedida;";
-                                                // Hacemos la consulta
-                                                $resultado = $mysqli->query($VerUM);
-                                                while ($row = mysqli_fetch_array($resultado)) {
-                                                    ?>
-                                                    <option value="<?php echo $row['idUnidadMedida']; ?>"><?php echo $row['NombreUnidadMedida'] ?></option>
-                                                    <?php
-                                                }
-                                                ?>
+                                                <!-- Acá mostraremos las unidades de medida que existen en la base de datos -->
+                                                <script type="text/javascript">
+                                                    ObtenerDatos('UnidadMedida');
+                                                </script>
                                             </select>
                                         </div>
                                     </div>
@@ -232,6 +245,7 @@
                     } else {
                         echo "<script language=\"JavaScript\">\n";
                         echo "myFunction(\"Nombre de unidad de medida registrada\");\n";
+                        echo "ObtenerDatos('UnidadMedida');\n";
                         echo "</script>";
                     }
                 }

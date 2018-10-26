@@ -505,23 +505,29 @@
                 $ImagenAveria;
                 if (isset($_FILES['imagen'])) {
                     $cantidad = count($_FILES["imagen"]["tmp_name"]);
-                    for ($i = 0; $i < $cantidad; $i++) {
-                        //Comprobamos si el fichero es una imagen
-                        if ($_FILES['imagen']['type'][$i] == 'image/png' || $_FILES['imagen']['type'][$i] == 'image/jpeg') {
-                            // Creamos el directorio a partir de la fecha y hora
-                            $FechaHoraActual = date("YmdHis");
-                            // Pasamos la dirección a la variable que vamos a almacenar en la base de datos
-                            $ImagenAveria = "FotosReportes/" . $FechaHoraActual;
-                            // Creamos el directorio
-                            if (!is_dir($ImagenAveria)) {
-                                mkdir($ImagenAveria);
-                            }
-                            //Subimos el fichero al servidor
-                            move_uploaded_file($_FILES["imagen"]["tmp_name"][$i], $ImagenAveria . "/" . $_FILES["imagen"]["name"][$i]);
-                            $validar = true;
-                        } else
-                            $validar = false;
-                    }
+					
+					foreach ($_FILES["pictures"]["error"] as $key => $error) {
+						if ($error == UPLOAD_ERR_OK) {
+							if ($_FILES['imagen']['type'][$i] == 'image/png' || $_FILES['imagen']['type'][$i] == 'image/jpeg') {
+								// Creamos el directorio a partir de la fecha y hora
+								$FechaHoraActual = date("YmdHis");
+								// nombre de directorio
+								$uploads_dir = '\FotosReportes' . $FechaHoraActual;
+								// Creamos el directorio
+								if (!is_dir($uploads_dir)) {
+									mkdir($uploads_dir);
+									$tmp_name = $_FILES["imagen"]["tmp_name"][$key];
+									// basename() puede evitar ataques de denegación de
+									// sistema de ficheros; podría ser apropiada más
+									// validación/saneamiento del nombre del fichero
+									$name = basename($_FILES["imagen"]["name"][$key]);
+									move_uploaded_file($tmp_name, "$uploads_dir\\$name");
+								}
+							}
+						}
+					}
+					
+					
                 }
                 // Guardamos la información en variables
                 $Ubicacion = $_POST['coords'];

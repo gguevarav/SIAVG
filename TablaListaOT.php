@@ -61,7 +61,7 @@ if (isset($_GET['SolicitarTabla'])) {
                         <!-- Habilitación -->
                         <div>
                             <div class="input-group input-group-lg">
-                                <form method="get" action="GenerarOTPDF.php">
+                                <form method="get" target="_blank" action="GenerarOTPDF.php">
                                     <input type="hidden" name="idOrdenTrabajo" value="<?php echo $row['idAveria'] ?>" />
                                     <input type="submit" class="btn btn-primary" class="btn" value="Ver Cotización">
                                 </form>

@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="width:150px;">Unidad de Medida</span>
-                                    <select class="form-control" name="UnidadMedida" id="UnidadMedida">
+                                    <select class="form-control" name="UnidadMedida" style="width:350px;" id="UnidadMedida">
                                         <option value="" disabled selected>Unidad de Medida</option>
                                         <!-- Acá mostraremos los puestos que existen en la base de datos -->
                                         <?php

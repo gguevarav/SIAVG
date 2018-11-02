@@ -1,7 +1,7 @@
 <?php
     // Datos para la conexión a la base de datos.
     define('DB_SERVER', 'localhost');
-    define('DB_NAME', 'dbsiavg');
+    define('DB_NAME', 'DBSIAVG');
     define('DB_USER', 'root');
     define('DB_PASS', '');
 

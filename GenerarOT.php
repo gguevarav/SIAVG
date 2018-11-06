@@ -498,7 +498,7 @@
                                     </head>
                                     <body>
                                         <div id='apDiv3'>
-                                            <h1>Se ah generado la orden de trabajo No. " . $idOrdenTrabajoGenerada . " de la averia No. " . $idAveria . "</h1>
+                                            <h1>Se ah generado la orden de trabajo No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idOrdenTrabajoGenerada . "' target='_blank'>" . $idOrdenTrabajoGenerada ."</a> de la averia No. " . $idAveria . "</h1>
                                         </div>								
                                     </body>
                                     </html>");

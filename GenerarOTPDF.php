@@ -147,7 +147,7 @@ if (isset($_GET['idOrdenTrabajo'])) {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <img src="imagenes/Logo.png" height="150" width="150">
+                                                <img src="imagenes/logo3.jpg" height="150" width="150">
                                             </td>
                                             <td>
                                                 <table class="table">
@@ -162,7 +162,7 @@ if (isset($_GET['idOrdenTrabajo'])) {
                                                 </table>
                                             </td>
                                             <td>
-                                                <img src="imagenes/Logo.png" height="150" width="150">
+                                                <img src="imagenes/logo3.jpg" height="150" width="150">
                                             </td>
                                         </tr>
                                     </tbody>

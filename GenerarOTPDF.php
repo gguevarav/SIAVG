@@ -6,7 +6,7 @@ if (isset($_GET['idOrdenTrabajo'])) {
     $mpdf = new \Mpdf\Mpdf();
 
     // Vamos a obtener toda la información de la OT
-    $InfoAveria = "SELECT * FROM ordentrabajo WHERE idAveria=" . $_GET['idOrdenTrabajo'] . " AND idTrazabilidad!=2;";
+    $InfoAveria = "SELECT * FROM OrdenTrabajo WHERE idAveria=" . $_GET['idOrdenTrabajo'] . " AND idTrazabilidad!=2;";
     // Hacemos la consulta
     $ResultadoInfoAveria = $mysqli->query($InfoAveria);
     $FilaResultadoInfoAveria = $ResultadoInfoAveria->fetch_assoc();
@@ -18,13 +18,13 @@ if (isset($_GET['idOrdenTrabajo'])) {
     $FilaResultadoUbicacionAveria = $ResultadoUbicacionAveria->fetch_assoc();
     //$UbicacionAveriaMostrar = $FilaResultadoUbicacionAveria['UbicacionAveria'];
     // Buscaremos los usuario que trabajaron para el reporte y la oT
-    $EncargadoMunicipal = "SELECT NombreUsuario FROM usuario WHERE idUsuario=" . $FilaResultadoInfoAveria['EncargadoMunicipal'] . ";";
+    $EncargadoMunicipal = "SELECT NombreUsuario FROM Usuario WHERE idUsuario=" . $FilaResultadoInfoAveria['EncargadoMunicipal'] . ";";
     // Hacemos la consulta
     $ResultadoConsultaEncargadoMunicipal = $mysqli->query($EncargadoMunicipal);
     $FilaResultadoEncargadoMunicipal = $ResultadoConsultaEncargadoMunicipal->fetch_assoc();
     // $NombreUsuarioSolicitado = $FilaResultadoEncargadoMunicipal['NombreUsuario'];
 
-    $EncargadoCovial = "SELECT NombreUsuario FROM usuario WHERE idUsuario=" . $FilaResultadoInfoAveria['EncargadoCovial'] . ";";
+    $EncargadoCovial = "SELECT NombreUsuario FROM Usuario WHERE idUsuario=" . $FilaResultadoInfoAveria['EncargadoCovial'] . ";";
     // Hacemos la consulta
     $ResultadoConsultaEncargadoCovial = $mysqli->query($EncargadoCovial);
     $FilaResultadoEncargadoCovial = $ResultadoConsultaEncargadoCovial->fetch_assoc();
@@ -77,7 +77,7 @@ if (isset($_GET['idOrdenTrabajo'])) {
         $FilaResultadoInfoMaterial = $ResultadoConsultaInfoMaterial->fetch_assoc();
 
         // Buscaremos el nombre del nombre del la unidad de medida
-        $NombreUnidadMedida = "SELECT NombreUnidadMedida FROM unidadmedida WHERE idunidadmedida=" . $FilaResultadoInfoMaterial['idUnidadMedida'] . ";";
+        $NombreUnidadMedida = "SELECT NombreUnidadMedida FROM UnidadMedida WHERE idUnidadMedida=" . $FilaResultadoInfoMaterial['idUnidadMedida'] . ";";
         // Hacemos la consulta
         $ResultadoConsultaNombreUnidadMedida = $mysqli->query($NombreUnidadMedida);
         $FilaResultadoNombreUnidadMedida = $ResultadoConsultaNombreUnidadMedida->fetch_assoc();

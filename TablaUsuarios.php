@@ -14,7 +14,7 @@ if (isset($_GET['SolicitarTabla'])) {
 
         // Primero hacemos la consulta en la tabla de persona
         // Si somos el superadministrador podremos editar nuestro usuario mientras no
-        $VerPersonas = "SELECT * FROM persona WHERE NombrePersona!='Gemis Daniel'";
+        $VerPersonas = "SELECT * FROM Persona WHERE NombrePersona!='Gemis Daniel'";
         // Hacemos la consulta
         $resultado = $mysqli->query($VerPersonas);
         // Correlativo para cada fila
@@ -22,7 +22,7 @@ if (isset($_GET['SolicitarTabla'])) {
         while ($row = mysqli_fetch_array($resultado)) {
             // Obtenemos el nombre de usuario y privilegio de cada persona
             // Primero haremos la consulta
-            $VerUsuario = "SELECT * FROM usuario WHERE idPersona=" . $row['idPersona'] . "";
+            $VerUsuario = "SELECT * FROM Usuario WHERE idPersona=" . $row['idPersona'] . "";
             // Ejecutamos la consulta
             $ResultadoConsultaUsuario = $mysqli->query($VerUsuario);
             // Guardamos la consulta en un array
@@ -41,7 +41,7 @@ if (isset($_GET['SolicitarTabla'])) {
                 // NombreRol
                 $idRol = $ResultadoConsulta['idRol'];
                 // Primero haremos la consulta
-                $VerNombreRol = "SELECT NombreRol FROM rol WHERE idRol=" . $idRol . ";";
+                $VerNombreRol = "SELECT NombreRol FROM Rol WHERE idRol=" . $idRol . ";";
                 // Ejecutamos la consulta
                 $ResultadoConsultaNombreRol = $mysqli->query($VerNombreRol);
                 // Guardamos la consulta en un array

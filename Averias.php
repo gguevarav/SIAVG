@@ -228,7 +228,7 @@
                 // Guardamos el id en una variable
                 $idAEliminar = $_POST['idAEliminar'];
                 // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-                $VeridUsuario = "SELECT idUsuario FROM averia WHERE idAveria=" . $idAEliminar . ";";
+                $VeridUsuario = "SELECT idUsuario FROM Averia WHERE idAveria=" . $idAEliminar . ";";
                 // Hacemos la consulta
                 $ResultadoConsultaID = $mysqli->query($VeridUsuario);
                 $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
@@ -326,7 +326,7 @@
                 $idAprobar = $_POST['idAprobar'];
 
                 // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-                $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM ordentrabajo WHERE idAveria=" . $idAprobar . ";";
+                $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM OrdenTrabajo WHERE idAveria=" . $idAprobar . ";";
                 // Hacemos la consulta
                 $ResultadoConsultaID = $mysqli->query($VeridUsuario);
                 $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
@@ -361,7 +361,7 @@
                     echo "Error: " . $mysqli->error . "\n";
                     exit;
                 } else {
-                    $query = "UPDATE ordentrabajo SET idTrazabilidad = 4 WHERE idAveria=" . $idAprobar . ";";
+                    $query = "UPDATE OrdenTrabajo SET idTrazabilidad = 4 WHERE idAveria=" . $idAprobar . ";";
                     // Ejecutamos la consulta
                     if (!$resultado = $mysqli->query($query)) {
                         echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -375,7 +375,7 @@
                         echo "</script>";
 
                         // Obtendremos el numero de OT
-                        $VerIdOT = "SELECT idOrdenTrabajo FROM ordentrabajo WHERE idAveria=" . $idAprobar . ";";
+                        $VerIdOT = "SELECT idOrdenTrabajo FROM OrdenTrabajo WHERE idAveria=" . $idAprobar . ";";
                         // Hacemos la consulta
                         $ResultadoConsultaidOT = $mysqli->query($VerIdOT);
                         $FilaResultadoidOT = $ResultadoConsultaidOT->fetch_assoc();
@@ -449,7 +449,7 @@
                 $idRechazar = $_POST['idRechazar'];
 
                 // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-                $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM ordentrabajo WHERE idAveria=" . $idRechazar . ";";
+                $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM OrdenTrabajo WHERE idAveria=" . $idRechazar . ";";
                 // Hacemos la consulta
                 $ResultadoConsultaID = $mysqli->query($VeridUsuario);
                 $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
@@ -484,7 +484,7 @@
                     echo "Error: " . $mysqli->error . "\n";
                     exit;
                 } else {
-                    $query = "UPDATE ordentrabajo SET idTrazabilidad = 5 WHERE idAveria=" . $idRechazar . ";";
+                    $query = "UPDATE OrdenTrabajo SET idTrazabilidad = 5 WHERE idAveria=" . $idRechazar . ";";
                     // Ejecutamos la consulta
                     if (!$resultado = $mysqli->query($query)) {
                         echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -497,7 +497,7 @@
                         echo "myFunction(\"Orden de Trabajo rechazada\");\n";
                         echo "</script>";
                         // Obtendremos el numero de OT
-                        $VerIdOT = "SELECT idOrdenTrabajo FROM ordentrabajo WHERE idAveria=" . $idRechazar . ";";
+                        $VerIdOT = "SELECT idOrdenTrabajo FROM OrdenTrabajo WHERE idAveria=" . $idRechazar . ";";
                         // Hacemos la consulta
                         $ResultadoConsultaidOT = $mysqli->query($VerIdOT);
                         $FilaResultadoidOT = $ResultadoConsultaidOT->fetch_assoc();

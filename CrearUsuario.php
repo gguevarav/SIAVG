@@ -224,7 +224,7 @@
             // Código que recibe la información para registrar un producto
             if (isset($_POST['CrearUsuario'])) {
                 //Primero revisamos que no exista la marca ya en la base de datos
-                $ConsultaExisteUsuario = "SELECT NombreUsuario FROM usuario WHERE NombreUsuario='" . $_POST['username'] . "';";
+                $ConsultaExisteUsuario = "SELECT NombreUsuario FROM Usuario WHERE NombreUsuario='" . $_POST['username'] . "';";
                 $ResultadoExisteUsuario = $mysqli->query($ConsultaExisteUsuario);
                 $row = mysqli_fetch_array($ResultadoExisteUsuario);
                 if ($row['NombreUsuario'] != null) {

@@ -276,7 +276,7 @@
             $PrecioMaterial = $_POST['PrecioMaterial'];
 
             // Preparamos la consulta
-            $query = "UPDATE material SET NombreMaterial = '" . $NombreMaterial . "',
+            $query = "UPDATE Material SET NombreMaterial = '" . $NombreMaterial . "',
                                                     idUnidadMedida = " . $UnidadMedida . ",
                                                     PrecioxUnidad = " . $PrecioMaterial . "
                                                                     WHERE idMaterial=" . $idMaterial . ";";

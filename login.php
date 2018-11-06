@@ -83,7 +83,7 @@
 
                 // Consulta SQL, seleccionamos todos los datos de la tabla y obtenemos solo
                 // la fila que tiene el usario especificado
-                $query = "SELECT * FROM usuario WHERE NombreUsuario='" . $Usuario . "';";
+                $query = "SELECT * FROM Usuario WHERE NombreUsuario='" . $Usuario . "';";
                 if (!$resultado = $mysqli->query($query)) {
                     echo "Error: La ejecución de la consulta falló debido a: \n";
                     echo "Query: " . $query . "\n";
@@ -117,7 +117,7 @@
                             if ($ResultadoConsulta['NombreUsuario'] == $Usuario) {
                                 if ($ResultadoConsulta['PasswordUsuario'] == $password) {
                                     $idPersona = $ResultadoConsulta['IdPersona'];
-                                    $query = "SELECT * FROM persona WHERE idPersona=" . $idPersona . "";
+                                    $query = "SELECT * FROM Persona WHERE idPersona=" . $idPersona . "";
                                     if (!$resultado = $mysqli->query($query)) {
                                         echo "Error: La ejecución de la consulta falló debido a: \n";
                                         echo "Query: " . $query . "\n";
@@ -126,7 +126,7 @@
                                         exit;
                                     } else {
                                         $ResultadoConsultaPersona = $resultado->fetch_assoc();
-                                        $query = "SELECT * FROM rol WHERE idRol='" . $ResultadoConsulta['idRol'] . "'";
+                                        $query = "SELECT * FROM Rol WHERE idRol='" . $ResultadoConsulta['idRol'] . "'";
                                         if (!$resultadoRol = $mysqli->query($query)) {
                                             echo "Error: La ejecución de la consulta falló debido a: \n";
                                             echo "Query: " . $query . "\n";

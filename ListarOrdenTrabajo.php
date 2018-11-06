@@ -261,7 +261,7 @@
             $idEnProceso = $_POST['idEnProceso'];
 
             // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-            $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM ordentrabajo WHERE idAveria=" . $idEnProceso . ";";
+            $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM OrdenTrabajo WHERE idAveria=" . $idEnProceso . ";";
             // Hacemos la consulta
             $ResultadoConsultaID = $mysqli->query($VeridUsuario);
             $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
@@ -378,7 +378,7 @@
             $idCerrar = $_POST['idCerrar'];
 
             // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-            $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM ordentrabajo WHERE idAveria=" . $idCerrar . ";";
+            $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM OrdenTrabajo WHERE idAveria=" . $idCerrar . ";";
             // Hacemos la consulta
             $ResultadoConsultaID = $mysqli->query($VeridUsuario);
             $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();

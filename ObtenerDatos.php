@@ -6,7 +6,7 @@ if (isset($_GET['Solicitud'])) {
     include_once "Seguridad/conexion.php";
     // Si en la sesión activa tiene privilegios de administrador puede ver el formulario
     if ($_GET['Solicitud'] == 'UnidadMedida') {
-        $VerUM = "SELECT * FROM unidadmedida;";
+        $VerUM = "SELECT * FROM UnidadMedida;";
         // Hacemos la consulta
         $resultado = $mysqli->query($VerUM);
         ?>

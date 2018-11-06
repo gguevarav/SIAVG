@@ -13,7 +13,7 @@ if (isset($_GET['SolicitarTabla'])) {
         $NombreUsuario = $_SESSION["NombreUsuario"];
         $idUsuario2 = $_SESSION["idUsuario"];
         
-        $ListadoOT = "SELECT * FROM Ordentrabajo";
+        $ListadoOT = "SELECT * FROM OrdenTrabajo";
         // Hacemos la consulta
         $resultado = $mysqli->query($ListadoOT);
         $Contador = 1;
@@ -30,7 +30,7 @@ if (isset($_GET['SolicitarTabla'])) {
                 <td><span id="TotalMaterial<?php echo $row['idOrdenTrabajo']; ?>"><?php echo $row['CostoMaterialOrdenTrabajo'] ?></span></td>
                 <td><span id="TotalMaterial<?php echo $row['idOrdenTrabajo']; ?>"><?php echo $row['CostoTotalOrdenTrabajo'] ?></span></td>
                 <td><span id="RealizadoPor<?php echo $row['idOrdenTrabajo']; ?>"><?php
-                        $VerNombreRealizado = "SELECT NombreUsuario FROM usuario WHERE idUsuario=" . $row['EncargadoCovial'] . ";";
+                        $VerNombreRealizado = "SELECT NombreUsuario FROM Usuario WHERE idUsuario=" . $row['EncargadoCovial'] . ";";
                         // Hacemos la consulta
                         $ResultadoConsultaNombreRealizado = $mysqli->query($VerNombreRealizado);
                         $FilaResultadoNombreRea = $ResultadoConsultaNombreRealizado->fetch_assoc();
@@ -38,7 +38,7 @@ if (isset($_GET['SolicitarTabla'])) {
                         echo $NombreUsuarioRealizado;
                         ?></span></td>
                 <td><span id="SolicitadoPor<?php echo $row['idOrdenTrabajo']; ?>"><?php
-                        $VerNombreSolicitado = "SELECT NombreUsuario FROM usuario WHERE idUsuario=" . $row['EncargadoMunicipal'] . ";";
+                        $VerNombreSolicitado = "SELECT NombreUsuario FROM Usuario WHERE idUsuario=" . $row['EncargadoMunicipal'] . ";";
                         // Hacemos la consulta
                         $ResultadoConsultaNombreSolicitado = $mysqli->query($VerNombreSolicitado);
                         $FilaResultadoNombreSoli = $ResultadoConsultaNombreSolicitado->fetch_assoc();

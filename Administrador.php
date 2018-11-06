@@ -75,7 +75,7 @@
                                                 <option value="" disabled selected>Usuario</option>
                                                 <!-- Acá mostraremos los puestos que existen en la base de datos -->
                                                 <?php
-                                                $VerUsuarios = "SELECT * FROM usuario;";
+                                                $VerUsuarios = "SELECT * FROM Usuario;";
                                                 // Hacemos la consulta
                                                 $resultado = $mysqli->query($VerUsuarios);
                                                 while ($row = mysqli_fetch_array($resultado)) {
@@ -201,7 +201,7 @@
                 } else {
                     $ContraseniaEncriptada = md5($PasswordUsuario);
                     // Creamos la consulta para la insersión de los datos
-                    $CambiarContrasenia = "UPDATE usuario SET PasswordUsuario='" . $ContraseniaEncriptada . "' WHERE idUsuario=" . $idUsuario . ";";
+                    $CambiarContrasenia = "UPDATE Usuario SET PasswordUsuario='" . $ContraseniaEncriptada . "' WHERE idUsuario=" . $idUsuario . ";";
 
                     if (!$resultado1 = $mysqli->query($CambiarContrasenia)) {
                         echo "Error: La ejecución de la consulta falló debido a: \n";

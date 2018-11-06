@@ -323,7 +323,7 @@
                             $HorasLaborad = $_POST['CantidadHorasEquipo' . $Contador];
                             // Vamos a consultar a cuando nos sale cada hora y a multiplicarla por la cantidad necesitada
                             // Primero haremos la consulta
-                            $VerCostoHora = "SELECT CostoPorHora FROM equipo WHERE idEquipo=" . $IdEquip . ";";
+                            $VerCostoHora = "SELECT CostoPorHora FROM Equipo WHERE idEquipo=" . $IdEquip . ";";
                             // Ejecutamos la consulta
                             $ResultadoConsultaCostoHora = $mysqli->query($VerCostoHora);
                             // Guardamos la consulta en un array
@@ -333,7 +333,7 @@
                             // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
                             $TotalEnEquipo += $CostoPorHoraEquipo * $HorasLaborad;
                             // Si contiene la palabra inicial producto seguido de un número insertamos e valor en la tabla de datalle de hojas de responsabilidad
-                            $ConsultaInsersionlistadoequipo = "INSERT INTO listadoequipo (idEquipo, idAveria, HorasLaboradas)
+                            $ConsultaInsersionlistadoequipo = "INSERT INTO ListadoEquipo (idEquipo, idAveria, HorasLaboradas)
 										       VALUES(" . $IdEquip . ", " . $idAveria . ", " . $HorasLaborad . ");";
                             if (!$ResultadoInsersionlistadoequipo = $mysqli->query($ConsultaInsersionlistadoequipo)) {
                                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -352,7 +352,7 @@
                             $HorasLaborad = $_POST['CantidadHorasPersonal' . $Contador];
                             // Vamos a consultar a cuando nos sale cada hora y a multiplicarla por la cantidad necesitada
                             // Primero haremos la consulta
-                            $VerCostoHoraPersona = "SELECT CostoXHoraPersona FROM persona WHERE idPersona=" . $IdEquip . ";";
+                            $VerCostoHoraPersona = "SELECT CostoXHoraPersona FROM Persona WHERE idPersona=" . $IdEquip . ";";
                             // Ejecutamos la consulta
                             $ResultadoConsultaCostoHoraPersona = $mysqli->query($VerCostoHoraPersona);
                             // Guardamos la consulta en un array
@@ -362,7 +362,7 @@
                             // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
                             $TotalEnPersonal += $CostoPorHoraPersona * $HorasLaborad;
                             // Si contiene la palabra inicial producto seguido de un número insertamos e valor en la tabla de datalle de hojas de responsabilidad
-                            $ConsultaInsersionlistadopersonal = "INSERT INTO listadopersonal (idAveria, idPersona, HorasLaboradas)
+                            $ConsultaInsersionlistadopersonal = "INSERT INTO ListadoPersonal (idAveria, idPersona, HorasLaboradas)
 										       VALUES(" . $idAveria . ", " . $IdEquip . ", " . $HorasLaborad . ");";
                             if (!$ResultadoInsersionlistadopersonal = $mysqli->query($ConsultaInsersionlistadopersonal)) {
                                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -380,7 +380,7 @@
                             $IdMaterial = $_POST['Material' . $Contador];
                             $CantidaMaterial = $_POST['CantidadMaterial' . $Contador];
                             // Primero haremos la consulta
-                            $VerCostoHoraMaterial = "SELECT PrecioxUnidad FROM material WHERE idMaterial=" . $IdMaterial . ";";
+                            $VerCostoHoraMaterial = "SELECT PrecioxUnidad FROM Material WHERE idMaterial=" . $IdMaterial . ";";
                             // Ejecutamos la consulta
                             $ResultadoConsultaCostoHoraMaterial = $mysqli->query($VerCostoHoraMaterial);
                             // Guardamos la consulta en un array
@@ -390,7 +390,7 @@
                             // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
                             $TotalEnMaterial += $CostoPorHoraMaterial * $CantidaMaterial;
                             // Si contiene la palabra inicial producto seguido de un número insertamos e valor en la tabla de datalle de hojas de responsabilidad
-                            $ConsultaInsersionlistadomarterial = "INSERT INTO listadomaterial (idAveria, idMaterial, CantidadMaterial)
+                            $ConsultaInsersionlistadomarterial = "INSERT INTO ListadoMaterial (idAveria, idMaterial, CantidadMaterial)
 										       VALUES(" . $idAveria . ", " . $IdMaterial . ", " . $CantidaMaterial . ");";
                             if (!$ResultadoInsersionlistadomaterial = $mysqli->query($ConsultaInsersionlistadomarterial)) {
                                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -423,7 +423,7 @@
                 $EncargadoMunicipal = $ResultadoConsultaEncargado['idUsuario'];
                 // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
                 $TotalEnMaterial += $CostoPorHoraMaterial * $CantidaMaterial;
-                $ConsultaInsersionOT = "INSERT INTO ordentrabajo (CostoPersonalOrdenTrabajo, CostoEquipoOrdenTrabajo, CostoMaterialOrdenTrabajo, CostoTotalOrdenTrabajo, idAveria, EncargadoMunicipal, EncargadoCovial, idTrazabilidad)
+                $ConsultaInsersionOT = "INSERT INTO OrdenTrabajo (CostoPersonalOrdenTrabajo, CostoEquipoOrdenTrabajo, CostoMaterialOrdenTrabajo, CostoTotalOrdenTrabajo, idAveria, EncargadoMunicipal, EncargadoCovial, idTrazabilidad)
                                                            VALUES(" . $TotalEnPersonal . ", " . $TotalEnEquipo . ", " . $TotalEnMaterial . ", " . $TotalNeto . ", " . $_POST['idAveria'] . ", " . $idUsuario2 . ", " . $EncargadoMunicipal . ", 3);";
                 if (!$ResultadoInsersionOT = $mysqli->query($ConsultaInsersionOT)) {
                     echo "Error: La ejecución de la consulta falló debido a: \n";

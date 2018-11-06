@@ -224,7 +224,7 @@
                 // Guardamos la información en variables
                 $NombreUnidad = $_POST['NombreUnidad'];
                 //Primero revisamos que no exista la marca ya en la base de datos
-                $ConsultaExisteUnidad = "SELECT NombreUnidadMedida FROM unidadmedida WHERE NombreUnidadMedida='" . $NombreUnidad . "';";
+                $ConsultaExisteUnidad = "SELECT NombreUnidadMedida FROM UnidadMedida WHERE NombreUnidadMedida='" . $NombreUnidad . "';";
                 $ResultadoExisteUnidad = $mysqli->query($ConsultaExisteUnidad);
                 $row = mysqli_fetch_array($ResultadoExisteUnidad);
                 if ($row['NombreUnidadMedida'] != null) {
@@ -233,7 +233,7 @@
                     echo "</script>";
                 } else {
                     // Preparamos la consulta
-                    $query = "INSERT INTO unidadmedida(NombreUnidadMedida)
+                    $query = "INSERT INTO UnidadMedida(NombreUnidadMedida)
                                                               VALUES('" . $NombreUnidad . "');";
                     // Ejecutamos la consulta
                     if (!$resultado = $mysqli->query($query)) {

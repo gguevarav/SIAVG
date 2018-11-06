@@ -509,6 +509,7 @@
                             //echo "No se pudo enviar el Mensaje.";
                         } else {
                             //echo "Mensaje enviado";
+                            header("location:Averias.php");
                         }
                     }
                 }

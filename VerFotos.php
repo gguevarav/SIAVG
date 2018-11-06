@@ -46,7 +46,7 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="container-fluid">
-                        <!-- Regresar -->
+                        <!-- Regresar 
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="input-group input-group-lg">
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-xs-6">
                                 <h1 class="text-center">Fotografías</h1>

@@ -359,7 +359,7 @@
                                     </head>
                                     <body>
                                         <div id='apDiv3'>
-                                            <h1>Su solicitud No. " . $idAveriaEnProceso . ", con numero de OT No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idEnProceso . "' target='_blank'>" . $idEnProceso ."</a> se encuenta en proceso de ejecucion</h2>
+                                            <h1>Su solicitud No. " . $idAveriaEnProceso . ", con numero de OT No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idAveriaEnProceso . "' target='_blank'>" . $idEnProceso ."</a> se encuenta en proceso de ejecucion</h1>
                                         </div>								
                                     </body>
                                     </html>");
@@ -477,7 +477,7 @@
                                     </head>
                                     <body>
                                         <div id='apDiv3'>
-                                            <h1>Se finalizo su solicitud No. " . $idAveriaCerrar . ", con numero de OT No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idCerrar . "' target='_blank'>" . $idCerrar .".</a></h2>
+                                            <h1>Se finalizo su solicitud No. " . $idAveriaCerrar . ", con numero de OT No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idAveriaCerrar . "' target='_blank'>" . $idCerrar .".</a></h1>
                                         </div>								
                                     </body>
                                     </html>");

@@ -428,7 +428,7 @@
                                     </head>
                                     <body>
                                         <div id='apDiv3'>
-                                            <h1>Se ah aprobado la orden de trabajo No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idOT . "' target='_blank'>" . $idOT ."</a> de la solicitud No. " . $idAprobar . ".</h2>
+                                            <h1>Se ah aprobado la orden de trabajo No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idAprobar . "' target='_blank'>" . $idOT ."</a> de la solicitud No. " . $idAprobar . ".</h1>
                                         </div>								
                                     </body>
                                     </html>");
@@ -550,7 +550,7 @@
                                     </head>
                                     <body>
                                         <div id='apDiv3'>
-                                            <h1>Se ah rechazado la orden de trabajo No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idOT . "' target='_blank'>" . $idOT ."</a> de la solicitud No. " . $idAprobar . ".</h2>
+                                            <h1>Se ah rechazado la orden de trabajo No. <a href='http://www.siavg.ga/GenerarOTPDF.php?idOrdenTrabajo=" . $idRechazar . "' target='_blank'>" . $idOT ."</a> de la solicitud No. " . $idAprobar . ".</h1>
                                         </div>								
                                     </body>
                                     </html>");

@@ -38,19 +38,6 @@
                 if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
                         $_SESSION["PrivilegioUsuario"] == 'Administrador') {
                     ?>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
-                            <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
-                        </ul>
-                    </li>
-                    <?php
-                }
-                ?>
-                <?php
-                if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
-                        $_SESSION["PrivilegioUsuario"] == 'Administrador') {
-                    ?>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de empleados<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="RegistroEmpleado.php">Crear empleado</a></li>
@@ -80,6 +67,19 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="ReporteAveria.php">Reportar una Avería</a></li>
                             <li><a href="Averias.php">Ver averías reportadas por mí</a></li>
+                        </ul>
+                    </li>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($_SESSION["PrivilegioUsuario"] == 'EncCovial' ||
+                        $_SESSION["PrivilegioUsuario"] == 'Administrador') {
+                    ?>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestión de OT<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="CrearOrdenTrabajo.php">Crear Orden de Trabajo</a></li>
+                            <li><a href="ListarOrdenTrabajo.php">Listar Orden de Trabajo</a></li>
                         </ul>
                     </li>
                     <?php

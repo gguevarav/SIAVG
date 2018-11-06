@@ -151,7 +151,7 @@
                             <br>
                             <!-- Prioridad avería -->
                             <div class="row">
-                                <div class="col-xs-9 col-xs-offset-1">
+                                <div class="col-xs-10 col-xs-offset-1">
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-exclamation-sign"></i></span>
                                         <select class="form-control" name="Prioridad" id="Prioridad">
@@ -170,17 +170,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- Button trigger modal -->
+                                <!-- Button trigger modal
                                 <div class="col-xs-1">
                                     <div class="input-group input-group-lg">
                                         <button type="button" class="btn btn-success btn-lg AgregarPrioridad" value="" data-toggle="modal" data-target="#ModalAgregarPrioridad">+</button>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <br>
                             <!-- Urgencia de la avería -->
                             <div class="row">
-                                <div class="col-xs-9 col-xs-offset-1">
+                                <div class="col-xs-10 col-xs-offset-1">
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-bullhorn"></i></span>
                                         <select class="form-control" name="Urgencia" id="Urgencia">
@@ -199,17 +199,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- Button trigger modal -->
+                                <!-- Button trigger modal 
                                 <div class="col-xs-1">
                                     <div class="input-group input-group-lg">
                                         <button type="button" class="btn btn-success btn-lg AgregarUrgencia" value="" data-toggle="modal" data-target="#ModalAgregarUrgencia">+</button>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <br>
                             <!-- Tamaño de la avería de la avería -->
                             <div class="row">
-                                <div class="col-xs-9 col-xs-offset-1">
+                                <div class="col-xs-10 col-xs-offset-1">
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-scale"></i></span>
                                         <select class="form-control" name="Tamanio" id="Tamanio">
@@ -228,12 +228,12 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- Button trigger modal -->
+                                <!-- Button trigger modal 
                                 <div class="col-xs-1">
                                     <div class="input-group input-group-lg">
                                         <button type="button" class="btn btn-success btn-lg AgregarTamanio" value="" data-toggle="modal" data-target="#ModalAgregarTamanio">+</button>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <br>
                             <!-- Resgistrar -->
@@ -408,7 +408,7 @@
                         $source = $_FILES["imagen"]["tmp_name"][$key]; //Obtenemos un nombre temporal del archivo
                         
                         // Creamos la fecha y hora actual
-                        $fecha = new DateTime(now, new DateTimeZone('America/Guatemala'));
+                        $fecha = new DateTime('now', new DateTimeZone('America/Guatemala'));
                         $NombreCarpeta = $fecha->format('YmdHis');
                         
                         $directorio = 'FotosReportes/' . $NombreCarpeta . "/"; //Declaramos un  variable con la ruta donde guardaremos los archivos
@@ -445,7 +445,7 @@
             $idMunicipalidad = $FilaResultadoMunicipalidad['idMunicipalidad'];
             
             // Creamos la fecha y hora actual
-            $FechaRegistro = new DateTime(now, new DateTimeZone('America/Guatemala'));
+            $FechaRegistro = new DateTime('now', new DateTimeZone('America/Guatemala'));
             $FechaRegistroAveria = $FechaRegistro->format('Y-m-d H:i:s');
             
             // Preparamos la consulta

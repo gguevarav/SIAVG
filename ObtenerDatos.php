@@ -32,7 +32,7 @@ if (isset($_GET['Solicitud'])) {
         }
     }
     if ($_GET['Solicitud'] == 'Empleados') {
-        $VerEmpleado = "SELECT idPersona, NombrePersona, ApellidoPersona FROM Persona WHERE EstadoPersona='Activo';";
+        $VerEmpleado = "SELECT idPersona, NombrePersona, ApellidoPersona FROM Persona WHERE EstadoPersona='Activo' AND idTipoEmpleado!=1;";
         // Hacemos la consulta
         $resultado = $mysqli->query($VerEmpleado);
         ?>

@@ -425,7 +425,7 @@
                 $TotalEnMaterial += $CostoPorHoraMaterial * $CantidaMaterial;
                 
                 // Creamos la fecha y hora actual
-                $FechaRegistro = new DateTime(now, new DateTimeZone('America/Guatemala'));
+                $FechaRegistro = new DateTime('now', new DateTimeZone('America/Guatemala'));
                 $FechaRegistroOT = $FechaRegistro->format('Y-m-d H:i:s');
                 
                 $ConsultaInsersionOT = "INSERT INTO OrdenTrabajo (FechaOrdenTrabajo, CostoPersonalOrdenTrabajo, CostoEquipoOrdenTrabajo, CostoMaterialOrdenTrabajo, CostoTotalOrdenTrabajo, idAveria, EncargadoMunicipal, EncargadoCovial, idTrazabilidad)

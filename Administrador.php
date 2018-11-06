@@ -35,7 +35,7 @@
             // Guardamos el nombre del usuario en una variable
             $NombreUsuario = $_SESSION["NombreUsuario"];
             $idUsuario2 = $_SESSION["idUsuario"];
-            
+
             // Incluimos el menú para mostrar
             include_once "MenuPrincipal.php";
             ?>
@@ -211,6 +211,67 @@
                         // Mostrar el mensaje
                         echo "<script language=\"JavaScript\">\n";
                         echo "myFunction(\"Contraseña cambiada\");\n";
+                        echo "</script>";
+                    }
+                }
+            }
+            if (isset($_POST['RegistrarUnidadMedida'])) {
+                // Guardamos la información en variables
+                $NombreUnidad = $_POST['UnidadMedida'];
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteUnidad = "SELECT NombreUnidadMedida FROM UnidadMedida WHERE NombreUnidadMedida='" . $NombreUnidad . "';";
+                $ResultadoExisteUnidad = $mysqli->query($ConsultaExisteUnidad);
+                $row = mysqli_fetch_array($ResultadoExisteUnidad);
+                if ($row['NombreUnidadMedida'] != null) {
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"El nombre de la unidad de medida ya existe\");\n";
+                    echo "</script>";
+                } else {
+                    // Preparamos la consulta
+                    $query = "INSERT INTO UnidadMedida(NombreUnidadMedida)
+                                                              VALUES('" . $NombreUnidad . "');";
+                    // Ejecutamos la consulta
+                    if (!$resultado = $mysqli->query($query)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $query . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        exit;
+                    } else {
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Nombre de unidad de medida registrada\");\n";
+                        //echo "ObtenerDatos('UnidadMedida');\n";
+                        echo "</script>";
+                    }
+                }
+            }
+            // Termina código para agregar una nueva unidad
+            if (isset($_POST['RegistrarPuesto'])) {
+                // Obtenemos los valores de todos los campos y los almacenamos en variables
+                $NombreNuevoPuesto = $_POST['NombrePuesto'];
+
+                //Primero revisamos que no exista la marca ya en la base de datos
+                $ConsultaExisteTipoEmpleado = "SELECT NombreTipoEmpleado FROM TipoEmpleado WHERE NombreTipoEmpleado='" . $NombreNuevoPuesto . "';";
+                $ResultadoExisteTipoEmpleado = $mysqli->query($ConsultaExisteTipoEmpleado);
+                $row = mysqli_fetch_array($ResultadoExisteTipoEmpleado);
+                if ($row['NombreTipoEmpleado'] != null) {
+                    echo "<script language=\"JavaScript\">\n";
+                    echo "myFunction(\"El puesto ya existe\");\n";
+                    echo "</script>";
+                } else {
+
+                    // Creamos la consulta para la insersión de los datos
+                    $InsertarPuesto = "INSERT into TipoEmpleado (NombreTipoEmpleado)
+                                                       VALUES('" . $NombreNuevoPuesto . "');";
+                    if (!$resultado2 = $mysqli->query($InsertarPuesto)) {
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $InsertarPuesto . "\n";
+                        echo "Error: " . $mysqli->errno . "\n";
+                        exit;
+                    } else {
+                        echo "<script language=\"JavaScript\">\n";
+                        echo "myFunction(\"Puesto registrado\");\n";
+                        //echo "ObtenerDatos('UnidadMedida');\n";
                         echo "</script>";
                     }
                 }

@@ -225,12 +225,12 @@ CREATE TABLE OrdenTrabajo(
             ON UPDATE NO ACTION,
     INDEX (EncargadoMunicipal),
     FOREIGN KEY (EncargadoMunicipal)
-            REFERENCES Persona(idPersona)
+            REFERENCES Usuario(idUsuario)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
     INDEX (EncargadoCovial),
     FOREIGN KEY (EncargadoCovial)
-            REFERENCES Persona(idPersona)
+            REFERENCES Usuario(idUsuario)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
     INDEX (idTrazabilidad),

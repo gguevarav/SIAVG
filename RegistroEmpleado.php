@@ -109,7 +109,12 @@
                                                 <option value="" disabled selected>Puesto del Empleado</option>
                                                 <!-- Acá mostraremos los puestos que existen en la base de datos -->
                                                 <?php
-                                                $VerUM = "SELECT * FROM TipoEmpleado;";
+                                                $VerUM = "";
+                                                if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
+                                                    $VerUM = "SELECT * FROM TipoEmpleado;";
+                                                } else {
+                                                    $VerUM = "SELECT * FROM TipoEmpleado Where idTipoEmpleado!=1;";
+                                                }
                                                 // Hacemos la consulta
                                                 $resultado = $mysqli->query($VerUM);
                                                 while ($row = mysqli_fetch_array($resultado)) {

@@ -71,16 +71,16 @@ if (isset($_GET['SolicitarTabla'])) {
                     <td><span id="NombreRol<?php echo $row['idPersona']; ?>"><?php echo $NombreRol ?></span></td>
                     <td>
                         <?php
-                        if ($row['EstadoPersona'] == 'Activo') {
+                        if ($ResultadoConsulta['EstadoUsuario'] == 'Activo') {
                             ?>
                             <!-- Edición activada-->
                             <div>
                                 <div class="input-group input-group-lg">
-                                    <button type="button" class="btn btn-success CambiarRol" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
+                                    <button type="button" class="btn btn-success CambiarRol" value="<?php echo $ResultadoConsulta['idUsuario']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
                                 </div>
                             </div>
                             <?php
-                        } else if ($row['EstadoPersona'] == 'Inactivo') {
+                        } else if ($ResultadoConsulta['EstadoUsuario'] == 'Inactivo') {
                             ?>
                             <!-- Edición desactivada-->
                             <div>
@@ -94,16 +94,16 @@ if (isset($_GET['SolicitarTabla'])) {
                     </td>
                     <td>
                         <?php
-                        if ($row['EstadoPersona'] == 'Activo') {
+                        if ($ResultadoConsulta['EstadoUsuario'] == 'Activo') {
                             ?>
                             <!-- Edición activada-->
                             <div>
                                 <div class="input-group input-group-lg">
-                                    <button type="button" class="btn btn-success CambiarCorreo" value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
+                                    <button type="button" class="btn btn-success CambiarCorreo" value="<?php echo $ResultadoConsulta['idUsuario']; ?>"><span class="glyphicon glyphicon-edit"></span></button>
                                 </div>
                             </div>
                             <?php
-                        } else if ($row['EstadoPersona'] == 'Inactivo') {
+                        } else if ($ResultadoConsulta['EstadoUsuario'] == 'Inactivo') {
                             ?>
                             <!-- Edición desactivada-->
                             <div>
@@ -116,24 +116,24 @@ if (isset($_GET['SolicitarTabla'])) {
                         ?>
                     </td>
                     <?php
-                    if ($row['EstadoPersona'] == 'Activo') {
+                    if ($ResultadoConsulta['EstadoUsuario'] == 'Activo') {
                         ?>
                         <td>
                             <!-- Deshabilitación -->
                             <div>
                                 <div class="input-group input-group-lg">
-                                    <button type="button" class="btn btn-warning DeshabilitarUsuario"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
+                                    <button type="button" class="btn btn-warning DeshabilitarUsuario"  value="<?php echo $ResultadoConsulta['idUsuario']; ?>"><span class="glyphicon glyphicon-minus"></span></button>
                                 </div>
                             </div>
                         </td>
                         <?php
-                    } else if ($row['EstadoPersona'] == 'Inactivo') {
+                    } else if ($ResultadoConsulta['EstadoUsuario'] == 'Inactivo') {
                         ?>
                         <td>
                             <!-- Habilitación -->
                             <div>
                                 <div class="input-group input-group-lg">
-                                    <button type="button" class="btn btn-success HabilitarUsuario"  value="<?php echo $row['idPersona']; ?>"><span class="glyphicon glyphicon-check"></span></button>
+                                    <button type="button" class="btn btn-success HabilitarUsuario"  value="<?php echo $ResultadoConsulta['idUsuario']; ?>"><span class="glyphicon glyphicon-check"></span></button>
                                 </div>
                             </div>
                         </td>

@@ -88,7 +88,7 @@ CREATE TABLE Tamanio(
 CREATE TABLE Averia(
     idAveria                INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
     UbicacionAveria         VARCHAR(100)        NOT NULL,
-    FechaReporteAveria      TIMESTAMP			NOT NULL			DEFAULT CURRENT_TIMESTAMP,
+    FechaReporteAveria      DATETIME			NOT NULL,
     ImagenAveria            TEXT		        NOT NULL,
 	idMunicipalidad			TINYINT				NOT NULL,
     idPrioridad             TINYINT             NOT NULL,
@@ -209,7 +209,7 @@ CREATE TABLE ListadoPersonal(
 
 CREATE TABLE OrdenTrabajo(
     idOrdenTrabajo          INTEGER             NOT NULL            PRIMARY KEY                 AUTO_INCREMENT,
-    FechaOrdenTrabajo       TIMESTAMP           NOT NULL			DEFAULT CURRENT_TIMESTAMP,
+    FechaOrdenTrabajo       DATETIME           NOT NULL,
     CostoPersonalOrdenTrabajo   DECIMAL(10,2)   NOT NULL,
     CostoEquipoOrdenTrabajo     DECIMAL(10,2)   NOT NULL,
     CostoMaterialOrdenTrabajo   DECIMAL(10,2)   NOT NULL,

@@ -423,8 +423,13 @@
                 $EncargadoMunicipal = $ResultadoConsultaEncargado['idUsuario'];
                 // Hacemos el cálculo, multiplicamos el costo por equipo * la cantidad de horas, despues la multiplicamos por la cantidad de equipos necesarios
                 $TotalEnMaterial += $CostoPorHoraMaterial * $CantidaMaterial;
-                $ConsultaInsersionOT = "INSERT INTO OrdenTrabajo (CostoPersonalOrdenTrabajo, CostoEquipoOrdenTrabajo, CostoMaterialOrdenTrabajo, CostoTotalOrdenTrabajo, idAveria, EncargadoMunicipal, EncargadoCovial, idTrazabilidad)
-                                                           VALUES(" . $TotalEnPersonal . ", " . $TotalEnEquipo . ", " . $TotalEnMaterial . ", " . $TotalNeto . ", " . $_POST['idAveria'] . ", " . $idUsuario2 . ", " . $EncargadoMunicipal . ", 3);";
+                
+                // Creamos la fecha y hora actual
+                $FechaRegistro = new DateTime(now, new DateTimeZone('America/Guatemala'));
+                $FechaRegistroOT = $FechaRegistro->format('Y-m-d H:i:s');
+                
+                $ConsultaInsersionOT = "INSERT INTO OrdenTrabajo (FechaOrdenTrabajo, CostoPersonalOrdenTrabajo, CostoEquipoOrdenTrabajo, CostoMaterialOrdenTrabajo, CostoTotalOrdenTrabajo, idAveria, EncargadoMunicipal, EncargadoCovial, idTrazabilidad)
+                                                           VALUES('". $FechaRegistroOT ."'," . $TotalEnPersonal . ", " . $TotalEnEquipo . ", " . $TotalEnMaterial . ", " . $TotalNeto . ", " . $_POST['idAveria'] . ", " . $idUsuario2 . ", " . $EncargadoMunicipal . ", 3);";
                 if (!$ResultadoInsersionOT = $mysqli->query($ConsultaInsersionOT)) {
                     echo "Error: La ejecución de la consulta falló debido a: \n";
                     echo "Query: " . $ConsultaInsersionOT . "\n";

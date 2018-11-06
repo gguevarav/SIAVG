@@ -29,7 +29,7 @@
         // Incluimos el archivo que valida si hay una sesión activa
         include_once "Seguridad/seguro.php";
         // Primero hacemos la consulta en la tabla de persona
-        include_once "Seguridad/Conexion.php";
+        include_once "Seguridad/conexion.php";
         // Si en la sesión activa tiene privilegios de administrador puede ver el formulario
         if ($_SESSION["PrivilegioUsuario"] == 'Administrador') {
             // Guardamos el nombre del usuario en una variable

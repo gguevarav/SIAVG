@@ -259,9 +259,11 @@
         if (isset($_POST['EnProcesoOT'])) {
             // Guardamos el id en una variable
             $idEnProceso = $_POST['idEnProceso'];
-
+            // este es el id de la averia
+            $idAveriaEnProceso = $_POST['idAveriaEnProceso'];
+            
             // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-            $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM OrdenTrabajo WHERE idAveria=" . $idEnProceso . ";";
+            $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM OrdenTrabajo WHERE idAveria=" . $idAveriaEnProceso . ";";
             // Hacemos la consulta
             $ResultadoConsultaID = $mysqli->query($VeridUsuario);
             $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
@@ -286,7 +288,7 @@
             $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
             $mail->AddAddress($CorreoUsuarioCovial, "Seguimiento de Averias");
 
-            $idAveriaEnProceso = $_POST['idAveriaEnProceso'];
+            //$idAveriaEnProceso = $_POST['idAveriaEnProceso'];
             // Preparamos la consulta
             $query = "UPDATE OrdenTrabajo SET idTrazabilidad = 6 WHERE idOrdenTrabajo=" . $idEnProceso . ";";
             // Ejecutamos la consulta
@@ -376,9 +378,11 @@
         if (isset($_POST['CerrarOT'])) {
             // Guardamos el id en una variable
             $idCerrar = $_POST['idCerrar'];
+            // Guardamos el id pero de la orden de trabajo
+            $idAveriaCerrar = $_POST['idAveriaCerrar'];
 
             // Primero obtendremos el id del usuario que reportó la avería para poder saber que usuario consultar el correo
-            $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM OrdenTrabajo WHERE idAveria=" . $idCerrar . ";";
+            $VeridUsuario = "SELECT EncargadoMunicipal, EncargadoCovial FROM OrdenTrabajo WHERE idAveria=" . $idAveriaCerrar . ";";
             // Hacemos la consulta
             $ResultadoConsultaID = $mysqli->query($VeridUsuario);
             $FilaResultadoID = $ResultadoConsultaID->fetch_assoc();
@@ -402,8 +406,7 @@
             // Pasamos la dirección de correo
             $mail->AddAddress($CorreoUsuarioReporta, "Seguimiento de Averias");
             $mail->AddAddress($CorreoUsuarioCovial, "Seguimiento de Averias");
-
-            $idAveriaCerrar = $_POST['idAveriaCerrar'];
+            
             // Preparamos la consulta
             $query = "UPDATE OrdenTrabajo SET idTrazabilidad = 7 WHERE idOrdenTrabajo=" . $idCerrar . ";";
             // Ejecutamos la consulta

@@ -97,7 +97,7 @@ if (isset($_GET['SolicitarTabla'])) {
                             <!-- Habilitación -->
                             <div>
                                 <div class="input-group input-group-lg">
-                                    <button type="button" class="btn btn-success AprobarAveria"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-check"></span>Aprovar</button>
+                                    <button type="button" class="btn btn-success AprobarAveria"  value="<?php echo $row['idAveria']; ?>"><span class="glyphicon glyphicon-check"></span>Aprobar</button>
                                 </div>
                             </div>
                         </td>

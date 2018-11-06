@@ -261,8 +261,8 @@
                             exit;
                         }
                         // Preparamos la consulta
-                        $InsertarUsuario = "INSERT INTO Usuario (NombreUsuario, PasswordUsuario, CorreoUsuario, idMunicipalidad, idPersona, idRol)
-						      VALUES('" . $username . "', '" . $ContraseniaEncriptada . "', '" . $Correo . "', " . $idMunicipalidad . ", " . mysqli_insert_id($mysqli) . ", " . $Nombrerolusuario . ");";
+                        $InsertarUsuario = "INSERT INTO Usuario (NombreUsuario, PasswordUsuario, CorreoUsuario, idMunicipalidad, idPersona, idRol, EstadoUsuario)
+						      VALUES('" . $username . "', '" . $ContraseniaEncriptada . "', '" . $Correo . "', " . $idMunicipalidad . ", " . mysqli_insert_id($mysqli) . ", " . $Nombrerolusuario . ", 'Activo');";
 
                         if (!$resultado2 = $mysqli->query($InsertarUsuario)) {
                             echo "Error: La ejecución de la consulta falló debido a: \n";

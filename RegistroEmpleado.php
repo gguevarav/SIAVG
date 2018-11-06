@@ -17,6 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- vinculo a bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Toast-->
+        <link rel="stylesheet" type="text/css" href="css/Toast.css">
+        <script src="js/Toast.js"></script>
         <!-- Temas-->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login-->
@@ -45,6 +48,8 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="container-fluid">
+                        <!-- Snackbar -->
+                        <div id="snackbar"></div> 
                         <div class="row">
                             <div class="col-xs-6">
                                 <h1 class="text-center">Registro de empleados</h1>

@@ -5,7 +5,7 @@ $(document).ready(function () {
         var Nombres = $('#NombrePersona' + id).text() + " " + $('#ApellidoUsuario' + id).text();
 
         $('#ModalCambioRol').modal('show');
-        document.querySelector('#NombresApellidos').innerText = Nombres;
+        document.querySelector('#NombresApellidosRol').innerText = Nombres;
         $('#idUsuarioCambioRol').val(id);
     });
 });

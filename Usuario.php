@@ -181,7 +181,7 @@
                                 </div>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="width:150px;">Nombre del usuario</span>
-                                    <label class="form-control" style="width:350px;" id="NombresApellidos" name="NombresApellidos"></label>
+                                    <label class="form-control" style="width:350px;" id="NombresApellidosRol" name="NombresApellidosRol"></label>
                                 </div>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon" style="width:150px;">Puesto</span>

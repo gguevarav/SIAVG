@@ -144,7 +144,7 @@
                                 <div class="col-xs-10 col-xs-offset-1">
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-upload"></i></span>
-                                        <input type="file" class="form-control" name="imagen[]" multiple aria-describedby="sizing-addon1" required>
+                                        <input type="file" class="form-control" name="imagen[]" id="imagen[]" multiple aria-describedby="sizing-addon1" required>
                                     </div>
                                 </div>
                             </div>
@@ -400,24 +400,33 @@
             if (isset($_FILES['imagen'])) {
                 $cantidad = count($_FILES["imagen"]["tmp_name"]);
 
-                foreach ($_FILES["pictures"]["error"] as $key => $error) {
-                    if ($error == UPLOAD_ERR_OK) {
-                        if ($_FILES['imagen']['type'][$i] == 'image/png' || $_FILES['imagen']['type'][$i] == 'image/jpeg') {
-                            // Creamos el directorio a partir de la fecha y hora
-                            $FechaHoraActual = date("YmdHis");
-                            // nombre de directorio
-                            $uploads_dir = '\FotosReportes' . $FechaHoraActual;
-                            // Creamos el directorio
-                            if (!is_dir($uploads_dir)) {
-                                mkdir($uploads_dir);
-                                $tmp_name = $_FILES["imagen"]["tmp_name"][$key];
-                                // basename() puede evitar ataques de denegación de
-                                // sistema de ficheros; podría ser apropiada más
-                                // validación/saneamiento del nombre del fichero
-                                $name = basename($_FILES["imagen"]["name"][$key]);
-                                move_uploaded_file($tmp_name, "$uploads_dir\\$name");
-                            }
+                //Como el elemento es un arreglos utilizamos foreach para extraer todos los valores
+                foreach ($_FILES["imagen"]['tmp_name'] as $key => $tmp_name) {
+                    //Validamos que el archivo exista
+                    if ($_FILES["imagen"]["name"][$key]) {
+                        $filename = $_FILES["imagen"]["name"][$key]; //Obtenemos el nombre original del archivo
+                        $source = $_FILES["imagen"]["tmp_name"][$key]; //Obtenemos un nombre temporal del archivo
+                        
+                        // Creamos la fecha y hora actual
+                        $fecha = new DateTime(now, new DateTimeZone('America/Guatemala'));
+                        $NombreCarpeta = $fecha->format('YmdHis');
+                        
+                        $directorio = 'FotosReportes/' . $NombreCarpeta . "/"; //Declaramos un  variable con la ruta donde guardaremos los archivos
+                        //Validamos si la ruta de destino existe, en caso de no existir la creamos
+                        if (!file_exists($directorio)) {
+                            mkdir($directorio, 0777) or die("No se puede crear el directorio de extracci&oacute;n");
+                            $ImagenAveria = $directorio;
                         }
+                        $dir = opendir($directorio); //Abrimos el directorio de destino
+                        $target_path = $directorio . '/' . $filename; //Indicamos la ruta de destino, así como el nombre del archivo
+                        //Movemos y validamos que el archivo se haya cargado correctamente
+                        //El primer campo es el origen y el segundo el destino
+                        if (move_uploaded_file($source, $target_path)) {
+                            // echo "El archivo $filename se ha almacenado en forma exitosa.<br>";
+                        } else {
+                            // echo "Ha ocurrido un error, por favor inténtelo de nuevo.<br>";
+                        }
+                        closedir($dir); //Cerramos el directorio de destino
                     }
                 }
             }
@@ -434,10 +443,14 @@
             $ResultadoConsultaMunicipalidad = $mysqli->query($VeridMunicipalidad);
             $FilaResultadoMunicipalidad = $ResultadoConsultaMunicipalidad->fetch_assoc();
             $idMunicipalidad = $FilaResultadoMunicipalidad['idMunicipalidad'];
-
+            
+            // Creamos la fecha y hora actual
+            $FechaRegistro = new DateTime(now, new DateTimeZone('America/Guatemala'));
+            $FechaRegistroAveria = $FechaRegistro->format('Y-m-d H:i:s');
+            
             // Preparamos la consulta
-            $query = "INSERT INTO Averia(UbicacionAveria, ImagenAveria, idMunicipalidad, idPrioridad, idTrazabilidad, idUrgencia, idTamanio, idUsuario)
-											VALUES('" . $Ubicacion . "', '" . $ImagenAveria . "', " . $idMunicipalidad . ", " . $Prioridad . ", 1, " . $Urgencia . ", " . $Tamanio . ", " . $idUsuario2 . ")";
+            $query = "INSERT INTO Averia(UbicacionAveria, FechaReporteAveria, ImagenAveria, idMunicipalidad, idPrioridad, idTrazabilidad, idUrgencia, idTamanio, idUsuario)
+											VALUES('" . $Ubicacion ."', '" . $FechaRegistroAveria . "', '" . $ImagenAveria . "', " . $idMunicipalidad . ", " . $Prioridad . ", 1, " . $Urgencia . ", " . $Tamanio . ", " . $idUsuario2 . ")";
             // Ejecutamos la consulta
             if (!$resultado = $mysqli->query($query)) {
                 echo "Error: La ejecución de la consulta falló debido a: \n";

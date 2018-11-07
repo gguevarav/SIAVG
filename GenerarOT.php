@@ -509,7 +509,7 @@
                             //echo "No se pudo enviar el Mensaje.";
                         } else {
                             //echo "Mensaje enviado";
-                            header("location:Averias.php");
+                            echo "<meta http-equiv='refresh' content='0; url=CrearOrdenTrabajo.php'>";
                         }
                     }
                 }

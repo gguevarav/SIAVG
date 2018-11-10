@@ -75,8 +75,8 @@
                                     $directory = $_POST['Path'];
                                     $dirint = dir($directory);
                                     while (($archivo = $dirint->read()) !== false) {
-                                        if (preg_match('/gif/', $archivo) || preg_match('/GIF/', $archivo) || preg_match('/jpeg/', $archivo) || preg_match('/JPEG/', $archivo)  || preg_match('/jpg/', $archivo) || preg_match('/JPG/', $archivo) || preg_match('/png/', $archivo) || preg_match('/PNG/', $archivo)) {
-                                            ?>
+                                        if (preg_match('/gif/', $archivo) || preg_match('/jpg/', $archivo) || preg_match('/png/', $archivo)) {
+d                                          ?>
                                             <div class="row">
                                                 <div class="col-xs-10 col-xs-offset-1">
                                                     <div class="input-group input-group-lg">

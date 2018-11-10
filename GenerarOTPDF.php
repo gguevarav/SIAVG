@@ -120,7 +120,7 @@ if (isset($_GET['idOrdenTrabajo'])) {
         $ColumnasPersonal .= '<tr>
             <td class="text-center">'. $ContadorItems . '</td>
             <td class="text-center">' . $row['HorasLaboradas'] . '</td>
-            <td class="text-center">UN</td>
+            <td class="text-center">Hora</td>
             <td>' . $NombreTipoEmpl . '</td>
             <td class="text-center">Q. ' . $FilaResultadoInfoPersona['CostoXHoraPersona'] . '</td>
             <td class="text-right">Q. ' . $row['HorasLaboradas'] * $FilaResultadoInfoPersona['CostoXHoraPersona'] . '.00</td>
